@@ -1,3 +1,36 @@
-ul li {
-	list-style-type: armenian;
+.app-wrapper {
+	display: grid;
+	width: 1500px;
+	margin: 0 auto;
+	grid-template-areas: 
+	"h h"
+	"s m";
+	grid-template-rows: 90px 600px;
+	grid-template-columns: 2fr 10fr;
+	gap: 10px;
+
+}
+
+header {
+	grid-area: h;
+	background-color: #80ff00;
+}
+
+header > img {
+	height: 90px;
+	border-radius: 45px;
+	overflow: hidden;
+}
+
+nav {
+	background-color: #80ff00;
+	grid-area: s;
+}
+
+main {
+	grid-area: m;
+}
+
+a {
+	text-decoration: none;
 }
