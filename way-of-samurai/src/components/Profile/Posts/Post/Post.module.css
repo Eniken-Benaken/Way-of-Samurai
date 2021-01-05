@@ -1,13 +1,49 @@
 .item {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(12,1fr);
+	grid-template-rows: 50px 1fr;
+	grid-auto-rows: 50px;
 	margin: 10px 20px;
 	padding: 10px;
-	align-items: center;
 }
 
 .item > img {
+	grid-row: 1/span 1;
+	grid-column: 1/span 1;
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
-	margin-right: 20px;
+	justify-self: center;
+	align-self: center;
+}
+
+.item > .author {
+	grid-row: 1/span 1;
+	grid-column: 2/-1;
+	font-weight: bold;
+	font-size: 1.1rem;
+	margin-left: 20px;
+	align-self: center;
+}
+
+.item > .post_content {
+	grid-row: 2/span 1;
+	grid-column: 2/10;
+	margin: 15px;
+}
+
+.item > .likes {
+	grid-row: 3/span 1;
+	grid-column: 8/9;
+	margin: 10px;
+	color: cornflowerblue;
+	text-decoration: underline;
+}
+
+.item > .add_comment {
+	grid-row: 3/span 1;
+	grid-column: 9/11;
+	margin: 10px;
+	color: cornflowerblue;
+	text-decoration: underline;
 }

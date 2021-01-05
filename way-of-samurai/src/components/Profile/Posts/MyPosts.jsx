@@ -11,7 +11,8 @@ const MyPosts = (props) => {
 				<button>Add New</button>
 				<button>Upload Image</button>
 			</div>
-			<Post />
+			<Post author='Dem Pigeon' post_content="Hey, My name is Dem Pigeon" likes="13" />
+			<Post author='Dem Pigeon' post_content="This is my first post" likes="2" />
 		</div>
 	);
 }
