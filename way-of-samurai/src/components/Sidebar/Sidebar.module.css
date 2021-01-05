@@ -1,0 +1,15 @@
+.sidebar {
+	background-color: #80ff00;
+	grid-area: s;
+}
+
+.item {
+	margin: 10px;
+	margin-right: 0;
+	font-weight: bold;
+	color: cornsilk;
+}
+
+.active a {
+	color: cornflowerblue;
+}

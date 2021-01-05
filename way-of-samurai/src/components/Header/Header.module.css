@@ -1,0 +1,10 @@
+.header {
+	grid-area: h;
+	background-color: #80ff00;
+}
+
+.header > img {
+	height: 90px;
+	border-radius: 45px;
+	overflow: hidden;
+}

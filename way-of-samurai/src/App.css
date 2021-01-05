@@ -11,26 +11,6 @@
 
 }
 
-header {
-	grid-area: h;
-	background-color: #80ff00;
-}
-
-header > img {
-	height: 90px;
-	border-radius: 45px;
-	overflow: hidden;
-}
-
-nav {
-	background-color: #80ff00;
-	grid-area: s;
-}
-
-main {
-	grid-area: m;
-}
-
 a {
 	text-decoration: none;
 }

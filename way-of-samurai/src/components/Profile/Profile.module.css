@@ -1,0 +1,16 @@
+.main {
+	grid-area: m;
+}
+
+.banner {
+	display: block;
+}
+
+.person_info {
+	display        : flex;
+	align-content  : center;
+	justify-content: center;
+	width          : 200px;
+	height         : 100px;
+}
+
