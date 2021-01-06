@@ -1,0 +1,29 @@
+.track {
+	display: grid;
+	grid-template-columns: 50px 1fr 50px;
+}
+
+.cover {
+	width: 40px;
+	height: 40px;
+	background-color: rgb(239, 239, 239);
+	border-radius: 5px;
+	justify-self: center;
+	align-self: center;
+	text-align: center;
+	line-height: 40px;
+	font-size: 2rem;
+	color: cornflowerblue;
+	margin: 5px 10px;
+
+}
+
+.track_name {
+	align-self: center;
+}
+
+.track_duration {
+	align-self: center;
+	color: #888;
+	text-shadow: darkgray 0 0 2px;
+}

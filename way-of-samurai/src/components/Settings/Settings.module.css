@@ -1,0 +1,54 @@
+.settings_wrapper {
+	margin: 10px auto;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 70px ;
+	grid-auto-rows: 100px;
+	width: 60%;
+}
+
+.settings_header {
+	grid-column: 1/span 2;
+	padding-left: 20px;
+	font-size: 1.2rem;
+	background-color: #c6ebff;
+	border-bottom: 2px solid  #5cc6fe;
+	align-content: center;
+	line-height: 100px;
+}
+
+.person_info {
+	grid-column: 1/span 2;
+	grid-row: 2/span 3;
+	padding: 0 10px;	
+	font-size: 1.1rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: repeat(100px);
+}
+
+.name {
+	grid-column: 1/span 2;
+	align-content: center;
+	line-height: 100px;
+	border-bottom: 1px solid  #5cc6fe;
+}
+
+.login_info {
+	grid-column: 1/span 2;
+	align-content: center;
+	line-height: 100px;
+	border-bottom: 1px solid  #5cc6fe;
+}
+
+.phone_number {
+	grid-column: 1/span 2;
+	align-content: center;
+	line-height: 100px;
+	border-bottom: 2px solid  #5cc6fe;
+}
+
+.action_buttons {
+	grid-column: 1/span 2;
+	margin: 10px auto;
+}

@@ -14,3 +14,7 @@
 a {
 	text-decoration: none;
 }
+
+.main_wrapper {
+	grid-area: m;
+}
