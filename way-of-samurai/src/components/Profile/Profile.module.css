@@ -1,12 +1,5 @@
-.banner {
-	display: block;
+.profile_wrapper {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	gap: 10px;
 }
-
-.person_info {
-	display        : flex;
-	align-content  : center;
-	justify-content: center;
-	width          : 200px;
-	height         : 100px;
-}
-

@@ -5,9 +5,8 @@ import Post from './Post/Post';
 const MyPosts = (props) => {
 	return(
 		<div className={s.posts}>
-			My posts
-			<div className={s.item}>
-				<textarea></textarea>
+			<div className={s.new_post}>
+				<div><textarea className={s.new_post_content} placeholder="What is on your mind?"></textarea></div>
 				<button>Add New</button>
 				<button>Upload Image</button>
 			</div>

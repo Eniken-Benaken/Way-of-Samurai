@@ -1,3 +1,19 @@
 .posts {
-	margin: 10px auto;
+	grid-column: 2/-1;
+	display: grid;
+	gap:10px
+}
+
+.new_post {
+	padding: 10px;
+	border-radius: 10px;
+	width: 100%;
+	background-color: #fff;
+	box-sizing: border-box;
+}
+
+.new_post_content {
+	width: 99%;
+	border: 1px solid #e1e1e1;
+	border-radius: 5px;
 }

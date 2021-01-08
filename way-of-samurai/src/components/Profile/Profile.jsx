@@ -1,14 +1,12 @@
 import React from 'react';
 import s from './Profile.module.css';
 import MyPosts from './Posts/MyPosts';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
 	return(
-		<main className={s.main}>
-			<div className={s.banner}>
-				<img src="https://source.unsplash.com/1200x200/?new-year" alt="newyear"/>
-			</div>
-			<div className={s.person_info}>ava + description</div>
+		<main className={s.profile_wrapper}>
+			<ProfileInfo />
 			<MyPosts />
 		</main>
 	);

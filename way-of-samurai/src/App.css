@@ -1,14 +1,13 @@
 .app-wrapper {
 	display: grid;
-	width: 1500px;
-	margin: 0 auto;
+	width: 1000px;
+	margin: 10px 23%;
 	grid-template-areas: 
 	"h h"
 	"s m";
-	grid-template-rows: 90px 600px;
+	grid-template-rows: 46px 600px;
 	grid-template-columns: 2fr 10fr;
 	gap: 10px;
-
 }
 
 a {
@@ -18,3 +17,13 @@ a {
 .main_wrapper {
 	grid-area: m;
 }
+
+body {
+	background-color: #e7f1f1;
+}
+
+html,body, #root {
+	margin-top: 0;
+	padding-top: 0;
+}
+

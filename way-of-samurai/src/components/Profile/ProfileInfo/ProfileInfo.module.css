@@ -1,0 +1,54 @@
+.profileInfo_wrapper {
+	display: grid;
+	grid-column: 1/-1;
+	grid-template-rows: 1fr 200px;
+	max-width: 100%;
+	gap: 10px;
+}
+
+
+
+.banner {
+	display: block;
+}
+
+.banner img {
+	object-fit: cover;
+	max-width: 100%;
+	border-radius: 10px;
+}
+
+
+
+.person_info {
+	display: grid;
+	grid-template-columns: 200px 1fr;	
+	gap: 10px;
+}
+
+.avatar_block {
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+	display: grid;
+	gap: 5px;
+}
+
+.avatar_block img {
+	object-fit: cover;
+	max-width: 180px;
+	height: 180px;
+	border-radius: 4px;
+}
+
+
+.description_block {
+	max-height: 180px;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+}
+
+.description_block h3 {
+	margin-top: 0;
+}
