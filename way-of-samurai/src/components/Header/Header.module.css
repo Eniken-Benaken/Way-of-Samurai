@@ -1,6 +1,6 @@
 .header {
 	grid-area: h;
-	background-color: #80ff00;
+	background-color: rgb(26, 115, 232);
 	max-width: 1000px;
 }
 

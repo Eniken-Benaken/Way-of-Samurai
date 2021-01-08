@@ -1,5 +1,4 @@
 .sidebar {
-	background-color: #80ff00;
 	grid-area: s;
 	width: 100%;
 }
@@ -11,6 +10,7 @@
 .item a {
 	font-weight: bold;
 	color: cornsilk;
+	text-shadow: rgba(0,0,0,0.2) 1px 1px 2px;
 	font-size: 1.5rem;
 }
 
