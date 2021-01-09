@@ -12,7 +12,7 @@ const Post = (props) => {
 				<div className={s.post_content}>{props.post_content}</div>
 			</div>
 			<div className={s.action_buttons}>
-				<div className={s.likes}>{props.likes}{"\u2764"} like</div>			
+				<div className={s.likes}>{props.likes_count}{"\u2764"} like</div>			
 				<div className={s.add_comment}>add comment</div>
 			</div>
 		</div>
