@@ -5,8 +5,8 @@ import Message from './Message/Message';
 
 
 const Dialogs = (props) => {
-	let dialogs = [...props.dialogs];
-	let messages = [...props.messages];
+	let dialogs = [...props.dialogs_data.dialogs];
+	let messages = [...props.dialogs_data.messages];
 
 	return (
 		<div className={s.dialogs_wrapper}>
@@ -21,5 +21,3 @@ const Dialogs = (props) => {
 }
 
 export default Dialogs;
-
-

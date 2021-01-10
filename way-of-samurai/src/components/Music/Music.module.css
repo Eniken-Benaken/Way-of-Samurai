@@ -1,9 +1,14 @@
 .music_wrapper {
-	margin: 10px auto;
-	width: 50%;
+	width: 80%;
+	background-color     : #fff;
+	border-radius        : 10px;
+	padding: 10px;
+	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
 .music_header {
-	margin-bottom: 20px;
+	margin-left: 40px;
+	margin-bottom: 10px;
 	font-size: 2rem;
+	color:cadetblue;
 }

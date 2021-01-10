@@ -3,6 +3,12 @@
 }
 
 .dialog {
-	margin: 10px;
-	color: black
+	color: black;
+	padding-left: 10px;
+	line-height: 42px;
+	height: 42px;
+}
+
+.dialog:last-child {
+	border-bottom: none;
 }

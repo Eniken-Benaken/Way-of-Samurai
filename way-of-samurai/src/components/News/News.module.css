@@ -1,3 +1,4 @@
 .posts {
-	margin: 20px auto;
+	display: grid;
+	gap: 10px;
 }

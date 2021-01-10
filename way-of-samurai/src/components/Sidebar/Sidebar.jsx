@@ -7,19 +7,19 @@ const Sidebar = (props) => {
 	return(
 		<nav className={s.sidebar}>
 			<div className={`${s.item}`}>
-				<NavLink to="/profile" activeClassName={s.active}>&#128100; Profile</NavLink>
+				<NavLink exact to="/" activeClassName={s.active}>&#128100; Profile</NavLink>
 			</div>
 			<div className={s.item}>
-				<NavLink to="/dialogs" activeClassName={s.active}>&#9993; Messages</NavLink>
+				<NavLink exact to="/dialogs" activeClassName={s.active}>&#9993; Messages</NavLink>
 			</div>
 			<div className={s.item}>
-				<NavLink to="/news" activeClassName={s.active}>&#128226; News</NavLink>
+				<NavLink exact to="/news" activeClassName={s.active}>&#128226; News</NavLink>
 			</div>
 			<div className={s.item}>
-				<NavLink to="/music" activeClassName={s.active}>&#9835; Music</NavLink>
+				<NavLink exact to="/music" activeClassName={s.active}>&#9835; Music</NavLink>
 			</div>
 			<div className={s.item}>
-				<NavLink to="/settings" activeClassName={s.active}>	&#9966; Settings</NavLink>
+				<NavLink exact to="/settings" activeClassName={s.active}>	&#9966; Settings</NavLink>
 			</div>
 		</nav>
 	);

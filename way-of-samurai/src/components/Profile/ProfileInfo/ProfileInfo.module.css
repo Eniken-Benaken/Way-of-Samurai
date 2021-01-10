@@ -32,6 +32,7 @@
 	border-radius: 10px;
 	display: grid;
 	gap: 5px;
+	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
 .avatar_block img {
@@ -47,6 +48,7 @@
 	padding: 10px;
 	background-color: #fff;
 	border-radius: 10px;
+	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
 .description_block h3 {

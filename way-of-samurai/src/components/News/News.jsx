@@ -3,10 +3,11 @@ import s from './News.module.css';
 import NewsPost from './NewsPost/NewsPost';
 
 const News = (props) => {
+	let news_posts = [...props.news_data.news_posts];
+
 	return(
 		<div className={s.posts}>
-			<NewsPost author='Buddy Melon' post_content="Today's Weather is perfect!" likes="26" />
-			<NewsPost author='John Smith' post_content="Hello! I'm learning React js too" likes="202" />
+			{news_posts.map((post) => <NewsPost id={post.id} author={post.author} author_url={post.author_url} post_content={post.post_content} likes_count={post.likes_count} />)}
 		</div>
 	);
 }

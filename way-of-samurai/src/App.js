@@ -17,16 +17,16 @@ const App = (props) => {
 				<Sidebar /> 
 				<div className="main_wrapper">
 					<Route 
-						path='/profile' 
-						render={() => <Profile posts={props.posts} />}
+						exact path='/' 
+						render={() => <Profile profile_data={props.app_state.profile} />}
 					/>
 					<Route 
 						path='/dialogs' 
-						render={() => <Dialogs dialogs={props.dialogs} messages={props.messages} />}
+						render={() => <Dialogs dialogs_data={props.app_state.dialogs} />}
 					/>
 					<Route 
 						path='/news' 
-						component={News}
+						render={() => <News news_data={props.app_state.news} />}
 					/>
 					<Route 
 						path='/music' 
