@@ -5,7 +5,7 @@ const ProfileInfo = (props) => {
 	return(
 		<div className={s.profileInfo_wrapper}>
 			<div className={s.banner}>
-				<img src="https://source.unsplash.com/1400x200/?new-year" alt="newyear"/>
+				<img src="https://source.unsplash.com/1000x200/?city" alt="newyear"/>
 			</div>
 			<div className={s.person_info}>
 				<div className={s.avatar_block}>

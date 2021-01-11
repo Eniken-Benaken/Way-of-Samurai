@@ -11,10 +11,10 @@ const Dialogs = (props) => {
 	return (
 		<div className={s.dialogs_wrapper}>
 			<div className={s.dialog_items}>
-				{dialogs.map(d => <Dialog id={d.id} dialog_name={d.dialog_name} />)}
+				{dialogs.map(d => <Dialog id={d.id} dialog_name={d.dialog_name} dialog_avatar={d.dialog_avatar} />)}
 			</div>
 			<div className={s.messages}>
-				{messages.map(m => <Message id={m.id} message={m.message} />)}
+				{messages.map(m => <Message id={m.id} message={m.message} message_author={m.author} />)}
 			</div>
 		</div>
 	);

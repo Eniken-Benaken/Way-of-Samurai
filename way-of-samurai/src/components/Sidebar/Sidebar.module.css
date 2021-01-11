@@ -1,23 +1,71 @@
-.sidebar {
+.sidebar_wrapper {
 	grid-area: s;
-	width: 100%;
+	display: grid;
+	height: fit-content;
+	gap: 10px;
+}
+
+.menu {
 	height: fit-content;
 	background-color: #fff;
 	border-radius: 10px;
 	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
-.item {
+.menu_item {
 	margin: 10px;
 }
 
-.item a {
+.menu_item a {
 	font-weight: bold;
 	color: cornsilk;
 	text-shadow: rgba(0,0,0,0.6) 1px 1px 2px;
 	font-size: 1.5rem;
+	display: grid;
+	grid-template-columns: 35px 5fr;
 }
 
-.item .active {
+.menu_item .active {
 	color: cornflowerblue;
+}
+
+.menu_item_icon {
+	justify-self: center;
+}
+
+
+.friends_bar {
+	display: grid;
+	height: fit-content;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
+	padding: 10px;
+}
+
+.friends_header {
+	margin-left: 10px;
+	color: rgba(0,0,0,0.3);
+	font-size: 1.2rem;
+}
+
+.friends_block {
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	grid-template-rows: repeat(2,1fr);
+}
+
+.friend {
+	padding: 3px;
+}
+
+.friend_avatar {
+	width        : 40px;
+	height       : 40px;
+	border-radius: 20px;
+	object-fit   : cover;
+}
+
+.friend_name {
+	width: 45px;
 }

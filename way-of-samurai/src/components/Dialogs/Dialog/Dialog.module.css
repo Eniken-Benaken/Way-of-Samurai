@@ -3,12 +3,25 @@
 }
 
 .dialog {
-	color: black;
 	padding-left: 10px;
+	padding-top: 5px;
 	line-height: 42px;
 	height: 42px;
 }
 
-.dialog:last-child {
-	border-bottom: none;
+.dialog a {
+	color: black;
+	display: grid;
+	grid-template-columns: 50px 1fr;
+}
+
+.dialog a img {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	object-fit   : cover;
+}
+
+.dialog:first-child {
+	padding-top: 0;
 }

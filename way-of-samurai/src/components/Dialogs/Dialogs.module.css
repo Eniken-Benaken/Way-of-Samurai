@@ -18,4 +18,5 @@
 	padding: 10px 0;
 	display  : grid;
 	font-size: 1.2rem;
+	gap: 8px;
 }

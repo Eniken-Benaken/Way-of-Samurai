@@ -14,7 +14,7 @@ const App = (props) => {
 		<BrowserRouter>
     	<div className="app-wrapper">
 				<Header />
-				<Sidebar /> 
+				<Sidebar sidebar={props.app_state.sidebar} /> 
 				<div className="main_wrapper">
 					<Route 
 						exact path='/' 
