@@ -1,3 +1,5 @@
+import { rerenderEntireTree } from '../render';
+
 export let state = {
 	sidebar: {
 		friends: [
@@ -64,7 +66,28 @@ export let state = {
 				post_content: "This is my first post",
 				likes_count: 2
 			}
-		]
+		],
+		textareaState: '',
+		functions: {
+			setters: {
+				add_new_post: (post_content) => {
+					state.profile.posts.push(
+						{
+							id: state.profile.posts.lenght+1,
+							author: "Dem Pigoen",
+							post_content: state.profile.textareaState,
+							likes_count: 0
+						}
+					);
+					state.profile.textareaState = "";
+					rerenderEntireTree(state);
+				},
+				handleTextareaChange: (textarea_value) => {
+					state.profile.textareaState = `${textarea_value}`;
+					rerenderEntireTree(state);
+				}
+			}
+		}
 	},
 	dialogs: {
 		dialogs: [
@@ -103,3 +126,14 @@ export let state = {
 		]
 	}
 };
+
+// add_new_post = (post_content) => {
+// 	state.profile.posts.push(
+// 		{
+// 			id: posts.lenght+1,
+// 			author: "Dem Pigoen",
+// 			post_content: post_content,
+// 			likes_count: 0
+// 		}
+// 	)
+// }

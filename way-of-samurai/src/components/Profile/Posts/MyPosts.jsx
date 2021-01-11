@@ -4,11 +4,23 @@ import Post from './Post/Post';
 
 const MyPosts = (props) => {
 	let posts = props.posts;
+	const newPost = React.createRef();
+	const addNewPost = () => {
+		if(newPost.current.value) {
+			props.add_post(`${newPost.current.value}`);
+			newPost.current.value = '';
+		}		
+	};
+
+	const handleChange = (e) => {
+		props.handleTextareaChange(e.target.value);
+	}
+
 	return(
 		<div className={s.posts}>
 			<div className={s.new_post}>
-				<div><textarea className={s.new_post_content} placeholder="What is on your mind?"></textarea></div>
-				<button>Add New</button>
+				<div><textarea ref={newPost} className={s.new_post_content} placeholder="What is on your mind?" onChange={handleChange} value={props.textareaState}></textarea></div>
+				<button onClick={addNewPost} >Add New</button>
 				<button>Upload Image</button>
 			</div>
 			{posts.map(p => <Post 

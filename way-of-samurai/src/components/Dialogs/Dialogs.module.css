@@ -20,3 +20,26 @@
 	font-size: 1.2rem;
 	gap: 8px;
 }
+
+.new_message_wrapper {
+	display: grid;
+	grid-template-rows: 1fr 32px;
+	margin: 10px;
+}
+
+.new_message {
+	border: 1px solid #e1e1e1;
+	border-radius: 5px;
+}
+
+.new_message_buttons {
+	align-self: center;
+	justify-self: end;
+}
+
+.new_message_buttons button {
+	margin-left: 2px;
+	height: 30px;
+	line-height: 26px;
+	text-align: center;
+}
