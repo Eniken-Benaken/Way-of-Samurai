@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import s from './Sidebar.module.css';
 import Friend from './Friend/Friend';
 import MenuItem from './Menu_items/MenuItem';
@@ -14,7 +14,7 @@ const Sidebar = (props) => {
 			<nav className={s.menu}>
 				{menu_items.map(
 					menu_item => 
-						<MenuItem id={menu_item.id} path={menu_item.path} icon={menu_item.icon} item={menu_item.item} />
+						<MenuItem key={menu_item.id} id={menu_item.id} path={menu_item.path} icon={menu_item.icon} item={menu_item.item} />
 				)}
 			</nav>
 			<Route exact path="/" render={() =>

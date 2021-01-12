@@ -7,7 +7,7 @@ const Profile = (props) => {
 	return(
 		<main className={s.profile_wrapper}>
 			<ProfileInfo />
-			<MyPosts posts={props.profile_data.posts} add_post={props.profile_data.functions.setters.add_new_post} handleTextareaChange={props.profile_data.functions.setters.handleTextareaChange} textareaState={props.profile_data.textareaState} />
+			<MyPosts posts={props.profile_data.posts} add_post={props.add_new_post} handleNewPostStateChange={props.handleNewPostStateChange} newPostState={props.getNewPostState()} />
 		</main>
 	);
 }

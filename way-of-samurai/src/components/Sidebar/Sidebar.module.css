@@ -56,7 +56,9 @@
 }
 
 .friend {
+	display: grid;
 	padding: 3px;
+	justify-items: center;
 }
 
 .friend_avatar {
@@ -68,4 +70,5 @@
 
 .friend_name {
 	width: 45px;
+	text-align: center;
 }

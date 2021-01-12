@@ -7,19 +7,18 @@ const MyPosts = (props) => {
 	const newPost = React.createRef();
 	const addNewPost = () => {
 		if(newPost.current.value) {
-			props.add_post(`${newPost.current.value}`);
-			newPost.current.value = '';
+			props.add_post();
 		}		
 	};
 
 	const handleChange = (e) => {
-		props.handleTextareaChange(e.target.value);
+		props.handleNewPostStateChange(e.target.value);
 	}
 
 	return(
 		<div className={s.posts}>
 			<div className={s.new_post}>
-				<div><textarea ref={newPost} className={s.new_post_content} placeholder="What is on your mind?" onChange={handleChange} value={props.textareaState}></textarea></div>
+				<div><textarea ref={newPost} className={s.new_post_content} placeholder="What is on your mind?" onChange={handleChange} value={props.newPostState}></textarea></div>
 				<button onClick={addNewPost} >Add New</button>
 				<button>Upload Image</button>
 			</div>
