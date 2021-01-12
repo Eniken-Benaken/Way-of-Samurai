@@ -7,12 +7,20 @@ const MyPosts = (props) => {
 	const newPost = React.createRef();
 	const addNewPost = () => {
 		if(newPost.current.value) {
-			props.add_post();
+			props.dispatch(
+				{
+					type: 'ADD_POST'					
+				}
+			);
 		}		
 	};
 
 	const handleChange = (e) => {
-		props.handleNewPostStateChange(e.target.value);
+		props.dispatch(
+			{
+				type: 'HANDLE_NEW_POST_STATE_CHANGE',
+				textarea_value: e.target.value
+			});
 	}
 
 	return(

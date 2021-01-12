@@ -18,7 +18,7 @@ const App = (props) => {
 				<div className="main_wrapper">
 					<Route 
 						exact path='/' 
-						render={() => <Profile profile_data={props.state.profile} add_new_post={props.add_new_post} handleNewPostStateChange={props.handleNewPostStateChange} getNewPostState={props.getNewPostState} />}
+						render={() => <Profile profile_data={props.state.profile} dispatch={props.dispatch} getNewPostState={props.getNewPostState} />}
 					/>
 					<Route 
 						path='/dialogs' 

@@ -2,31 +2,52 @@ export let store = {
 	_subscriber() {
 		console.log('no subscribers (observers)');
 	},
+
 	getState() { return this._state },
+
 	subscribe(observer) {
 		this._subscriber = observer;
 	},
-	add_new_post() {
+
+	setNewPostState(new_value) {
+		this._state.profile.newPostState = new_value;
+		this._subscriber(this._state);
+	},
+
+	_addNewPost () {
 		this._state.profile.posts.push(
 			{
 				id: this._state.profile.posts.length + 1,
 				author: "Dem Pigoen",
-				post_content: this._state.profile._newPostState,
+				post_content: this._state.profile.newPostState,
 				likes_count: 0
 			}
 		);
 		this.setNewPostState("");
 	},
-	handleNewPostStateChange(textarea_value) {
-		this.setNewPostState(textarea_value);
+
+	_handleNewPostStateChange(text) {
+		this.setNewPostState(text);
 	},
-	setNewPostState(new_value) {
-		this._state.profile._newPostState = new_value;
-		this._subscriber(this._state);
+
+
+
+	dispatch(action) {
+		switch (action.type) {
+			case 'ADD_POST':
+				this._addNewPost();
+				this.setNewPostState("");
+				break;
+			case 'HANDLE_NEW_POST_STATE_CHANGE':
+				this._handleNewPostStateChange(action.textarea_value);
+				break;
+			default:
+				break;
+		}
 	},
-	getNewPostState() {
-		return this._state.profile._newPostState;
-	},
+	
+
+	
 	_state: {
 		sidebar: {
 			friends: [
@@ -94,7 +115,7 @@ export let store = {
 					likes_count: 2
 				}
 			],
-			_newPostState: ''
+			newPostState: ''
 		},
 		dialogs: {
 			dialogs: [
