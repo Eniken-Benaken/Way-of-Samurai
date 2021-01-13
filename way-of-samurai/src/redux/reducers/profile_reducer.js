@@ -1,6 +1,24 @@
 import {actions} from '../actions';
 
-const profile_reducer = (state,action) => {
+const initial_state = {
+	posts: [
+		{
+			id: 1,
+			author: "Dem Pigeon",
+			post_content: "Hey, My name is Dem Pigeon",
+			likes_count: 13
+		},
+		{
+			id: 2,
+			author: "Dem Pigeon",
+			post_content: "This is my first post",
+			likes_count: 2
+		}
+	],
+	newPostState: ''
+};
+
+const profile_reducer = (state = initial_state,action) => {
 	let _state = state;
 	function _setNewPostState(new_value) {
 		_state.newPostState = new_value;

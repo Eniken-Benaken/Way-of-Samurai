@@ -7,15 +7,18 @@ import { newMessageTextActionCreator, sendMessageActionCreator } from '../../red
 
 
 const Dialogs = (props) => {
-	let dialogs = [...props.dialogs_data.dialogs];
-	let messages = [...props.dialogs_data.messages];
+	let dialogs = [...props.dialogs];
+	let messages = [...props.messages];
+	const newMessageState = props.newMessageState;
 	const newMessage = React.createRef();
 	const sendMessage = () => {
-		props.dispatch(sendMessageActionCreator());
+		if(newMessage.current.value) {
+			props.sendMessage();
+		}	
 	};
 
 	const handleNewMessageChange = (e) => {
-		props.dispatch(newMessageTextActionCreator(e.target.value));
+		props.handleNewMessageChange(e);
 	};
 
 	return (
@@ -26,7 +29,7 @@ const Dialogs = (props) => {
 			<div className={s.messages}>
 				{messages.map(m => <Message message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}
 				<div className={s.new_message_wrapper}>
-					<textarea ref={newMessage} className={s.new_message} value={props.dialogs_data.newMessageState} onChange={handleNewMessageChange}></textarea>
+					<textarea ref={newMessage} className={s.new_message} value={newMessageState} onChange={handleNewMessageChange}></textarea>
 					<div className={s.new_message_buttons}>
 						<button onClick={sendMessage}>Add message</button>
 						<button>😉</button>

@@ -51,6 +51,7 @@
 
 .friends_block {
 	display: grid;
+	justify-items: space-between;
 	grid-template-columns: repeat(3,1fr);
 	grid-template-rows: repeat(2,1fr);
 }

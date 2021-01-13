@@ -4,26 +4,25 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-	let posts = props.posts;
+	const posts = props.posts;
+	const newPostState = props.newPostState;
 
 	const newPost = React.createRef();
 	
 	const addNewPost = () => {
-		const action = addPostActionCreator();
 		if(newPost.current.value) {
-			props.dispatch(action);
+			props.addPost();
 		}		
 	};
 
 	const handleChange = (e) => {
-		const action = newPostTextActionCreator(e.target.value);
-		props.dispatch(action);
+		props.handleChange(e);
 	}
 
 	return(
 		<div className={s.posts}>
 			<div className={s.new_post}>
-				<div><textarea ref={newPost} className={s.new_post_content} placeholder="What is on your mind?" onChange={handleChange} value={props.newPostState}></textarea></div>
+				<div><textarea ref={newPost} className={s.new_post_content} placeholder="What is on your mind?" onChange={handleChange} value={newPostState}></textarea></div>
 				<button onClick={addNewPost} >Add New</button>
 				<button>Upload Image</button>
 			</div>
