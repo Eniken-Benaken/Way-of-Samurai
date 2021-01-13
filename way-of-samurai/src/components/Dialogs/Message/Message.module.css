@@ -1,6 +1,6 @@
 .message {	
 	padding: 10px;
-	padding-left: 20px;
+	margin: 0 10px;
 	background-color: #c2fed2;
 	border-radius: 5px;
 	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
@@ -10,4 +10,5 @@
 .own {
 	background-color: rgb(159, 242, 245);
 	justify-self: end;
+	padding: 10px;
 }

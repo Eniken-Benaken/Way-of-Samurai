@@ -1,3 +1,6 @@
+import profile_reducer from './reducers/profile_reducer';
+import dialogs_reducer from './reducers/dialogs_reducer';
+
 export let store = {
 	_subscriber() {
 		console.log('no subscribers (observers)');
@@ -9,45 +12,14 @@ export let store = {
 		this._subscriber = observer;
 	},
 
-	setNewPostState(new_value) {
-		this._state.profile.newPostState = new_value;
+	dispatch(action) {
+		this._state.profile = profile_reducer(this._state.profile,action);
+		this._state.dialogs = dialogs_reducer(this._state.dialogs,action);
 		this._subscriber(this._state);
 	},
-
-	_addNewPost () {
-		this._state.profile.posts.push(
-			{
-				id: this._state.profile.posts.length + 1,
-				author: "Dem Pigoen",
-				post_content: this._state.profile.newPostState,
-				likes_count: 0
-			}
-		);
-		this.setNewPostState("");
-	},
-
-	_handleNewPostStateChange(text) {
-		this.setNewPostState(text);
-	},
-
-
-
-	dispatch(action) {
-		switch (action.type) {
-			case 'ADD_POST':
-				this._addNewPost();
-				this.setNewPostState("");
-				break;
-			case 'HANDLE_NEW_POST_STATE_CHANGE':
-				this._handleNewPostStateChange(action.textarea_value);
-				break;
-			default:
-				break;
-		}
-	},
 	
 
-	
+
 	_state: {
 		sidebar: {
 			friends: [
@@ -127,13 +99,14 @@ export let store = {
 				{ id: "roman", dialog_name: "Roman", dialog_avatar: "https://static.wikia.nocookie.net/this-war-of-mine/images/0/07/70px-Roman.jpg" }
 			],
 			messages: [
-				{ id: 1, message: "We need to get food.", author: "Dem Pigeon" },
-				{ id: 2, message: "This is so wrong to steal food from others like us!", author: "Pavlo" },
-				{ id: 3, message: "I would eat anything!", author: "Dem Pigeon" },
-				{ id: 4, message: "I haven't slept for a long time", author: "Pavlo" },
-				{ id: 5, message: "Smoke is soothing me.", author: "Dem Pigeon" },
-				{ id: 6, message: "I hope we will be able to warm up this shelter", author: "Pavlo" }
-			]
+				{ message_id: 1, message: "We need to get food.", author_id: 0, author_name: "Dem Pigeon" },
+				{ message_id: 2, message: "This is so wrong to steal food from others like us!", author_id: "pavlo", author_name: "Pavlo" },
+				{ message_id: 3, message: "I would eat anything!", author_id: 0, author_name: "Dem Pigeon" },
+				{ message_id: 4, message: "I haven't slept for a long time", author_id: "pavlo", author_name: "Pavlo" },
+				{ message_id: 5, message: "Smoke is soothing me.", author_id: 0, author_name: "Dem Pigeon" },
+				{ message_id: 6, message: "I hope we will be able to warm up this shelter", author_id: "pavlo", author_name: "Pavlo" }
+			],
+			newMessageState: ''
 		},
 		news: {
 			news_posts: [
@@ -155,5 +128,6 @@ export let store = {
 		}
 	}
 };
+
 
 	window.store = store;

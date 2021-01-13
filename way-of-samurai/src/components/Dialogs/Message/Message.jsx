@@ -4,7 +4,7 @@ import s from './Message.module.css';
 
 const Message = (props) => {
 	return(
-		<div className={`${s.message} ${props.message_author === "Dem Pigeon"&&s.own}`}>{props.message}</div>
+		<div id={props.message_id} author={props.author_id} className={`${s.message} ${props.author_id === 0&&s.own}`}>{props.message}</div>
 	);
 }
 

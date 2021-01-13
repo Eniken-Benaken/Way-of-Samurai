@@ -18,11 +18,11 @@ const App = (props) => {
 				<div className="main_wrapper">
 					<Route 
 						exact path='/' 
-						render={() => <Profile profile_data={props.state.profile} dispatch={props.dispatch} getNewPostState={props.getNewPostState} />}
+						render={() => <Profile profile_data={props.state.profile} dispatch={props.dispatch} />}
 					/>
 					<Route 
 						path='/dialogs' 
-						render={() => <Dialogs dialogs_data={props.state.dialogs} />}
+						render={() => <Dialogs dialogs_data={props.state.dialogs} dispatch={props.dispatch}/>}
 					/>
 					<Route 
 						path='/news' 

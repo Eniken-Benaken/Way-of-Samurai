@@ -1,26 +1,23 @@
 import React from 'react';
+import { addPostActionCreator, newPostTextActionCreator } from '../../../redux/actionCreators';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
 	let posts = props.posts;
+
 	const newPost = React.createRef();
+	
 	const addNewPost = () => {
+		const action = addPostActionCreator();
 		if(newPost.current.value) {
-			props.dispatch(
-				{
-					type: 'ADD_POST'					
-				}
-			);
+			props.dispatch(action);
 		}		
 	};
 
 	const handleChange = (e) => {
-		props.dispatch(
-			{
-				type: 'HANDLE_NEW_POST_STATE_CHANGE',
-				textarea_value: e.target.value
-			});
+		const action = newPostTextActionCreator(e.target.value);
+		props.dispatch(action);
 	}
 
 	return(
