@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 	return ({
 		addPost: () => {
 			const action = addPostActionCreator();
-				props.store.dispatch(action);
+				dispatch(action);
 		},
 		handleChange: (e) => {
 			dispatch(newPostTextActionCreator(e.target.value));
