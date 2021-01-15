@@ -1,50 +1,45 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import Sidebar from './components/Sidebar/Sidebar';
 import Profile from './components/Profile/Profile';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { MyContext } from './store_context';
+import SidebarContainer from './components/Sidebar/SidebarContainer';
+import NewsContainer from './components/News/NewsContainer';
 
 const App = (props) => {
-  return (
+	return (
 		<BrowserRouter>
-    	<div className="app-wrapper">
+			<div className="app-wrapper">
 				<Header />
-				<MyContext.Consumer>
-					{store => <Sidebar sidebar={store.getState().sidebar} />}
-				</MyContext.Consumer>}
+				<SidebarContainer />
 				<div className="main_wrapper">
-					<Route 
-						exact path='/' 
-						render={() => <Profile  />}
+					<Route
+						exact path='/'
+						render={() => <Profile />}
 					/>
-					<Route 
-						path='/dialogs' 
+					<Route
+						path='/dialogs'
 						render={() => <DialogsContainer />}
 					/>
-					<MyContext.Consumer>
-						{store => <Route 
-							path='/news' 
-							render={() => <News news_data={store.getState().news} />}
-						/>}
-					</MyContext.Consumer>
 					<Route 
-						path='/music' 
+							path='/news' 
+							render={() => <NewsContainer />}
+					/>
+					<Route
+						path='/music'
 						component={Music}
 					/>
-					<Route 
-						path='/settings' 
+					<Route
+						path='/settings'
 						component={Settings}
 					/>
 				</div>
-    	</div>
+			</div>
 		</BrowserRouter>
-  );
+	);
 };
 
 export default App;

@@ -6,8 +6,8 @@ import MenuItem from './Menu_items/MenuItem';
 
 
 const Sidebar = (props) => {
-	let friends = props.sidebar.friends;
-	let menu_items = props.sidebar.menu_items;
+	let friends = [...props.friends];
+	let menu_items = [...props.menu_items];
 
 	return (
 		<div className={s.sidebar_wrapper}>

@@ -7,9 +7,9 @@ import { newMessageTextActionCreator, sendMessageActionCreator } from '../../red
 
 
 const Dialogs = (props) => {
-	let dialogs = [...props.dialogs];
-	let messages = [...props.messages];
-	const newMessageState = props.newMessageState;
+	let dialogs = [...props.dialogs.dialogs];
+	let messages = [...props.dialogs.messages];
+	const newMessageState = props.dialogs.newMessageState;
 	const newMessage = React.createRef();
 	const sendMessage = () => {
 		if(newMessage.current.value) {
@@ -18,6 +18,7 @@ const Dialogs = (props) => {
 	};
 
 	const handleNewMessageChange = (e) => {
+		debugger;
 		props.handleNewMessageChange(e);
 	};
 

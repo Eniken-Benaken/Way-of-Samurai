@@ -2,9 +2,9 @@ import store from './redux/redux_store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { Provider } from './store_context';
+import { Provider } from 'react-redux';
 
-const rerenderEntireTree = (state) => {
+const rerenderEntireTree = () => {
 	ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -15,9 +15,8 @@ const rerenderEntireTree = (state) => {
 );
 }
 
-rerenderEntireTree(store.getState());
+rerenderEntireTree();
 
 store.subscribe(() => {
-	let state = store.getState();
-	rerenderEntireTree(state);
+	rerenderEntireTree();
 });

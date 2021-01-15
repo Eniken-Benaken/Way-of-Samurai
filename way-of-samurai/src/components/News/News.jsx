@@ -3,7 +3,7 @@ import s from './News.module.css';
 import NewsPost from './NewsPost/NewsPost';
 
 const News = (props) => {
-	let news_posts = [...props.news_data.news_posts];
+	let news_posts = [...props.news_posts];
 
 	return(
 		<div className={s.posts}>
