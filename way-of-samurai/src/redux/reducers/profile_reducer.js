@@ -19,41 +19,24 @@ const initial_state = {
 };
 
 const profile_reducer = (state = initial_state, action) => {
-	let stateCopy = {
-		posts: [...state.posts],
-		newPostState: state.newPostState
-	}
-
-	function _setNewPostState(new_value) {
-		stateCopy.newPostState = new_value;
-	};
-
-	function _addNewPost() {
-		stateCopy.posts.push(
-			{
-				id: stateCopy.posts.length + 1,
-				author: "Dem Pigoen",
-				post_content: stateCopy.newPostState,
-				likes_count: 0
-			}
-		);
-		_setNewPostState("");
-	}
-
-	function _handleNewPostStateChange(e) {
-		_setNewPostState(e.target.value);
-	}
-
 	switch (action.type) {
 		case actions.ADD_POST:
-			_addNewPost();
-			_setNewPostState("");
-			return stateCopy;
+			return {
+				posts: [...state.posts,{
+					id: state.posts.length + 1,
+					author: "Dem Pigoen",
+					post_content: state.newPostState,
+					likes_count: 0
+				}],
+				newPostState: ''
+			}
 		case actions.HANDLE_NEW_POST_CHANGE:
-			_handleNewPostStateChange(action.textarea_value);
-			return stateCopy;
+			return {
+				...state,
+				newPostState: action.textarea_value
+			}
 		default:
-			return stateCopy;
+			return state
 	}
 }
 export default profile_reducer;

@@ -7,3 +7,6 @@ export const newPostTextActionCreator = (textarea_value) =>
 export const sendMessageActionCreator = () => ({	type: actions.SEND_MESSAGE });
 export const newMessageTextActionCreator = (textarea_value) => 
 ({type: actions.HANDLE_NEW_MESSAGE_CHANGE,	textarea_value: textarea_value});
+
+export const followUser = (user_id) => ({	type: actions.FOLLOW_USER,user_id: user_id });
+export const unfollowUser = (user_id) => ({	type: actions.UNFOLLOW_USER,user_id: user_id });

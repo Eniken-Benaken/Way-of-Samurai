@@ -22,7 +22,7 @@ const Sidebar = (props) => {
 					<div className={s.friends_header}>Friends</div>
 					<div className={s.friends_block}>
 						{friends.map(friend =>
-							<Friend id={friend.id} friend_avatar={friend.friend_avatar} friend_name={friend.friend_name} />
+							<Friend key={friend.id} id={friend.id} friend_avatar={friend.friend_avatar} friend_name={friend.friend_name} />
 						)}
 					</div>
 				</div>

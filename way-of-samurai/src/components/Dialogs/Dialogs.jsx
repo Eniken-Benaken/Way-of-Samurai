@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
-import { newMessageTextActionCreator, sendMessageActionCreator } from '../../redux/actionCreators';
 
 
 
@@ -18,17 +17,16 @@ const Dialogs = (props) => {
 	};
 
 	const handleNewMessageChange = (e) => {
-		debugger;
 		props.handleNewMessageChange(e);
 	};
 
 	return (
 		<div className={s.dialogs_wrapper}>
 			<div className={s.dialog_items}>
-				{dialogs.map(d => <Dialog id={d.id} dialog_name={d.dialog_name} dialog_avatar={d.dialog_avatar} />)}
+				{dialogs.map(d => <Dialog key={d.id} id={d.id} dialog_name={d.dialog_name} dialog_avatar={d.dialog_avatar} />)}
 			</div>
 			<div className={s.messages}>
-				{messages.map(m => <Message message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}
+				{messages.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}
 				<div className={s.new_message_wrapper}>
 					<textarea ref={newMessage} className={s.new_message} value={newMessageState} onChange={handleNewMessageChange}></textarea>
 					<div className={s.new_message_buttons}>

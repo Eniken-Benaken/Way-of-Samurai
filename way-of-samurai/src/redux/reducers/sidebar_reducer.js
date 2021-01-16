@@ -33,18 +33,24 @@ const initial_state = {
 		},
 		{
 			id: 3,
+			icon: "👥",
+			item: "Users",
+			path: "/users"
+		},
+		{
+			id: 4,
 			icon: "📢",
 			item: "News",
 			path: "/news"
 		},
 		{
-			id: 4,
+			id: 5,
 			icon: "♫",
 			item: "Music",
 			path: "/music"
 		},
 		{
-			id: 5,
+			id: 6,
 			icon: "⛮",
 			item: "Settings",
 			path: "/settings"

@@ -21,39 +21,26 @@ const initial_state =  {
 };
 
 const dialogs_reducer = (state = initial_state,action) => {
-	let _state = state;
-	function _setNewMessageState(new_value) {
-		_state.newMessageState = new_value;
-	};
-
-	function _sendMessage () {
-		_state.messages.push(
-			{
-				message_id: _state.messages.length + 1,
-				author_id: 0,
-				author_name: "Dem Pigoen",
-				message: _state.newMessageState,
-			}
-		);
-		_setNewMessageState("");
-	}
-
-	function _handleNewMessageChange(text) {
-		_setNewMessageState(text);
-	}
-	
 	switch (action.type) {
 		case actions.SEND_MESSAGE:
-			_sendMessage();
-			_setNewMessageState("");
-			break;
+			return {
+				...state,
+				messages: [...state.messages,{
+					message_id: state.messages.length + 1,
+					author_id: 0,
+					author_name: "Dem Pigoen",
+					message: state.newMessageState,
+				}],
+				newMessageState: ""
+			}
 		case actions.HANDLE_NEW_MESSAGE_CHANGE:
-			_handleNewMessageChange(action.textarea_value);
-			break;
+			return {
+				...state,
+				newMessageState: action.textarea_value
+			}
 		default:
-			break;
+			return state;
 	}
-	return _state;
 }
 
 export default dialogs_reducer;

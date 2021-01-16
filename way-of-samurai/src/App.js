@@ -8,6 +8,7 @@ import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route } from 'react-router-dom';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import NewsContainer from './components/News/NewsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 const App = (props) => {
 	return (
@@ -35,6 +36,10 @@ const App = (props) => {
 					<Route
 						path='/settings'
 						component={Settings}
+					/>
+					<Route 
+						path='/users'
+						render={() => <UsersContainer />}
 					/>
 				</div>
 			</div>

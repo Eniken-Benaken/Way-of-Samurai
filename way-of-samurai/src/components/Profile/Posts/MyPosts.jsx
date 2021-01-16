@@ -15,7 +15,6 @@ const MyPosts = (props) => {
 	};
 
 	const handleChange = (e) => {
-		debugger
 		props.handleChange(e);
 
 	}
@@ -28,6 +27,7 @@ const MyPosts = (props) => {
 				<button>Upload Image</button>
 			</div>
 			{posts.map(p => <Post 
+				key={p.id}
 				id={p.id}
 				author={p.author}
 				post_content={p.post_content}

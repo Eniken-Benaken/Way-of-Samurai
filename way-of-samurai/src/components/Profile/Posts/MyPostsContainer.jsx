@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 				dispatch(action);
 		},
 		handleChange: (e) => {
-			dispatch(newPostTextActionCreator(e));
+			dispatch(newPostTextActionCreator(e.target.value));
 		}
 	})
 }
