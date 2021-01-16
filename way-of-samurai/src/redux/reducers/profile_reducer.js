@@ -1,4 +1,4 @@
-import {actions} from '../actions';
+import { actions } from '../actions';
 
 const initial_state = {
 	posts: [
@@ -18,39 +18,42 @@ const initial_state = {
 	newPostState: ''
 };
 
-const profile_reducer = (state = initial_state,action) => {
-	let _state = state;
+const profile_reducer = (state = initial_state, action) => {
+	let stateCopy = {
+		posts: [...state.posts],
+		newPostState: state.newPostState
+	}
+
 	function _setNewPostState(new_value) {
-		_state.newPostState = new_value;
+		stateCopy.newPostState = new_value;
 	};
 
-	function _addNewPost () {
-		_state.posts.push(
+	function _addNewPost() {
+		stateCopy.posts.push(
 			{
-				id: _state.posts.length + 1,
+				id: stateCopy.posts.length + 1,
 				author: "Dem Pigoen",
-				post_content: _state.newPostState,
+				post_content: stateCopy.newPostState,
 				likes_count: 0
 			}
 		);
 		_setNewPostState("");
 	}
 
-	function _handleNewPostStateChange(text) {
-		_setNewPostState(text);
+	function _handleNewPostStateChange(e) {
+		_setNewPostState(e.target.value);
 	}
-	
+
 	switch (action.type) {
 		case actions.ADD_POST:
 			_addNewPost();
 			_setNewPostState("");
-			return _state;
+			return stateCopy;
 		case actions.HANDLE_NEW_POST_CHANGE:
 			_handleNewPostStateChange(action.textarea_value);
-			return _state;
+			return stateCopy;
 		default:
-			return _state;
+			return stateCopy;
 	}
 }
-
 export default profile_reducer;

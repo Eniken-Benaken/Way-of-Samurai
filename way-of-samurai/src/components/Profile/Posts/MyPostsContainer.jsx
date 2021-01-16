@@ -4,9 +4,17 @@ import { addPostActionCreator, newPostTextActionCreator } from '../../../redux/a
 import MyPosts from './MyPosts';
 
 const mapStateToProps = (state) => {
+	const stateCopy = {
+		...state,
+		profile: {
+			posts: [...state.profile.posts],
+			newPostState: state.profile.newPostState
+		}
+	}
+
 	return ({
-		posts: state.profile.posts,
-		newPostState: state.profile.newPostState
+		posts: stateCopy.profile.posts,
+		newPostState: stateCopy.profile.newPostState
 	});
 };
 
@@ -17,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 				dispatch(action);
 		},
 		handleChange: (e) => {
-			dispatch(newPostTextActionCreator(e.target.value));
+			dispatch(newPostTextActionCreator(e));
 		}
 	})
 }

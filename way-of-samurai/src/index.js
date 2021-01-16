@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
 
-const rerenderEntireTree = () => {
-	ReactDOM.render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
 			<App />
@@ -13,10 +12,3 @@ const rerenderEntireTree = () => {
   </React.StrictMode>,
   document.getElementById('root')
 );
-}
-
-rerenderEntireTree();
-
-store.subscribe(() => {
-	rerenderEntireTree();
-});

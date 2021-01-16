@@ -1,5 +1,4 @@
 import React from 'react';
-import { addPostActionCreator, newPostTextActionCreator } from '../../../redux/actionCreators';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -16,7 +15,9 @@ const MyPosts = (props) => {
 	};
 
 	const handleChange = (e) => {
+		debugger
 		props.handleChange(e);
+
 	}
 
 	return(
