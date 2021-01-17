@@ -1,6 +1,8 @@
 .item {
+	width: 80%;
 	display              : grid;
 	grid-template-columns: 80px repeat(6, 1fr);
+	grid-template-rows: 100px 1fr;
 	padding              : 10px;
 	border-radius        : 10px;
 	background-color     : #fff;
@@ -9,17 +11,74 @@
 	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
+.avatar_follow {
+	grid-row: 1/span 2;
+	display: grid;
+	grid-template-rows: 100px 1fr;
+}
 
-.item img {
+.avatar_follow img {
 	grid-row     : 1/span 1;
 	grid-column  : 1/span 1;
 	width        : 80px;
 	height       : 80px;
 	border-radius: 40px;
 	object-fit   : cover;
+	box-shadow: rgba(0,0,0,0.3) 0 0 2px;
+}
+
+.avatar_follow button {
+	background-color: #5cc6fe;
+	border-color: transparent;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 1.2rem;
+}
+
+.avatar_follow .followed {
+	background-color:#fff;
+	border-color: #5cc6fe;
+	border-radius: 5px;
+	color: #5cc6fe;
+	font-size: 1.2rem;
 }
 
 
+
+.user_info_wrapper {
+	grid-row: 1/span 2;
+	grid-column: 2/span 6;
+	display: grid;
+	grid-template-columns: auto 130px;
+	font-size: 1.3rem;
+	padding-left: 10px;
+}
+
+
+.user_info {
+	grid-column: 1/2;
+	display: grid;
+	grid-template-rows: 25px auto 1fr;
+}
+
+.user_info .user_name {
+	align-self: center;
+}
+
+.user_name a {
+	color: black;
+}
+
+.user_info .user_status_message {
+	align-self: end;
+	grid-row: 3/4;
+	padding-bottom: 3px;
+}
+
+
+.user_location_wrapper {
+	color: rgb(136, 136, 136);
+}
 
 .post_content_wrapper {
 	grid-row   : 1/span 1;
