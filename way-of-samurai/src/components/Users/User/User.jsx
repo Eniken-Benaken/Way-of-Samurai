@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './User.module.css';
+import avatar from '../../../assets/images/avatar.png';
 
 const User = (props) => {
 	const followUser = (user_id) => {
@@ -17,7 +18,7 @@ const User = (props) => {
 	return (
 		<div className={s.item} id={props.user_id}>
 			<div className={s.avatar_follow}>
-				<img src={props.user_avatar} alt="avatar" />
+				<img src={props.user_avatar ? props.user_avatar : avatar} alt="avatar" />
 				{button}
 			</div>
 			<div className={s.user_info_wrapper}>

@@ -10,3 +10,4 @@ export const newMessageTextActionCreator = (textarea_value) =>
 
 export const followUser = (user_id) => ({	type: actions.FOLLOW_USER,user_id: user_id });
 export const unfollowUser = (user_id) => ({	type: actions.UNFOLLOW_USER,user_id: user_id });
+export const setUsers = (users) => ({	type: actions.SET_USERS,users: users});
