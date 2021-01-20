@@ -51,38 +51,49 @@ const initial_state = {
 		// { "user_id": "whumbless", "user_name": "Wilfrid", "user_avatar": "https://robohash.org/totamlaudantiumadipisci.jpg?size=50x50&set=set1", "user_status_message": "ante vel ipsum praesent blandit lacinia erat vestibulum", "user_city": "Peñaflor", "user_country": "Chile", is_followed: false},
 		// { "user_id": "ddownet", "user_name": "Dev", "user_avatar": "https://robohash.org/nullaipsumut.jpg?size=50x50&set=set1", "user_status_message": "non mi integer ac neque duis bibendum morbi non quam", "user_city": "Carromeu", "user_country": "Portugal" }
 	],
+	pageSize: 5,
+	totalUsersCount: 50,
+	activePage: 1
 };
 
 const users_reducer = (state = initial_state, action) => {
 	switch (action.type) {
 		case actions.FOLLOW_USER:
 			return {
+				...state,
 				users: state.users.map(user => {
-					if(user.user_id === action.user_id && !user.is_followed) {
+					if (user.id === action.user_id && !user.followed) {
 						return {
 							...user,
-							is_followed: true
+							followed: true
 						}
 					}
 					else return user
-				}),
+				})
 			}
 		case actions.UNFOLLOW_USER:
 			return {
+				...state,
 				users: state.users.map(user => {
-					if(user.user_id === action.user_id && user.is_followed) {
+					if (user.id === action.user_id && user.followed) {
 						return {
 							...user,
-							is_followed: false
+							followed: false
 						}
 					}
 					else return user;
-				}),
+				})
 			}
 		case actions.SET_USERS:
-			console.log('dispatcher inside reducer');
 			return {
-				users: [...state.users,...action.users]
+				...state,
+				users: [...action.users],
+				totalUsersCount: action.totalUsersCount
+			}
+		case actions.SET_CURRENT_USERS_PAGE:
+			return {
+				...state,
+				activePage: action.activePage
 			}
 		default:
 			return state
