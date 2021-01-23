@@ -1,7 +1,7 @@
 .profileInfo_wrapper {
 	display: grid;
 	grid-column: 1/-1;
-	grid-template-rows: 1fr 200px;
+	grid-template-rows: 1fr auto;
 	max-width: 100%;
 	gap: 10px;
 }
@@ -35,6 +35,14 @@
 	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
+.avatar_block .user_name {
+	text-transform: capitalize;
+}
+
+.user_name .looking_for_job {
+	margin: 10px;
+}
+
 .avatar_block img {
 	object-fit: cover;
 	max-width: 180px;
@@ -44,7 +52,7 @@
 
 
 .description_block {
-	max-height: 180px;
+	max-height: fit-content;
 	padding: 10px;
 	background-color: #fff;
 	border-radius: 10px;
@@ -53,4 +61,9 @@
 
 .description_block h3 {
 	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+.description_content {
+	margin-bottom: 5px;
 }

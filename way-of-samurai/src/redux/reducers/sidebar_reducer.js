@@ -23,7 +23,7 @@ const initial_state = {
 			id: 1,
 			icon: "👤",
 			item: "Profile",
-			path: "/"
+			path: "/profile"
 		},
 		{
 			id: 2,

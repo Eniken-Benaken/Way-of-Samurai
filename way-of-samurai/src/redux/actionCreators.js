@@ -13,3 +13,9 @@ export const unfollowUser = (user_id) => ({	type: actions.UNFOLLOW_USER,user_id:
 export const setUsers = (users,totalUsersCount = 50) => ({	type: actions.SET_USERS,users: users, totalUsersCount: totalUsersCount});
 export const setCurrentUsersPage = (activePage = 1) => ({ type: actions.SET_CURRENT_USERS_PAGE,activePage: activePage });
 export const toggleIsFetching = (is_fetching) => ({ type: actions.TOGGLE_IS_FETCHING,is_fetching: is_fetching });
+
+
+export const setUserProfile = (user_id) => ({
+	type: actions.SET_USER_PROFILE, 
+	current_user: user_id
+})

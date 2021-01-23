@@ -1,6 +1,7 @@
 import s from './Users.module.css';
 import User from './User/User';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
 	const pagesItems = [];
@@ -16,18 +17,22 @@ const Users = (props) => {
 			<div className={s.pagination}>
 				{pagesItems}
 			</div>
-			{props.users.map(u => <User
-				key={u.id}
-				user_id={u.id}
-				user_name={u.name}
-				user_avatar={u.photos.small}
-				user_status_message={u.status}
-				user_city={"u.city"}
-				user_country={"u.country"}
-				is_followed={u.followed}
-				followUser={props.followUser}
-				unfollowUser={props.unfollowUser}
-			/>)}
+			{props.users.map(u => 
+			<NavLink to={`/profile/${u.id}`}>
+				<User
+					key={u.id}
+					user_id={u.id}
+					user_name={u.name}
+					user_avatar={u.photos.small}
+					user_status_message={u.status}
+					user_city={"u.city"}
+					user_country={"u.country"}
+					is_followed={u.followed}
+					followUser={props.followUser}
+					unfollowUser={props.unfollowUser}
+				/>
+			</NavLink>
+			)}
 		</div>
 	);
 }
