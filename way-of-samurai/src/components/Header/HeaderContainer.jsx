@@ -1,21 +1,19 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { authAPI } from '../../api/API';
-import { setAuthData, setIsAuth } from './../../redux/actionCreators';
+import { getAuthData } from '../../redux/thunkCreators';
 import Header from './Header';
 
 class HeaderContainer extends Component {
 	componentDidMount() {
-		// this.props.toggleIsFetching(true);
-		authAPI.getAuthData()
-			.then(data => {
-				let {id,email,login} = data;
-				if (response.data.resultCode === 0) {
-					this.props.setAuthData(id,email,login);
-					this.props.setIsAuth(true)
-				}				
-			});
+		this.props.getAuthData()
+		// authAPI.getAuthData()
+		// 	.then(data => {
+		// 		let {id,email,login} = data;
+		// 		if (data.resultCode === 0) {
+		// 			this.props.setAuthData(id,email,login);
+		// 			this.props.setIsAuth(true)
+		// 		}				
+		// 	});
 	}
 
 	render() {
@@ -36,5 +34,5 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { setAuthData, setIsAuth })(HeaderContainer);
+export default connect(mapStateToProps, { getAuthData })(HeaderContainer);
 

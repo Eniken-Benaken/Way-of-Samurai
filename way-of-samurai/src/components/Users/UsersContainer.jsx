@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { followUser, setCurrentUsersPage, toggleIsFetching, setUsers, unfollowUser,toggleFollowing } from '../../redux/actionCreators';
+import { getUsers, followUser, unfollowUser } from '../../redux/thunkCreators'; 
 import Users from './Users';
 import Preloader from '../common/Preloader';
-import { usersAPI } from '../../api/API';
 
 
 class UsersContainer extends Component {
 	componentDidMount() {
-		this.props.toggleIsFetching(true);
-		if (this.props) {
-			usersAPI.getUsers(this.props.activePage, this.props.pageSize)
-				.then(data => {
-					if (!data.error) {
-						this.props.toggleIsFetching(false);
-						this.props.setUsers(data.items)
-					}
-				});
-		}
+		this.props.getUsers(this.props.activePage,this.props.pageSize);
+		// this.props.toggleIsFetching(true);
+		// if (this.props) {
+		// 	usersAPI.getUsers(this.props.activePage, this.props.pageSize)
+		// 		.then(data => {
+		// 			if (!data.error) {
+		// 				this.props.toggleIsFetching(false);
+		// 				this.props.setUsers(data.items)
+		// 			}
+		// 		});
+		// }
 	}
 
 	onPageChange = (pageNumber) => {
-		this.props.setCurrentUsersPage(pageNumber);
-		this.props.toggleIsFetching(true);
-		usersAPI.getUsers(pageNumber, this.props.pageSize)
-			.then(data => {
-				if (!data.error) {
-					this.props.toggleIsFetching(false);
-					this.props.setUsers(data.items)
-				}
-			});
+		this.props.getUsers(pageNumber,this.props.pageSize);
+		// this.props.setCurrentUsersPage(pageNumber);
+		// this.props.toggleIsFetching(true);
+		// usersAPI.getUsers(pageNumber, this.props.pageSize)
+		// 	.then(data => {
+		// 		if (!data.error) {
+		// 			this.props.toggleIsFetching(false);
+		// 			this.props.setUsers(data.items)
+		// 		}
+		// 	});
 	}
 
 	render() {
@@ -42,25 +43,29 @@ class UsersContainer extends Component {
 		const users = [...this.props.users];
 
 		const follow = (userId) => {
-			this.props.toggleFollowing(userId,true);
-			usersAPI.followUser(userId)
-				.then(response => {
-					if (response.data.resultCode === 0) {
-						this.props.toggleFollowing(userId,false);
-						this.props.followUser(userId);
-					}
-				})
+			this.props.followUser(userId);
+			
+
+			// this.props.toggleFollowing(userId,true);
+			// usersAPI.followUser(userId)
+			// 	.then(response => {
+			// 		if (response.data.resultCode === 0) {
+			// 			this.props.toggleFollowing(userId,false);
+			// 			this.props.followUser(userId);
+			// 		}
+			// 	})
 		}
 
 		const unfollow = (userId) => {
-			this.props.toggleFollowing(userId,true);
-			usersAPI.unfollowUser(userId)
-				.then(response => {
-					if (response.data.resultCode === 0) {
-						this.props.toggleFollowing(userId,false);
-						this.props.unfollowUser(userId);
-					}
-				})
+			this.props.unfollowUser(userId);
+			// this.props.toggleFollowing(userId,true);
+			// usersAPI.unfollowUser(userId)
+			// 	.then(response => {
+			// 		if (response.data.resultCode === 0) {
+			// 			this.props.toggleFollowing(userId,false);
+			// 			this.props.unfollowUser(userId);
+			// 		}
+			// 	})
 		}
 
 		return (
@@ -90,8 +95,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { //JS looks for equal named imports(varibles)
 	followUser, //same as followUser: followUser
 	unfollowUser, //React-redux at the same time takes these ACs
-	setUsers, //and wraps it with dispatches inside CBs
-	setCurrentUsersPage,
-	toggleIsFetching,
-	toggleFollowing,
+	getUsers//and wraps it with dispatches inside CBs
 })(UsersContainer);

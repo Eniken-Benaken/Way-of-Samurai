@@ -1,7 +1,6 @@
 import s from './Users.module.css';
 import User from './User/User';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
 	const pagesItems = [];

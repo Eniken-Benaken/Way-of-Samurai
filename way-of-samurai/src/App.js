@@ -18,7 +18,7 @@ const App = (props) => {
 				<SidebarContainer />
 				<div className="main_wrapper">
 					<Route
-						exact path='/profile/:userId?'
+						path='/profile/:userId?'
 						render={() => <ProfileContainer />}
 					/>
 					<Route
