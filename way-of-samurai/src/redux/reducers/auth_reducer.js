@@ -4,7 +4,8 @@ const initial_state = {
 	id: null,
 	email: null,
 	login: null,
-	is_auth: false
+	is_auth: false,
+	checking_auth: false
 };
 
 const users_reducer = (state = initial_state, action) => {
@@ -18,6 +19,11 @@ const users_reducer = (state = initial_state, action) => {
 			return {
 				...state,
 				is_auth: action.is_auth
+			}
+		case actions.TOGGLE_CHECKING_AUTH:
+			return {
+				...state,
+				checking_auth: action.checking_auth
 			}
 		default:
 			return state

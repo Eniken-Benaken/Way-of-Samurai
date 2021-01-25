@@ -4,19 +4,19 @@ import s from './ProfileInfo.module.css';
 import avatarPlaceholder from '../../../assets/images/avatar.png';
 
 const ProfileInfo = (props) => {
-	if (!props.profileInfo) {
+	if (!props.current_user) {
 		return (<Preloader />)
 	}
-	let is_looking = props.profileInfo.lookingForAJob ? <span className={s.looking_for_job}>🤑</span> : <span className={s.looking_for_job}>🤠</span>;
+	let is_looking = props.current_user.lookingForAJob ? <span className={s.looking_for_job}>🤑</span> : <span className={s.looking_for_job}>🤠</span>;
 
 	let contacts = [];
-	for (let prop in props.profileInfo.contacts) {
-		if(props.profileInfo.contacts[prop])
-		{contacts.push(<div key={prop} className={s.contact}>{`${prop}: ${props.profileInfo.contacts[prop]}`}</div>)}
+	for (let prop in props.current_user.contacts) {
+		if(props.current_user.contacts[prop])
+		{contacts.push(<div key={prop} className={s.contact}>{`${prop}: ${props.current_user.contacts[prop]}`}</div>)}
 		else {contacts.push(<div key={prop} className={s.contact}>{`${prop}: --`}</div>)}
 	}
 
-	let avatar = props.profileInfo.photos.large ? <img src={props.profileInfo.photos.large} alt="avatar" /> : <img src={avatarPlaceholder} alt="avatar" />
+	let avatar = props.current_user.photos.large ? <img src={props.current_user.photos.large} alt="avatar" /> : <img src={avatarPlaceholder} alt="avatar" />
 
 	return (
 		<div className={s.profileInfo_wrapper}>
@@ -25,13 +25,13 @@ const ProfileInfo = (props) => {
 			</div>
 			<div className={s.person_info}>
 				<div className={s.avatar_block}>
-					<div className={s.user_name}>{props.profileInfo.fullName} {is_looking}</div>
+					<div className={s.user_name}>{props.current_user.fullName} {is_looking}</div>
 					{avatar}
 					<button>Change Profile Photo</button>
 				</div>
 				<div className={s.description_block}>
 					<h3 className={s.description_header}>About me</h3>
-					<div className={s.description_content}>{props.profileInfo.aboutMe}</div>
+					<div className={s.description_content}>{props.current_user.aboutMe}</div>
 					<h3 className={s.description_header}>Contacts:</h3>
 					{contacts}
 				</div>

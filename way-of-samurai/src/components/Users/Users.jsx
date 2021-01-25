@@ -19,7 +19,6 @@ const Users = (props) => {
 			{props.users.map(u => {
 				let is_following = false;
 				for (let user of props.is_following) {
-					console.log(user, u.id);
 					if (user === u.id) {
 						is_following = true; 
 						break;

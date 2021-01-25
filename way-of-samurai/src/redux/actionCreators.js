@@ -30,8 +30,11 @@ export const setAuthData = (id,email,login) => ({
 		login
 	}
 })
-
 export const setIsAuth = (is_auth) => ({
 	type: actions.SET_IS_AUTH,
 	is_auth: is_auth
+})
+export const toggleCkeckingAuth = (checking_auth) => ({
+	type: actions.SET_IS_AUTH,
+	checking_auth: checking_auth
 })

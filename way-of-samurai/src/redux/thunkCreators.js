@@ -1,5 +1,5 @@
 import { authAPI, profileAPI, usersAPI } from "../api/API";
-import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth } from "./actionCreators";
+import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, toggleCkeckingAuth } from "./actionCreators";
 
 export const getUsers = (activePage, pageSize) => {
 	return (dispatch) => {
@@ -53,11 +53,15 @@ export const getUserData = (userId) => {
 
 export const getAuthData = () => {
 	return (dispatch) => {
+		dispatch(toggleCkeckingAuth(true));
 		authAPI.getAuthData()
-			.then(data => {
-				let {id,email,login} = data;
-					dispatch(setAuthData(id,email,login));
-					dispatch(setIsAuth(true));
+		.then(data => {
+			let {id,email,login} = data;
+			if(login) {
+				dispatch(setAuthData(id,email,login));
+				dispatch(toggleCkeckingAuth(false));
+				dispatch(setIsAuth(true));
+				}
 			});
 	}
 }

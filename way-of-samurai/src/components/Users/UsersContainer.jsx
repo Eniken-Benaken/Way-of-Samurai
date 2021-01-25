@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getUsers, followUser, unfollowUser } from '../../redux/thunkCreators'; 
 import Users from './Users';
 import Preloader from '../common/Preloader';
+import withAuthRedirect from '../common/withAuthRedirect';
+import { compose } from 'redux';
 
 
 class UsersContainer extends Component {
@@ -79,8 +81,6 @@ class UsersContainer extends Component {
 
 
 
-
-
 const mapStateToProps = (state) => {
 	return ({
 		users: [...state.users.users],
@@ -92,8 +92,11 @@ const mapStateToProps = (state) => {
 	});
 };
 
-export default connect(mapStateToProps, { //JS looks for equal named imports(varibles)
-	followUser, //same as followUser: followUser
-	unfollowUser, //React-redux at the same time takes these ACs
-	getUsers//and wraps it with dispatches inside CBs
-})(UsersContainer);
+export default compose (
+	connect(mapStateToProps, { //JS looks for equal named imports(varibles)
+		followUser, //same as followUser: followUser
+		unfollowUser, //React-redux at the same time takes these ACs
+		getUsers//and wraps it with dispatches inside CBs
+	}),
+	withAuthRedirect
+)(UsersContainer);

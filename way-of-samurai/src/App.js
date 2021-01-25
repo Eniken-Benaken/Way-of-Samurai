@@ -9,14 +9,21 @@ import SidebarContainer from './components/Sidebar/SidebarContainer';
 import NewsContainer from './components/News/NewsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import LoginPage from './components/Login/LoginPage';
 
 const App = (props) => {
+	
+
 	return (
 		<BrowserRouter>
 			<div className="app-wrapper">
 				<HeaderContainer />
 				<SidebarContainer />
 				<div className="main_wrapper">
+					<Route
+						exact path='/'
+						render={() => <ProfileContainer />}
+					/>
 					<Route
 						path='/profile/:userId?'
 						render={() => <ProfileContainer />}
@@ -40,6 +47,10 @@ const App = (props) => {
 					<Route 
 						path='/users'
 						render={() => <UsersContainer />}
+					/>
+					<Route 
+						path='/login'
+						render={() => <LoginPage />}
 					/>
 				</div>
 			</div>
