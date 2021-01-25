@@ -12,3 +12,19 @@
 	border-radius: 10px;
 	overflow: hidden;
 }
+
+.loginBlock {
+	float: right;
+	font-size: 1.2rem;
+	line-height: 40px;
+	margin-right: 15px;
+}
+
+.loginBlock a {
+	color: white;
+	text-decoration: none;
+}
+
+.loginBlock span {
+	margin-right: 5px;
+}

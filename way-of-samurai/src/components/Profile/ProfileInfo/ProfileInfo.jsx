@@ -12,8 +12,8 @@ const ProfileInfo = (props) => {
 	let contacts = [];
 	for (let prop in props.profileInfo.contacts) {
 		if(props.profileInfo.contacts[prop])
-		{contacts.push(<div className={s.contact}>{`${prop}: ${props.profileInfo.contacts[prop]}`}</div>)}
-		else {contacts.push(<div className={s.contact}>{`${prop}: --`}</div>)}
+		{contacts.push(<div key={prop} className={s.contact}>{`${prop}: ${props.profileInfo.contacts[prop]}`}</div>)}
+		else {contacts.push(<div key={prop} className={s.contact}>{`${prop}: --`}</div>)}
 	}
 
 	let avatar = props.profileInfo.photos.large ? <img src={props.profileInfo.photos.large} alt="avatar" /> : <img src={avatarPlaceholder} alt="avatar" />

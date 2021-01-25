@@ -57,13 +57,11 @@ const profile_reducer = (state = initial_state, action) => {
 				newPostState: action.textarea_value
 			}
 		case actions.SET_USER_PROFILE:
-			debugger
 			return {
 				...state,
 				current_user: action.current_user
 			}
 		case actions.TOGGLE_IS_FETCHING:
-			debugger
 			return {
 				...state,
 				is_fetching: action.is_fetching

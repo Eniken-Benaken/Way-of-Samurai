@@ -5,7 +5,8 @@ const initial_state = {
 	pageSize: 5,
 	totalUsersCount: 50,
 	activePage: 1,
-	is_fetching: false
+	is_fetching: false,
+	is_following: []
 };
 
 const users_reducer = (state = initial_state, action) => {
@@ -51,6 +52,13 @@ const users_reducer = (state = initial_state, action) => {
 			return {
 				...state,
 				is_fetching: action.is_fetching
+			}
+		case actions.TOGGLE_FOLLOWING:
+			return {
+				...state,
+				is_following: action.is_fetching
+					? [...state.is_following, action.user_id]
+					: state.is_following.filter(item => item !== action.user_id)
 			}
 		default:
 			return state

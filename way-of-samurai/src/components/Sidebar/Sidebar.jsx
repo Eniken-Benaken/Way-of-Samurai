@@ -17,7 +17,7 @@ const Sidebar = (props) => {
 						<MenuItem key={menu_item.id} id={menu_item.id} path={menu_item.path} icon={menu_item.icon} item={menu_item.item} />
 				)}
 			</nav>
-			<Route exact path="/" render={() =>
+			<Route exact path="/profile" render={() =>
 				<div className={s.friends_bar}>
 					<div className={s.friends_header}>Friends</div>
 					<div className={s.friends_block}>

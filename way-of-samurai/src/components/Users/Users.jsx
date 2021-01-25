@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const Users = (props) => {
 	const pagesItems = [];
-	props.pagesNumbers.map (pageNumber => {
+	props.pagesNumbers.map(pageNumber => {
 		if (pageNumber === props.activePage) {
 			pagesItems.push(<span key={pageNumber} className={`${s.page} ${s.activePage}`}>{pageNumber}</span>);
 			return;
@@ -17,9 +17,16 @@ const Users = (props) => {
 			<div className={s.pagination}>
 				{pagesItems}
 			</div>
-			{props.users.map(u => 
-			<NavLink to={`/profile/${u.id}`}>
-				<User
+			{props.users.map(u => {
+				let is_following = false;
+				for (let user of props.is_following) {
+					console.log(user, u.id);
+					if (user === u.id) {
+						is_following = true; 
+						break;
+					}
+				}
+				return <User
 					key={u.id}
 					user_id={u.id}
 					user_name={u.name}
@@ -28,10 +35,11 @@ const Users = (props) => {
 					user_city={"u.city"}
 					user_country={"u.country"}
 					is_followed={u.followed}
+					is_following={is_following}
 					followUser={props.followUser}
 					unfollowUser={props.unfollowUser}
 				/>
-			</NavLink>
+			}
 			)}
 		</div>
 	);
