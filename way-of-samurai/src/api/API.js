@@ -22,13 +22,23 @@ export const usersAPI = {
 } 
 
 export const profileAPI = {
-	getUserData(userId) {
+	getUserData(userId=14327) {
 		return a.get(`profile/${userId}`).then(response => response.data)
+	},
+	getStatus(userId=14327) {
+		return a.get(`profile/status/${userId}`)
+	},
+	setStatus(status) {
+		return a.put(`profile/status`, {status: status})
 	}
 }
 
 export const authAPI = {
 	getAuthData() {
 		return a.get(`auth/me`).then(response => response.data.data)
+	},
+	sendLoginData(email,password,rememberMe) {
+		return a.post(`auth/login`, { email,password,rememberMe})
 	}
 }
+

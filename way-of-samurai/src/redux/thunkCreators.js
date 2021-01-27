@@ -1,5 +1,5 @@
 import { authAPI, profileAPI, usersAPI } from "../api/API";
-import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, toggleCkeckingAuth } from "./actionCreators";
+import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, toggleCkeckingAuth, setStatus } from "./actionCreators";
 
 export const getUsers = (activePage, pageSize) => {
 	return (dispatch) => {
@@ -47,6 +47,20 @@ export const getUserData = (userId) => {
 			.then(data => {
 				dispatch(setUserProfile(data));
 				dispatch(toggleIsFetching(false));
+				profileAPI.getStatus(userId)
+					.then(response => {
+						if(response.data)
+						dispatch(setStatus(response.data))
+						else dispatch(setStatus(response.statusText))
+					})
+			});
+	}
+}
+export const updateStatus = (status) => {
+	return (dispatch) => {
+		profileAPI.setStatus(status)
+			.then(response => {
+				if(response.status === 200)	dispatch(setStatus(status));
 			});
 	}
 }
@@ -64,4 +78,8 @@ export const getAuthData = () => {
 				}
 			});
 	}
+}
+
+export const submitLogin = (email,password,rememberMe) => {
+	return authAPI.sendLoginData(email,password,rememberMe);
 }

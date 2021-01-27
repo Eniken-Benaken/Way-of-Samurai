@@ -2,24 +2,22 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
-import { Redirect } from 'react-router-dom';
+import MessageForm from '../Forms/MessageForm';
 
 
 
 const Dialogs = (props) => {
 	let dialogs = [...props.dialogs.dialogs];
 	let messages = [...props.dialogs.messages];
-	const newMessageState = props.dialogs.newMessageState;
-	const newMessage = React.createRef();
-	const sendMessage = () => {
-		if(newMessage.current.value) {
-			props.sendMessage();
-		}	
+	// const newMessageState = props.dialogs.newMessageState;
+	// const newMessage = React.createRef();
+	const sendMessage = (new_message) => {
+			props.sendMessage(new_message);
 	};
 
-	const handleNewMessageChange = (e) => {
-		props.handleNewMessageChange(e);
-	};
+	// const handleNewMessageChange = (e) => {
+	// 	props.handleNewMessageChange(e);
+	// };
 
 	return (
 		<div className={s.dialogs_wrapper}>
@@ -28,13 +26,7 @@ const Dialogs = (props) => {
 			</div>
 			<div className={s.messages}>
 				{messages.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}
-				<div className={s.new_message_wrapper}>
-					<textarea ref={newMessage} className={s.new_message} value={newMessageState} onChange={handleNewMessageChange}></textarea>
-					<div className={s.new_message_buttons}>
-						<button onClick={sendMessage}>Add message</button>
-						<button>😉</button>
-					</div>
-				</div>
+				<MessageForm sendMessage={sendMessage} />
 			</div>
 		</div>
 	);

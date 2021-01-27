@@ -1,12 +1,8 @@
 import { actions } from './actions';
 
-export const addPostActionCreator = () => ({	type: actions.ADD_POST });
-export const newPostTextActionCreator = (textarea_value) => 
-({type: actions.HANDLE_NEW_POST_CHANGE,	textarea_value: textarea_value});
+export const addPostActionCreator = (new_post) => ({	type: actions.ADD_POST,new_post });
 
-export const sendMessageActionCreator = () => ({	type: actions.SEND_MESSAGE });
-export const newMessageTextActionCreator = (textarea_value) => 
-({type: actions.HANDLE_NEW_MESSAGE_CHANGE,	textarea_value: textarea_value});
+export const sendMessageActionCreator = (new_message) => ({	type: actions.SEND_MESSAGE, new_message });
 
 export const followUserAC = (user_id) => ({	type: actions.FOLLOW_USER,user_id: user_id});
 export const unfollowUserAC = (user_id) => ({	type: actions.UNFOLLOW_USER,user_id: user_id});
@@ -19,6 +15,10 @@ export const toggleFollowing = (user_id,is_fetching) => ({ type: actions.TOGGLE_
 export const setUserProfile = (user_id) => ({
 	type: actions.SET_USER_PROFILE, 
 	current_user: user_id
+})
+export const setStatus = (status) => ({
+	type: actions.SET_STATUS, 
+	status: status
 })
 
 

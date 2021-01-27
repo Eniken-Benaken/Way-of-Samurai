@@ -1,3 +1,10 @@
-.loginHeader {
-	margin: 10px;
+.login_form {
+	display              : grid;
+	padding              : 10px;
+	border-radius        : 10px;
+	background-color     : #fff;
+	box-sizing           : border-box;
+	gap                  : 10px;
+	box-shadow           : rgba(0, 0, 0, 0.2) 1px 1px 4px;
+	width: 70%;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addPostActionCreator, newPostTextActionCreator } from '../../../redux/actionCreators';
+import { addPostActionCreator } from '../../../redux/actionCreators';
 import MyPosts from './MyPosts';
 
 const mapStateToProps = (state) => {
@@ -8,24 +8,19 @@ const mapStateToProps = (state) => {
 		...state,
 		profile: {
 			posts: [...state.profile.posts],
-			newPostState: state.profile.newPostState
 		}
 	}
 
 	return ({
 		posts: stateCopy.profile.posts,
-		newPostState: stateCopy.profile.newPostState
 	});
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return ({
-		addPost: () => {
-			const action = addPostActionCreator();
+		addPost: (new_post) => {
+			const action = addPostActionCreator(new_post);
 				dispatch(action);
-		},
-		handleChange: (e) => {
-			dispatch(newPostTextActionCreator(e.target.value));
 		}
 	})
 }

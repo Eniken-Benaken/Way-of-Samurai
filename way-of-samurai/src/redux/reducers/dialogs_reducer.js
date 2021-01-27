@@ -17,7 +17,6 @@ const initial_state =  {
 		{ message_id: 5, message: "Smoke is soothing me.", author_id: 0, author_name: "Dem Pigeon" },
 		{ message_id: 6, message: "I hope we will be able to warm up this shelter", author_id: "pavlo", author_name: "Pavlo" }
 	],
-	newMessageState: ''
 };
 
 const dialogs_reducer = (state = initial_state,action) => {
@@ -29,14 +28,9 @@ const dialogs_reducer = (state = initial_state,action) => {
 					message_id: state.messages.length + 1,
 					author_id: 0,
 					author_name: "Dem Pigoen",
-					message: state.newMessageState,
+					message: action.new_message,
 				}],
 				newMessageState: ""
-			}
-		case actions.HANDLE_NEW_MESSAGE_CHANGE:
-			return {
-				...state,
-				newMessageState: action.textarea_value
 			}
 		default:
 			return state;
