@@ -22,7 +22,7 @@ export const usersAPI = {
 } 
 
 export const profileAPI = {
-	getUserData(userId=14327) {
+	getUserData(userId) {
 		return a.get(`profile/${userId}`).then(response => response.data)
 	},
 	getStatus(userId=14327) {
@@ -35,10 +35,25 @@ export const profileAPI = {
 
 export const authAPI = {
 	getAuthData() {
-		return a.get(`auth/me`).then(response => response.data.data)
+		return a.get(`auth/me`).then(
+			response => {
+				console.log('authAPI.getAuthData() - response.data',response.data);
+				return response.data
+			})
 	},
 	sendLoginData(email,password,rememberMe) {
-		return a.post(`auth/login`, { email,password,rememberMe})
+		return a.post(`auth/login`, { email,password,rememberMe}).then(
+			response => {
+				console.log('authAPI.sendLoginData() - response',response);
+				return response
+			})
+	},
+	signOut() {
+		return a.delete(`auth/login`).then(
+			response => {
+				console.log('authAPI.signOut() - response',response);
+				return response
+			})
 	}
 }
 

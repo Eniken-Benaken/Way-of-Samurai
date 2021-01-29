@@ -7,6 +7,7 @@ import MessageForm from '../Forms/MessageForm';
 
 
 const Dialogs = (props) => {
+	props.setCurrentRoute("/dialogs");
 	let dialogs = [...props.dialogs.dialogs];
 	let messages = [...props.dialogs.messages];
 	// const newMessageState = props.dialogs.newMessageState;

@@ -20,9 +20,12 @@
 	margin-right: 15px;
 }
 
-.loginBlock a {
+.loginBlock button {
 	color: white;
+	text-shadow: black 1px 1px 2px;
 	text-decoration: none;
+	background-color: rgb(198, 255, 144);
+	font-size: 1.1rem;
 }
 
 .loginBlock span {

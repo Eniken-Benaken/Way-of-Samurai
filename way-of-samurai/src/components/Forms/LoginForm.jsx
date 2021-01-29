@@ -1,10 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
-import { submitLogin } from '../../redux/thunkCreators';
-// import s from './LoginForm.module.css';
+import s from '../Login/LoginPage.module.css';
 
 const LoginForm = (props) => {
+	if(props.is_auth) return <Redirect to={props.current_route} />
+
 	const initialValues = {
 		email: '',
 		password: '',
@@ -13,15 +15,18 @@ const LoginForm = (props) => {
 
 	const onSubmit = values => {
 		let {email,password,rememberMe} = values;
-		submitLogin(email,password,rememberMe)
-		.then(response => console.log(response));
+		console.log(email,password,rememberMe);
+		props.submitLogin(email,password,rememberMe)
+		// .then(response => console.log(response));
 	}
 
 	const validationSchema = Yup.object({
-		email: Yup.string().email('Invalid email format').min(2, "Must be longer than 2 characters")
+		email: Yup.string().email('Invalid email format').min(10, "Must be longer than 10 characters")
     .max(40, "Nice try, nobody has a email that long").required('Required'),
-		password: Yup.string().min(8, "Must be longer than 2 characters").required('Required')
+		password: Yup.string().min(8, "Must be longer than 8 characters").required('Required')
 	})
+
+	let error = props.error && <div className={s.submit_error}>{props.error}</div>
 
 	return (
 		<Formik
@@ -31,19 +36,18 @@ const LoginForm = (props) => {
 		>
 			<Form>
 				<div>
-					<label htmlFor="email">Email: </label>
 					<Field
 						type="text"
 						name="email"
-
+						placeholder='email'
 					/>
 					<ErrorMessage name='email' />
 				</div>
 				<div>
-					<label htmlFor="password">Password: </label>
 					<Field
 						type="password"
 						name="password"
+						placeholder='password'
 					/>
 					<ErrorMessage name='password' />
 				</div>
@@ -54,6 +58,7 @@ const LoginForm = (props) => {
 						name="rememberMe"
 					/>
 				</div>
+				{error}
 				<button type="submit">Submit</button>
 			</Form>
 		</Formik>

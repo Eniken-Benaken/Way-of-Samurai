@@ -38,3 +38,17 @@ export const toggleCkeckingAuth = (checking_auth) => ({
 	type: actions.SET_IS_AUTH,
 	checking_auth: checking_auth
 })
+export const stopSubmit = (error) => ({
+	type: actions.STOP_SUBMIT,
+	submit_error: error
+})
+
+export const initApp = (initialized) => ({
+	type: actions.INIT_APP,
+	initialized: initialized
+})
+
+export const setCurrentRoute = (current_route) => ({
+	type: actions.SET_CURRENT_ROUTE,
+	current_route: current_route
+})

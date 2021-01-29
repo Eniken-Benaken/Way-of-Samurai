@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAuthData } from '../../redux/thunkCreators';
+import { signOut } from '../../redux/thunkCreators';
 import Header from './Header';
 
 class HeaderContainer extends Component {
-	componentDidMount() {
-		this.props.getAuthData()
-		// authAPI.getAuthData()
-		// 	.then(data => {
-		// 		let {id,email,login} = data;
-		// 		if (data.resultCode === 0) {
-		// 			this.props.setAuthData(id,email,login);
-		// 			this.props.setIsAuth(true)
-		// 		}				
-		// 	});
-	}
-
 	render() {
-		return <Header is_auth={this.props.is_auth} login={this.props.login} />
+		return <Header is_auth={this.props.is_auth} login={this.props.login} signOut={this.props.signOut} />
 	}
 }
 
@@ -34,5 +22,5 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { getAuthData })(HeaderContainer);
+export default connect(mapStateToProps, { signOut })(HeaderContainer);
 

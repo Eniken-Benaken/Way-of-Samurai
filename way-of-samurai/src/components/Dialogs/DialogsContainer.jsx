@@ -1,4 +1,4 @@
-import { sendMessageActionCreator } from '../../redux/actionCreators';
+import { sendMessageActionCreator, setCurrentRoute } from '../../redux/actionCreators';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return ({
-		sendMessage: (new_message) => dispatch(sendMessageActionCreator(new_message))
+		sendMessage: (new_message) => dispatch(sendMessageActionCreator(new_message)),
+		setCurrentRoute: (current_route) => dispatch(setCurrentRoute(current_route))
 	})
 }
 
@@ -22,5 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default compose(
-	connect(mapStateToProps,mapDispatchToProps)
+	connect(mapStateToProps,mapDispatchToProps),
+	withAuthRedirect
 )(Dialogs);
