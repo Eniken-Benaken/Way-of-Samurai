@@ -3,9 +3,8 @@ import Preloader from '../../common/Preloader';
 import s from './ProfileInfo.module.css';
 import avatarPlaceholder from '../../../assets/images/avatar.png';
 
-const ProfileInfo = (props) => {
-	let statusText = props.status;
-
+const ProfileInfo = ({ current_visited_user, isFetching, status, updateStatus, user_id }) => {
+	let statusText = status;
 	const [state, setState] = useState({
 		editMode: false,
 		status: statusText
@@ -15,13 +14,15 @@ const ProfileInfo = (props) => {
 		setState(
 			{
 				...state,
-				status: props.status
+				status: status
 			}
 		)
-	}, [props.status]);
+	}, [status]);
 
-	if (!props.current_user) return <Preloader />
-	let ownProfile = props.current_user.userId === 14327;
+
+	if (isFetching) return <Preloader />
+	if (!current_visited_user) return <Preloader />
+	let ownProfile = current_visited_user.userId === user_id;
 	if (statusText === '' && ownProfile) {
 		statusText = 'Double-click here to add status';
 	}
@@ -39,42 +40,38 @@ const ProfileInfo = (props) => {
 		})
 	}
 
-	const updateStatus = () => {
+	const updateUserStatus = () => {
 		toggleEditMode()
-		props.updateStatus(state.status);
-	}
-	if (!props.current_user) {
-		return (<Preloader />)
+		updateStatus(state.status);
 	}
 
-
-	let is_looking = props.current_user.lookingForAJob
+	let is_looking = current_visited_user.lookingForAJob
 		? <span className={s.looking_for_job}>🤑</span>
 		: <span className={s.looking_for_job}>🤠</span>;
 
 	let contacts = [];
-	for (let contact in props.current_user.contacts) {
-		if (props.current_user.contacts[contact]) {
+	for (let contact in current_visited_user.contacts) {
+		if (current_visited_user.contacts[contact]) {
 			contacts.push(
-				<div key={contact} className={s.contact}>{`${contact}: ${props.current_user.contacts[contact]}`}</div>
+				<div key={contact} className={s.contact}>{`${contact}: ${current_visited_user.contacts[contact]}`}</div>
 			)
 		}
 		else { contacts.push(<div key={contact} className={s.contact}>{`${contact}: --`}</div>) }
 	}
 
-	let avatar = props.current_user.photos.large
-		? <img src={props.current_user.photos.large} alt="avatar" />
+	let avatar = current_visited_user.photos.large
+		? <img src={current_visited_user.photos.large} alt="avatar" />
 		: <img src={avatarPlaceholder} alt="avatar" />
 
-	let status = !state.editMode
-		? <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span> : <input type="text" autoFocus={true} onChange={handleStatusChange} onBlur={updateStatus} value={state.status} />;
+	let userStatus = !state.editMode
+		? <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span> : <input type="text" autoFocus={true} onChange={handleStatusChange} onBlur={updateUserStatus} value={state.status} />;
 
 	if (ownProfile) {
-		status = !state.editMode
-			? <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span> : <input type="text" autoFocus={true} onChange={handleStatusChange} onBlur={updateStatus} value={state.status} />
+		userStatus = !state.editMode
+			? <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span> : <input type="text" autoFocus={true} onChange={handleStatusChange} onBlur={updateUserStatus} value={state.status} />
 	}
 	else {
-		status = <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span>;
+		userStatus = <span key="status" onDoubleClick={toggleEditMode}>{statusText}</span>;
 	}
 
 	return (
@@ -84,13 +81,13 @@ const ProfileInfo = (props) => {
 			</div>
 			<div className={s.person_info}>
 				<div className={s.avatar_block}>
-					<div className={s.user_name}>{props.current_user.fullName} {is_looking}</div>
+					<div className={s.user_name}>{current_visited_user.fullName} {is_looking}</div>
 					{avatar}
 					<button>Change Profile Photo</button>
 				</div>
 				<div className={s.description_block}>
 					<h3 className={s.description_header}>About me</h3>
-					<div className={s.description_content}>{status}</div>
+					<div className={s.description_content}>{userStatus}</div>
 					<h3 className={s.description_header}>Contacts:</h3>
 					{contacts}
 				</div>

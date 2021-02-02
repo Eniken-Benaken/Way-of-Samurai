@@ -1,15 +1,14 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
-// import s from './PostForm.module.css';
 
-const PostForm = (props) => {
+const PostForm = ({addPost}) => {
 	const initialValues = {
 		new_post: '',
 	}
 
 	const onSubmit = values => {
-		props.addPost(values.new_post);
+		addPost(values.new_post);
 	}
 
 	const validationSchema = Yup.object({

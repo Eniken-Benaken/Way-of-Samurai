@@ -1,0 +1,12 @@
+.pagination {
+	display: block;
+}
+
+.pagination .page {
+	border-bottom: 1px solid rgb(0, 210, 238);
+	cursor: pointer;
+}
+
+.pagination .activePage {
+	border-bottom: 4px solid rgb(0, 210, 238);
+}

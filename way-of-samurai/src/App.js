@@ -33,7 +33,7 @@ class App extends Component {
 					/>
 					<Route
 						path='/profile/:userId?'
-						render={() => <ProfileContainer />}
+						render={() => <ProfileContainer  />}
 					/>
 					<Route
 						path='/dialogs'
@@ -60,6 +60,7 @@ class App extends Component {
 						render={() => <LoginPage />}
 					/>
 				</div>
+				<h1>Hello Testing</h1>
 			</div>
 		);
 	};

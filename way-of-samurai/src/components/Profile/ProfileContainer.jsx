@@ -6,15 +6,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
+import { getCurrentVisitedUserId, getIsFetchingProfileData,getCurrentVisitedUserstatus, getCurrentUserId } from '../../redux/selectors';
 
 class ProfileContainer extends Component {
 	componentDidMount() {
-		let userId = this.props.user_id;
+		let {userId} = this.props.match.params;
+		if(!userId) userId = this.props.user_id;
 		this.props.getUserData(userId);
-			// profileAPI.getUserData(userId)
-			// .then(data => {
-			// 	this.props.setUserProfile(data)
-			// });
 	}
 
 	render() {
@@ -26,11 +24,10 @@ class ProfileContainer extends Component {
 const mapStateToProps = (state) => {
 	return (
 		{
-			current_user: state.profile.current_user,
-			is_fetching: state.profile.is_fetching,
-			status: state.profile.status,
-			user_id: state.auth.id,
-			is_auth: state.auth.is_auth
+			current_visited_user: getCurrentVisitedUserId(state),
+			is_fetching: getIsFetchingProfileData(state),
+			status: getCurrentVisitedUserstatus(state),
+			user_id: getCurrentUserId(state),
 		}
 	)
 }

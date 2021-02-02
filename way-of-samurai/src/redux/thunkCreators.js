@@ -1,82 +1,53 @@
 import { authAPI, profileAPI, usersAPI } from "../api/API";
-import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, setStatus, stopSubmit,initApp, setCurrentRoute } from "./actionCreators";
+import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, setStatus, stopSubmit, initApp } from "./actionCreators";
 
-export const getUsers = (activePage, pageSize) => {
-	return (dispatch) => {
-		dispatch(toggleIsFetching(true));
-		usersAPI.getUsers(activePage, pageSize)
-			.then(data => {
-				if (!data.error) {
-					dispatch(toggleIsFetching(false));
-					dispatch(setUsers(data.items));
-					dispatch(setCurrentUsersPage(activePage));
-				}
-			})
-	}
-}
-export const followUser = (userId) => {
-	return (dispatch) => {
-		dispatch(toggleFollowing(userId, true));
-		usersAPI.followUser(userId)
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					dispatch(toggleFollowing(userId, false));
-					dispatch(followUserAC(userId));
-				}
-			})
-	}
-}
-export const unfollowUser = (userId) => {
-	return (dispatch) => {
-		dispatch(toggleFollowing(userId, true));
-		usersAPI.unfollowUser(userId)
-			.then(response => {
-				if (response.data.resultCode === 0) {
-					dispatch(toggleFollowing(userId, false));
-					dispatch(unfollowUserAC(userId));
-				}
-			})
+const followUnfollowFlow = async (dispatch, userId, AC, APImethod) => {
+dispatch(toggleFollowing(userId, true));
+	const response = await APImethod(userId)
+	if (response.data.resultCode === 0) {
+		dispatch(toggleFollowing(userId, false));
+		dispatch(AC(userId));
 	}
 }
 
-
-export const getUserData = (userId) => {
-	return (dispatch) => {
-		dispatch(toggleIsFetching(true));
-		profileAPI.getUserData(userId)
-			.then(data => {
-				dispatch(setUserProfile(data));
-				dispatch(toggleIsFetching(false));
-				profileAPI.getStatus(userId)
-					.then(response => {
-						if (response.data)
-							dispatch(setStatus(response.data))
-						else dispatch(setStatus(response.statusText))
-					})
-			});
+export const getUsers = (activePage, pageSize) => async (dispatch) => {
+	const data = await usersAPI.getUsers(activePage, pageSize)
+	if (!data.error) {
+		dispatch(setUsers(data.items));
+		dispatch(setCurrentUsersPage(activePage));
 	}
 }
-export const updateStatus = (status) => {
-	return (dispatch) => {
-		profileAPI.setStatus(status)
-			.then(response => {
-				if (response.status === 200) dispatch(setStatus(status));
-			});
-	}
+export const followUser = (userId) => async (dispatch) => {
+	followUnfollowFlow(dispatch,userId,followUserAC, usersAPI.followUser)
+}
+export const unfollowUser = (userId) => async (dispatch) => {
+	followUnfollowFlow(dispatch,userId,unfollowUserAC, usersAPI.unfollowUser)
 }
 
-export const getAuthData = () => {
-	return (dispatch) => {
-		return authAPI.getAuthData()
-			.then(data => {
-				let { id, email, login } = data.data;
-				dispatch(setAuthData(id, email, login));
-				if (login) {
-					dispatch(setIsAuth(true));
-				} else dispatch(setIsAuth(false));
-				return data;
-			});
-	}
+
+export const getUserData = (userId) => async (dispatch) => {
+	dispatch(toggleIsFetching(true));
+	const data = await profileAPI.getUserData(userId)
+	dispatch(setUserProfile(data));
+	dispatch(toggleIsFetching(false));
+	const response = await profileAPI.getStatus(userId)
+	if (response.data)
+		dispatch(setStatus(response.data))
+	else dispatch(setStatus(response.statusText))
+}
+export const updateStatus = (status) => async (dispatch) => {
+	const response = await profileAPI.setStatus(status)
+	if (response.status === 200) dispatch(setStatus(status));
+}
+
+export const getAuthData = () => async (dispatch) => {
+	const data = await authAPI.getAuthData()
+	let { id, email, login } = data.data;
+	dispatch(setAuthData(id, email, login));
+	if (login) {
+		dispatch(setIsAuth(true));
+	} else dispatch(setIsAuth(false));
+	return data;
 }
 
 export const submitLogin = (email, password, rememberMe) => {
@@ -131,12 +102,7 @@ export const signOut = () => {
 	}
 }
 
-export const init_app = () => {
-	return (dispatch) => {
-		dispatch(getAuthData()).then(
-			(response) => {
-				dispatch(initApp(true));
-			}
-		)
-	}
+export const init_app = () => async (dispatch) => {
+	await dispatch(getAuthData())
+	dispatch(initApp(true));
 }

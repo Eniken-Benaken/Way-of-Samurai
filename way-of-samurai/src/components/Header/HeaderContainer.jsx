@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getIsAuth,getCurrentUserEmail,getCurrentUserLogin } from '../../redux/selectors';
 import { signOut } from '../../redux/thunkCreators';
 import Header from './Header';
 
@@ -12,10 +13,9 @@ class HeaderContainer extends Component {
 const mapStateToProps = (state) => {
 	return (
 		{
-			id: state.auth.id,
-			email: state.auth.email,
-			login: state.auth.login,
-			is_auth: state.auth.is_auth,
+			email: getCurrentUserEmail(state),
+			login: getCurrentUserLogin(state),
+			is_auth: getIsAuth(state),
 		}
 	)
 }

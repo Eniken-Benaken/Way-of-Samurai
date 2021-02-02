@@ -1,26 +1,17 @@
 import s from './Users.module.css';
 import User from './User/User';
 import React from 'react';
+import Paginator from '../common/Paginator';
 
-const Users = (props) => {
-	const pagesItems = [];
-	props.pagesNumbers.map(pageNumber => {
-		if (pageNumber === props.activePage) {
-			pagesItems.push(<span key={pageNumber} className={`${s.page} ${s.activePage}`}>{pageNumber}</span>);
-			return;
-		}
-		pagesItems.push(<span key={pageNumber} className={s.page} onClick={() => { props.setActivePage(pageNumber) }}>{pageNumber}</span>)
-	});
+const Users = ({pagesNumbers,activePage,setActivePage,users,followUser,unfollowUser,is_following}) => {
 	return (
 		<div className={s.users}>
-			<div className={s.pagination}>
-				{pagesItems}
-			</div>
-			{props.users.map(u => {
-				let is_following = false;
-				for (let user of props.is_following) {
+			<Paginator pagesNumbers={pagesNumbers} activePage={activePage} setActivePage={setActivePage} />
+			{users.map(u => {
+				let is_follow = false;
+				for (let user of is_following) {
 					if (user === u.id) {
-						is_following = true; 
+						is_follow = true; 
 						break;
 					}
 				}
@@ -33,9 +24,9 @@ const Users = (props) => {
 					user_city={"u.city"}
 					user_country={"u.country"}
 					is_followed={u.followed}
-					is_following={is_following}
-					followUser={props.followUser}
-					unfollowUser={props.unfollowUser}
+					is_following={is_follow}
+					followUser={followUser}
+					unfollowUser={unfollowUser}
 				/>
 			}
 			)}

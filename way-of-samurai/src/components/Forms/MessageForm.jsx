@@ -4,13 +4,13 @@ import * as Yup from 'yup';
 // import { submitLogin } from '../../redux/thunkCreators';
 // import s from './MessageForm.module.css';
 
-const MessageForm = (props) => {
+const MessageForm = ({sendMessage}) => {
 	const initialValues = {
 		new_message: '',
 	}
 
 	const onSubmit = values => {
-		props.sendMessage(values.new_message);
+		sendMessage(values.new_message);
 	}
 
 	const validationSchema = Yup.object({

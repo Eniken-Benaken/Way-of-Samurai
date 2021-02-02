@@ -3,19 +3,21 @@ import { connect } from 'react-redux';
 import LoginForm from '../Forms/LoginForm';
 import { submitLogin } from '../../redux/thunkCreators';
 import s from './LoginPage.module.css';
+import { getIsAuth,getSubmitError,getCurrentRoute } from '../../redux/selectors';
 
-const LoginPage = (props) => {
+const LoginPage = ({submitLogin,error,is_auth,current_route}) => {
 	return (
 		<div className={s.login_form}>
-			<LoginForm submitLogin={props.submitLogin} error={props.error} is_auth={props.is_auth} current_route={props.current_route} />
+			<LoginForm submitLogin={submitLogin} error={error} is_auth={is_auth} current_route={current_route} />
 		</div>
 	);
 }
 
 const mapStateToProps = (state) => ({
-	is_auth: state.auth.is_auth,
-	error: state.auth.submit_error,
-	current_route: state.app.current_route
+	is_auth: getIsAuth(state),
+	error: getSubmitError(state),
+	current_route: getCurrentRoute(state)
 })
 
 export default connect(mapStateToProps,{submitLogin})(LoginPage);
+

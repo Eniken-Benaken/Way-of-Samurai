@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import s from '../Login/LoginPage.module.css';
 
-const LoginForm = (props) => {
-	if(props.is_auth) return <Redirect to={props.current_route} />
+const LoginForm = ({submitLogin,error,is_auth,current_route}) => {
+	if(is_auth) return <Redirect to={current_route} />
 
 	const initialValues = {
 		email: '',
@@ -16,7 +16,7 @@ const LoginForm = (props) => {
 	const onSubmit = values => {
 		let {email,password,rememberMe} = values;
 		console.log(email,password,rememberMe);
-		props.submitLogin(email,password,rememberMe)
+		submitLogin(email,password,rememberMe)
 		// .then(response => console.log(response));
 	}
 
@@ -26,7 +26,7 @@ const LoginForm = (props) => {
 		password: Yup.string().min(8, "Must be longer than 8 characters").required('Required')
 	})
 
-	let error = props.error && <div className={s.submit_error}>{props.error}</div>
+	let serverErrorMessage = error && <div className={s.submit_error}>{error}</div>
 
 	return (
 		<Formik
@@ -58,7 +58,7 @@ const LoginForm = (props) => {
 						name="rememberMe"
 					/>
 				</div>
-				{error}
+				{serverErrorMessage}
 				<button type="submit">Submit</button>
 			</Form>
 		</Formik>

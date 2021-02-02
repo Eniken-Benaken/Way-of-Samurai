@@ -15,8 +15,7 @@ const initial_state = {
 			likes_count: 2
 		}
 	],
-	newPostState: '',
-	current_user: '',
+	current_visited_user: '',
 	status: '',
 		// "aboutMe": "Lorem ipsum dolor sit amet consectetur adipisicing.",
 		// "contacts": {
@@ -51,10 +50,15 @@ const profile_reducer = (state = initial_state, action) => {
 					likes_count: 0
 				}],
 			}
+		case actions.DELETE_POST:
+			return {
+				...state,
+				posts: state.posts.filter(post => post.id !== action.postId),
+			}
 		case actions.SET_USER_PROFILE:
 			return {
 				...state,
-				current_user: action.current_user
+				current_visited_user: action.current_visited_user
 			}
 		case actions.SET_STATUS:
 			return {

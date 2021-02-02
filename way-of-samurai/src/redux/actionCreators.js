@@ -1,6 +1,9 @@
 import { actions } from './actions';
 
 export const addPostActionCreator = (new_post) => ({	type: actions.ADD_POST,new_post });
+export const deletePostAC = (postId) => ({
+	type: actions.DELETE_POST, postId
+})
 
 export const sendMessageActionCreator = (new_message) => ({	type: actions.SEND_MESSAGE, new_message });
 
@@ -12,9 +15,9 @@ export const toggleIsFetching = (is_fetching) => ({ type: actions.TOGGLE_IS_FETC
 export const toggleFollowing = (user_id,is_fetching) => ({ type: actions.TOGGLE_FOLLOWING, user_id: user_id, is_fetching: is_fetching});
 
 
-export const setUserProfile = (user_id) => ({
+export const setUserProfile = (current_visited_user) => ({
 	type: actions.SET_USER_PROFILE, 
-	current_user: user_id
+	current_visited_user: current_visited_user
 })
 export const setStatus = (status) => ({
 	type: actions.SET_STATUS, 
