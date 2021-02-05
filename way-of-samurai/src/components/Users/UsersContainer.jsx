@@ -16,12 +16,7 @@ class UsersContainer extends Component {
 	}
 
 	render() {
-		let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-		let pages = [];
-		for (let i = 1; i <= pagesCount; i++) {
-			pages.push(i);
-		}
-
+		
 		const users = [...this.props.users];
 
 		const follow = (userId) => {
@@ -35,7 +30,7 @@ class UsersContainer extends Component {
 		return (
 			<>
 				{this.props.is_fetching && <Preloader />}
-				<Users users={users} pagesNumbers={pages} activePage={this.props.activePage} followUser={follow} unfollowUser={unfollow} setActivePage={this.onPageChange} is_following={this.props.is_following} />
+				<Users users={users} pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount} activePage={this.props.activePage} followUser={follow} unfollowUser={unfollow} setActivePage={this.onPageChange} portionSize={this.props.portionSize} is_following={this.props.is_following} />
 			</>
 		)
 	}
@@ -50,7 +45,8 @@ const mapStateToProps = (state) => {
 		totalUsersCount: state.users.totalUsersCount,
 		activePage: state.users.activePage,
 		is_fetching: state.users.is_fetching,
-		is_following: state.users.is_following
+		is_following: state.users.is_following,
+		portionSize: state.users.portionSize
 	});
 };
 

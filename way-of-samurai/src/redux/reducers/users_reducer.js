@@ -3,11 +3,12 @@ import { actions } from '../actions';
 
 const initial_state = {
 	users: [],
-	pageSize: 5,
-	totalUsersCount: 50,
+	pageSize: 10,
+	totalUsersCount: 501,
 	activePage: 1,
 	is_fetching: false,
-	is_following: []
+	is_following: [],
+	portionSize: 20
 };
 
 const users_reducer = (state = initial_state, action) => {
@@ -35,7 +36,6 @@ const users_reducer = (state = initial_state, action) => {
 			return {
 				...state,
 				users: [...action.users],
-				totalUsersCount: action.totalUsersCount
 			}
 		case actions.SET_CURRENT_USERS_PAGE:
 			return {
