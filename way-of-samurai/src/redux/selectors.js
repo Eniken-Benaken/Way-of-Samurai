@@ -6,6 +6,10 @@ export const getSubmitError = (state) => {
 	return state.auth.submit_error
 }
 
+export const getSubmitErrorCode = (state) => {
+	return state.auth.submit_error_code
+}
+
 export const getCurrentRoute = (state) => {
 	return state.app.current_route
 }
@@ -20,6 +24,10 @@ export const getCurrentUserEmail = (state) => {
 
 export const getCurrentUserId = (state) => {
 	return state.auth.id
+}
+
+export const getCaptchaUrl = (state) => {
+	return state.auth.captcha_url
 }
 
 export const getCurrentVisitedUserId = (state) => {

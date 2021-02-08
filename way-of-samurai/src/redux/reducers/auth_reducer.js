@@ -7,18 +7,18 @@ const initial_state = {
 	is_auth: false,
 	checking_auth: false,
 	submit_error: '',
+	submit_error_code: '',
+	captcha_url: null
 };
 
 const auth_reducer = (state = initial_state, action) => {
 	switch (action.type) {
 		case actions.SET_AUTH_DATA:
-			console.log('auth_reducer.SET_AUTH_DATA - prev.state+action.data',state,action.data);
 			return {
 				...state,
 				...action.data
 			}
 		case actions.SET_IS_AUTH:
-			console.log('auth_reducer.SET_IS_AUTH - prev.state+action.is_auth',state,action.is_auth);
 			return {
 				...state,
 				is_auth: action.is_auth
@@ -29,10 +29,16 @@ const auth_reducer = (state = initial_state, action) => {
 				checking_auth: action.checking_auth
 			}
 		case actions.STOP_SUBMIT:
-			// console.log(state,action.submit_error);
 			return {
 				...state,
-				submit_error: action.submit_error
+				submit_error: action.submit_error,
+				submit_error_code: action.submit_error_code
+			}
+		case actions.SET_CAPTCHA_URL:
+			return {
+				...state,
+				captcha_url: action.captcha_url,
+				submit_error_code: ''
 			}
 		default:
 			return state

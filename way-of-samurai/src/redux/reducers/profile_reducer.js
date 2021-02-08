@@ -17,25 +17,26 @@ const initial_state = {
 	],
 	current_visited_user: '',
 	status: '',
-		// "aboutMe": "Lorem ipsum dolor sit amet consectetur adipisicing.",
-		// "contacts": {
-		// 	"facebook": "facebook.com",
-		// 	"website": null,
-		// 	"vk": "vk.com/dimych",
-		// 	"twitter": "https://twitter.com/@sdf",
-		// 	"instagram": "instagra.com/sds",
-		// 	"youtube": null,
-		// 	"github": "github.com",
-		// 	"mainLink": null
-		// },
-		// "lookingForAJob": true,
-		// "lookingForAJobDescription": "не ищу, а дурачусь",
-		// "fullName": "dem pigeon",
-		// "userId": 0,
-		// "photos": {
-		// 	"small": "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
-		// 	"large": "https://i.guim.co.uk/img/media/d31ebd49b32a5aa609a584ababb1e03bc70b4942/573_213_2929_1758/master/2929.jpg?width=445&quality=45&auto=format&fit=max&dpr=2&s=a54fc963e39dd6645fce012663ed13c1"
-		// }
+	isFetching: false,
+	// "aboutMe": "",
+	// "contacts": {
+	// 	"facebook": "",
+	// 	"website": "",
+	// 	"vk": "",
+	// 	"twitter": "",
+	// 	"instagram": "",
+	// 	"youtube": "",
+	// 	"github": "",
+	// 	"mainLink": ""
+	// },
+	// "lookingForAJob": false,
+	// "lookingForAJobDescription": "",
+	// "fullName": "",
+	// "userId": "",
+	// "photos": {
+	// 	"small": "",
+	// 	"large": ""
+	// }
 };
 
 const profile_reducer = (state = initial_state, action) => {
@@ -43,7 +44,7 @@ const profile_reducer = (state = initial_state, action) => {
 		case actions.ADD_POST:
 			return {
 				...state,
-				posts: [...state.posts,{
+				posts: [...state.posts, {
 					id: state.posts.length + 1,
 					author: "Dem Pigoen",
 					post_content: action.new_post,
@@ -70,6 +71,8 @@ const profile_reducer = (state = initial_state, action) => {
 				...state,
 				is_fetching: action.is_fetching
 			}
+		case actions.SET_USER_INFO:
+			console.log("profile_reducer dispatch SET_USER_INFO call with action data: ",action.current_visited_user_changes);
 		default:
 			return state
 	}

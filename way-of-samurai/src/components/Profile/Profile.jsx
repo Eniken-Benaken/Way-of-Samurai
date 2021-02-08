@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import s from './Profile.module.css';
 import MyPostsContainer from './Posts/MyPostsContainer';
-import ProfileInfo from './ProfileInfo/ProfileInfo';
+import ProfileInfoContainer from './ProfileInfo/ProfileInfoContainer';
 
-const Profile = ({current_visited_user,isFetching,status,updateStatus,setCurrentRoute,user_id}) => {
-	setCurrentRoute("/profile");
-	return(
+const Profile = (props) => {
+	let [editMode,setEditMode] = useState(false);
+
+	if(editMode) return (<main className={s.profile_wrapper}>
+		<ProfileInfoContainer {...props} editMode={editMode} setEditMode={setEditMode}/>
+	</main>)
+	else return(
 		<main className={s.profile_wrapper}>
-			<ProfileInfo current_visited_user={current_visited_user} isFetching={isFetching} status={status} updateStatus={updateStatus} user_id={user_id} />
+			<ProfileInfoContainer {...props} editMode={editMode} setEditMode={setEditMode}/>
 			<MyPostsContainer />
 		</main>
 	);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 const Status = ({ statusText, ownProfile, updateStatus }) => {
 	const [status, setStatus] = useState(statusText)
-	const [editMode, setEditMode] = useState(statusText)
+	const [editMode, setEditMode] = useState(false)
 
 	if (status === '' && ownProfile) {
 		setStatus('Double-click here to add status');

@@ -4,6 +4,9 @@ export const addPostActionCreator = (new_post) => ({	type: actions.ADD_POST,new_
 export const deletePostAC = (postId) => ({
 	type: actions.DELETE_POST, postId
 })
+// export const savePhotoSuccess = (photos) => ({
+// 	type: actions.SAVE_PHOTO, photos
+// })
 
 export const sendMessageActionCreator = (new_message) => ({	type: actions.SEND_MESSAGE, new_message });
 
@@ -18,6 +21,10 @@ export const toggleFollowing = (user_id,is_fetching) => ({ type: actions.TOGGLE_
 export const setUserProfile = (current_visited_user) => ({
 	type: actions.SET_USER_PROFILE, 
 	current_visited_user: current_visited_user
+})
+export const setUserInfo = (current_visited_user_changes) => ({
+	type: actions.SET_USER_INFO, 
+	current_visited_user_changes: current_visited_user_changes
 })
 export const setStatus = (status) => ({
 	type: actions.SET_STATUS, 
@@ -41,9 +48,14 @@ export const toggleCkeckingAuth = (checking_auth) => ({
 	type: actions.SET_IS_AUTH,
 	checking_auth: checking_auth
 })
-export const stopSubmit = (error) => ({
+export const stopSubmit = (error,error_code) => ({
 	type: actions.STOP_SUBMIT,
-	submit_error: error
+	submit_error: error,
+	submit_error_code: error_code
+})
+export const getCaptchaUrlSuccess = (captcha_url) => ({
+	type: actions.SET_CAPTCHA_URL,
+	captcha_url: captcha_url
 })
 
 export const initApp = (initialized) => ({

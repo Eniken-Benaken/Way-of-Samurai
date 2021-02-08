@@ -1,5 +1,5 @@
-import { authAPI, profileAPI, usersAPI } from "../api/API";
-import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, setStatus, stopSubmit, initApp } from "./actionCreators";
+import { authAPI, profileAPI, usersAPI,securityAPI } from "../api/API";
+import { setUsers, toggleFollowing, toggleIsFetching, followUserAC, unfollowUserAC, setCurrentUsersPage, setUserProfile, setAuthData, setIsAuth, setStatus, stopSubmit, initApp, getCaptchaUrlSuccess } from "./actionCreators";
 
 const followUnfollowFlow = async (dispatch, userId, AC, APImethod) => {
 dispatch(toggleFollowing(userId, true));
@@ -39,6 +39,16 @@ export const updateStatus = (status) => async (dispatch) => {
 	const response = await profileAPI.setStatus(status)
 	if (response.status === 200) dispatch(setStatus(status));
 }
+export const getCaptcha = () => async (dispatch) => {
+	const captcha_url = await securityAPI.getCaptchaUrl()	
+	if (captcha_url) dispatch(getCaptchaUrlSuccess(captcha_url));
+	else console.log("AIN'T GET ANY CAPTCHA");
+}
+export const savePhoto = (photo,userId) => async (dispatch) => {
+	const response = await profileAPI.setProfilePhoto(photo)
+	console.log(response.data);
+	if (response.data.resultCode === 0) dispatch(getUserData(userId));
+}
 
 export const getAuthData = () => async (dispatch) => {
 	const data = await authAPI.getAuthData()
@@ -50,9 +60,9 @@ export const getAuthData = () => async (dispatch) => {
 	return data;
 }
 
-export const submitLogin = (email, password, rememberMe) => {
+export const submitLogin = (email, password, rememberMe, captcha) => {
 	return (dispatch) => {
-		authAPI.sendLoginData(email, password, rememberMe).then(
+		authAPI.sendLoginData(email, password, rememberMe, captcha).then(
 			response => {
 				// console.log("submitLogin thunk - response.data - ", response);
 				if (response.data.resultCode === 0) {
@@ -70,7 +80,7 @@ export const submitLogin = (email, password, rememberMe) => {
 						});
 				}
 				else {
-					dispatch(stopSubmit(response.data.messages.toString()))
+					dispatch(stopSubmit(response.data.messages.toString(),response.data.resultCode))
 				}
 			}
 		)
@@ -103,6 +113,9 @@ export const signOut = () => {
 }
 
 export const init_app = () => async (dispatch) => {
-	await dispatch(getAuthData())
+	const response = await dispatch(getAuthData());
+	if(response.resultCode === 0) {
+		dispatch(getUserData(response.data.id));
+	}
 	dispatch(initApp(true));
 }
