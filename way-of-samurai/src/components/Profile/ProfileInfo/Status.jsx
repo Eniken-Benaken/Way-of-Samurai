@@ -1,9 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
 
-const Status = ({ statusText, ownProfile, updateStatus }) => {
+const Status = ({ statusText, ownProfile, updateStatus, serverErrorMessage }) => {
 	const [status, setStatus] = useState(statusText)
 	const [editMode, setEditMode] = useState(false)
+	const [error,setError] = useState(serverErrorMessage)
 
 	if (status === '' && ownProfile) {
 		setStatus('Double-click here to add status');

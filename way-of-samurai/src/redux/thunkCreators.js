@@ -36,8 +36,14 @@ export const getUserData = (userId) => async (dispatch) => {
 	else dispatch(setStatus(response.statusText))
 }
 export const updateStatus = (status) => async (dispatch) => {
+	try {
 	const response = await profileAPI.setStatus(status)
-	if (response.status === 200) dispatch(setStatus(status));
+	console.log(response);
+	if (response.data.resultCode === 0) dispatch(setStatus(status));
+}
+catch(error) {
+		console.log(error);
+	}
 }
 export const getCaptcha = () => async (dispatch) => {
 	const captcha_url = await securityAPI.getCaptchaUrl()	

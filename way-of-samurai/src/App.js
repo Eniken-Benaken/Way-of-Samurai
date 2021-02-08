@@ -3,7 +3,7 @@ import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import NewsContainer from './components/News/NewsContainer';
 import UsersContainer from './components/Users/UsersContainer';
@@ -29,6 +29,7 @@ class App extends Component {
 				<HeaderContainer />
 				<SidebarContainer />
 				<div className="main_wrapper">
+				<Switch>
 					<Route
 						exact path='/'
 						render={withSuspense(ProfileContainer)}
@@ -61,6 +62,7 @@ class App extends Component {
 						path='/login'
 						render={() => <LoginPage />}
 					/>
+					</Switch>
 				</div>
 			</div>
 		);
