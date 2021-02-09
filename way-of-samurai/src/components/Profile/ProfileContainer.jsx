@@ -5,36 +5,62 @@ import { setCurrentRoute } from '../../redux/actionCreators';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
-import { getCurrentVisitedUserId, getIsFetchingProfileData, getCurrentVisitedUserstatus, getCurrentUserId, getCurrentRoute } from '../../redux/selectors';
+import { getCurrentVisitedUserId, getIsFetchingProfileData, getCurrentVisitedUserstatus, getCurrentUserId, getCurrentRoute, getIsAuth } from '../../redux/selectors';
+
+import facebookIcon from '../../assets/images/008-facebook.svg';
+import websiteIcon from '../../assets/images/006-web-page.svg';
+import vkIcon from '../../assets/images/005-vk.svg';
+import twitterIcon from '../../assets/images/003-twitter.svg';
+import instagramIcon from '../../assets/images/001-instagram.svg';
+import youtubeIcon from '../../assets/images/002-youtube.svg';
+import githubIcon from '../../assets/images/007-github-logo.svg';
+import mainLinkIcon from '../../assets/images/004-network.svg';
 import Preloader from '../common/Preloader';
+import { Redirect } from 'react-router-dom';
 
 class ProfileContainer extends Component {
+	ownProfile;
+	icons = {
+	facebookIcon,
+	websiteIcon,
+	vkIcon,
+	twitterIcon,
+	instagramIcon,
+	youtubeIcon,
+	githubIcon,
+	mainLinkIcon
+}
 	componentDidMount() {
 		this.initProfile();
 	}
 
+	shouldComponentUpdate(nextProps,nextState) {
+		return nextProps.match.params.userId !== this.props.match.params.userId || nextProps.status !== this.props.status || nextProps.user_id !== this.props.user_id || nextProps.current_visited_user !== this.props.current_visited_user || nextProps.is_auth !== this.props.is_auth
+	}
+
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		const userIds_are_not_equal = prevProps.match.params.userId !== this.props.match.params.userId;
-		// const current_user_photo_changed = prevProps.current_visited_user.photos.large !== this.props.current_visited_user.photos.large;
-		const current_user_status_changed = prevProps.status !== this.props.status;
-		const somethingChanged = userIds_are_not_equal || /*current_user_photo_changed ||*/ current_user_status_changed;
-		somethingChanged && this.initProfile()
+		this.initProfile()
 	}
 
 	initProfile() {
 		let { userId } = this.props.match.params;
 		if (!userId) {
 			if (this.props.current_route !== `/profile`) this.props.setCurrentRoute(`/profile`)
-			this.props.getUserData(this.props.user_id);
+			if(!this.ownProfile)this.props.getUserData(this.props.user_id);
+			this.ownProfile = true;
 		}
 		else {
+			this.ownProfile = false;
 			if (this.props.current_route !== `/profile/${userId}`) this.props.setCurrentRoute(`/profile/${userId}`)
+			else return
 			this.props.getUserData(userId);
 		}
 	}
 
+	
 	render() {
-		return <Profile {...this.props} />
+		if(this.ownProfile && !this.props.is_auth) return <Redirect to="/login" />
+		return <Profile {...this.props} ownProfile={this.ownProfile} icons={this.icons} />
 	}
 }
 
@@ -46,12 +72,12 @@ const mapStateToProps = (state) => {
 			is_fetching: getIsFetchingProfileData(state),
 			status: getCurrentVisitedUserstatus(state),
 			user_id: getCurrentUserId(state),
-			current_route: getCurrentRoute(state)
+			current_route: getCurrentRoute(state),
+			is_auth: getIsAuth(state)
 		}
 	)
 }
 
 export default compose(
 	connect(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, getCurrentRoute, savePhoto, getAuthData }),
-	withAuthRedirect
 )(ProfileContainer);

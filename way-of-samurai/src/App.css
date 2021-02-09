@@ -28,3 +28,7 @@ body {
 	background-color: #f9fbfb;
 	margin-top: -10px;
 }
+
+#root {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

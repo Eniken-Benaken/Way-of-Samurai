@@ -16,8 +16,10 @@ const Dialogs = ({dialogs:{dialogs,messages},sendMessage,setCurrentRoute}) => {
 
 	return (
 		<div className={s.dialogs_wrapper}>
-			<div className={s.dialog_items}>
-				{dialogsArray.map(d => <Dialog key={d.id} id={d.id} dialog_name={d.dialog_name} dialog_avatar={d.dialog_avatar} />)}
+			<div className={s.dialog_items_wrapper}>
+				<div className={s.dialog_items}>
+					{dialogsArray.map(d => <Dialog key={d.id} id={d.id} dialog_name={d.dialog_name} dialog_avatar={d.dialog_avatar} />)}
+				</div>
 			</div>
 			<div className={s.messages}>
 				{messagesArray.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}

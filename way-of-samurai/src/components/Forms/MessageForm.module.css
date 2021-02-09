@@ -1,0 +1,16 @@
+.send_message_form {
+	display: grid;
+	padding: 10px;
+	padding-bottom: 0;
+}
+
+.send_message_input textarea {
+	width: 99%;
+	min-height: 35px;
+	border-radius: 4px;
+	border: 1px solid #cedfd9;
+}
+
+.send_message_button {
+	justify-self: end;
+}

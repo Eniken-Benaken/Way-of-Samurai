@@ -8,14 +8,15 @@ import {setUserInfo} from './../../../redux/actionCreators';
 import { profileAPI } from '../../../api/API';
 import { useDispatch } from 'react-redux';
 
-const ProfileInfoContainer = ({ current_visited_user, isFetching, status, updateStatus, user_id, savePhoto, editMode, setEditMode }) => {
 
+const ProfileInfoContainer = ({ current_visited_user, isFetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
+	
+	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState(null);
 	const dispatch = useDispatch();
 
 	if (isFetching) return <Preloader />
 	if (!current_visited_user) return <Preloader />
-	let ownProfile = current_visited_user.userId === user_id;
 
 	let is_looking = current_visited_user.lookingForAJob
 		? <span className={s.looking_for_job}>🤑</span>
@@ -25,10 +26,9 @@ const ProfileInfoContainer = ({ current_visited_user, isFetching, status, update
 	for (let contact in current_visited_user.contacts) {
 		if (current_visited_user.contacts[contact]) {
 			contacts.push(
-				<div key={contact} className={s.contact}>{`${contact}: ${current_visited_user.contacts[contact]}`}</div>
+				<a key={contact} className={s.contact} href={current_visited_user.contacts[contact]}><img className={s.contact_icon} src={icons[`${contact}Icon`]} alt={contact} title={contact} /></a>
 			)
 		}
-		else { contacts.push(<div key={contact} className={s.contact}>{`${contact}: --`}</div>) }
 	}
 
 	let avatar = current_visited_user.photos.large

@@ -5,6 +5,11 @@
 .pagination .page {
 	border-bottom: 1px solid rgb(0, 210, 238);
 	cursor: pointer;
+	margin-left: 2px;
+}
+
+.pagination .page {
+	margin-right: 2px;
 }
 
 .pagination .activePage {

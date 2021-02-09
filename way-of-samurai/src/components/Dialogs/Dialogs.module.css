@@ -7,11 +7,16 @@
 	box-shadow: rgba(0,0,0,0.2) 1px 1px 4px;
 }
 
+.dialog_items_wrapper { 
+	display: grid;
+	border-right: 1px solid #bee6fc;
+}
+
 .dialog_items {
+	align-self: start;
 	padding: 10px 0;
 	display     : grid;
 	font-size   : 1.3rem;
-	border-right: 1px solid #5cc6fe;
 }
 
 .messages {

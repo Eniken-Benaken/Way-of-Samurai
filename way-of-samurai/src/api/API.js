@@ -23,7 +23,7 @@ export const usersAPI = {
 
 export const profileAPI = {
 	getUserData(userId) {
-		return a.get(`profile/${userId}`).then(response => response.data)
+		return a.get(`profile/${userId}`).then(response => response.data).catch(e => {console.error(e)})
 	},
 	getStatus(userId=14327) {
 		return a.get(`profile/status/${userId}`)

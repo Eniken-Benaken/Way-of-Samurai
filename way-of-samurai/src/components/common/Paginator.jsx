@@ -8,7 +8,6 @@ const Paginator = ({ totalItemsCount,pageSize, activePage, setActivePage, portio
 	for (let i = 1; i <= pagesCount; i++) {
 		pages.push(i);
 	}
-
 	
 	let portionsCount = Math.ceil(pagesCount/portionSize);
 	let [portionNumber, setPortionNumber] = useState(1);
