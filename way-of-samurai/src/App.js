@@ -56,7 +56,7 @@ class App extends Component {
 					/>
 					<Route
 						path='/users'
-						render={() => <UsersContainer />}
+						render={() => <UsersContainer haha="haha" />}
 					/>
 					<Route
 						path='/login'

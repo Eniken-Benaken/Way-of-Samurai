@@ -1,10 +1,18 @@
 import s from './Paginator.module.css';
 import React, { useEffect, useState } from 'react';
 
-const Paginator = ({ totalItemsCount,page_size, active_page, setactive_page, portion_size }) => {
-	let pagesCount = Math.ceil(totalItemsCount / page_size);
+type PropsType = {
+	total_items_count: number,
+	page_size: number,
+	active_page: number,
+	set_active_page: (pageNumber: number) => void,
+	portion_size: number
+}
 
-	let pages = [];
+const Paginator : React.FC<PropsType> = ({ total_items_count,page_size, active_page, set_active_page, portion_size }) => {
+	let pagesCount = Math.ceil(total_items_count / page_size);
+
+	let pages: Array<number> = [];
 	for (let i = 1; i <= pagesCount; i++) {
 		pages.push(i);
 	}
@@ -23,7 +31,7 @@ const Paginator = ({ totalItemsCount,page_size, active_page, setactive_page, por
 		if (pageNumber === active_page) {
 			return <span key={pageNumber} className={`${s.page} ${s.active_page}`}>{pageNumber}</span>
 		}
-		return <span key={pageNumber} className={s.page} onClick={() => { setactive_page(pageNumber) }}>{pageNumber}</span>
+		return <span key={pageNumber} className={s.page} onClick={() => { set_active_page(pageNumber) }}>{pageNumber}</span>
 	});
 	return (
 		<div className={s.pagination}>

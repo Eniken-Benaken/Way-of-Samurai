@@ -4,9 +4,9 @@ import { actions } from '../actions';
 
 type users_type = {
 	users: Array<userType>,
-	page_size: number|null,
-	total_users_count: number|null,
-	active_page: number|null,
+	page_size: number,
+	total_users_count: number,
+	active_page: number,
 	is_fetching: boolean,
 	is_following: Array<number>,
 	portion_size: number

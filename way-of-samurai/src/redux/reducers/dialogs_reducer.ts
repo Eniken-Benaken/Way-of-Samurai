@@ -14,13 +14,13 @@ type messages_item_type = {
 	author_name: string,
 }
 
-type dialogs_initial_state_type = {
+type dialogs_type = {
 	dialogs: Array<dialogs_item_type>,
 	messages: Array<messages_item_type>,
 	newMessageState: string
 }
 
-const initial_state: dialogs_initial_state_type =  {
+const initial_state: dialogs_type =  {
 	dialogs: [
 		{ id: "pavlo", dialog_name: "Pavlo", dialog_avatar: "https://static.wikia.nocookie.net/this-war-of-mine/images/7/7e/70px-Pavle.jpg" },
 		{ id: "meyrin", dialog_name: "Meyrin", dialog_avatar: "https://static.wikia.nocookie.net/this-war-of-mine/images/d/de/70px-Marin.jpg" },
@@ -53,7 +53,7 @@ const dialogs_reducer = (state = initial_state,action: sendMessageType) => {
 					message: action.new_message,
 				}],
 				newMessageState: ""
-			} as dialogs_initial_state_type
+			} as dialogs_type
 		default:
 			return state;
 	}

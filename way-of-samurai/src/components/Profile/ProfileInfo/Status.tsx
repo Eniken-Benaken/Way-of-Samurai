@@ -1,7 +1,13 @@
 import s from './ProfileInfo.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 
-const Status = ({ statusText, ownProfile, updateStatus, /*serverErrorMessage*/ }) => {
+type PropsType = {
+	statusText: string,
+	ownProfile: boolean,
+	updateStatus: (status: string) => void
+}
+
+const Status: FC<PropsType> = ({ statusText, ownProfile, updateStatus, /*serverErrorMessage*/ }) => {
 	const [status, setStatus] = useState(statusText)
 	const [editMode, setEditMode] = useState(false)
 	// const [error,setError] = useState(serverErrorMessage)
@@ -18,7 +24,7 @@ const Status = ({ statusText, ownProfile, updateStatus, /*serverErrorMessage*/ }
 		setEditMode(!editMode);
 	}
 
-	const handleStatusChange = (e) => {
+	const handleStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setStatus(e.target.value)
 	}
 

@@ -1,4 +1,3 @@
-import { initAppType, setCurrentRouteType } from './../actionCreators';
 import { actions } from '../actions';
 
 
@@ -8,7 +7,9 @@ const initial_state = {
 	current_route: ''
 };
 
-const app_reducer = (state = initial_state, action: any):typeof initial_state => {
+type appType = typeof initial_state
+
+const app_reducer = (state = initial_state, action: any): appType => {
 	switch (action.type) {
 		case actions.INIT_APP:
 			console.log('app_reducer.INIT_APP - prev.state+action.initialized',state,action.initialized);

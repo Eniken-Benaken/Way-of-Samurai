@@ -11,7 +11,9 @@ const initial_state = {
 	captcha_url: null as null | string
 };
 
-const auth_reducer = (state = initial_state, action: any):typeof initial_state => {
+type authType = typeof initial_state;
+
+const auth_reducer = (state = initial_state, action: any): authType => {
 	switch (action.type) {
 		case actions.SET_AUTH_DATA:
 			return {
