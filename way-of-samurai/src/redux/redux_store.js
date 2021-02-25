@@ -1,11 +1,11 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
-import dialogs_reducer from './reducers/dialogs_reducer';
-import news_reducer from './reducers/news_reducer';
-import profile_reducer from './reducers/profile_reducer';
-import sidebar_reducer from './reducers/sidebar_reducer';
-import users_reducer from './reducers/users_reducer';
-import auth_reducer from './reducers/auth_reducer';
-import app_reducer from './reducers/app_reducer';
+import dialogs_reducer from './reducers/dialogs_reducer.ts';
+import news_reducer from './reducers/news_reducer.ts';
+import profile_reducer from './reducers/profile_reducer.ts';
+import sidebar_reducer from './reducers/sidebar_reducer.ts';
+import users_reducer from './reducers/users_reducer.ts';
+import auth_reducer from './reducers/auth_reducer.ts';
+import app_reducer from './reducers/app_reducer.ts';
 import thunkMiddleWare from 'redux-thunk';
 
 let reducers = combineReducers({

@@ -1,17 +1,17 @@
 import { actions } from '../actions';
 
 const initial_state = {
-	id: null,
-	email: null,
-	login: null,
+	id: null as null | number,
+	email: null as null | string,
+	login: null as null | string,
 	is_auth: false,
 	checking_auth: false,
 	submit_error: '',
 	submit_error_code: '',
-	captcha_url: null
+	captcha_url: null as null | string
 };
 
-const auth_reducer = (state = initial_state, action) => {
+const auth_reducer = (state = initial_state, action: any):typeof initial_state => {
 	switch (action.type) {
 		case actions.SET_AUTH_DATA:
 			return {

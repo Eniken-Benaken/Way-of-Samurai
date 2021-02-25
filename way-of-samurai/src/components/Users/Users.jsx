@@ -3,10 +3,10 @@ import User from './User/User';
 import React from 'react';
 import Paginator from '../common/Paginator';
 
-const Users = ({users, pageSize, totalUsersCount, activePage, setActivePage, followUser, unfollowUser, is_following, portionSize}) => {
+const Users = ({users, page_size, total_users_count, active_page, setactive_page, followUser, unfollowUser, is_following, portion_size}) => {
 	return (
 		<div className={s.users}>
-			<Paginator pageSize={pageSize} activePage={activePage} setActivePage={setActivePage} totalItemsCount={totalUsersCount} portionSize={portionSize} />
+			<Paginator page_size={page_size} active_page={active_page} setactive_page={setactive_page} totalItemsCount={total_users_count} portion_size={portion_size} />
 			{users.map(u => {
 				let is_follow = false;
 				for (let user of is_following) {

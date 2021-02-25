@@ -1,6 +1,24 @@
 import {actions} from '../actions';
 
-const initial_state = {
+type friendType = {
+	id: number,
+	friend_avatar: string,
+	friend_name: string
+}
+
+type menuItemType = {
+	id: number,
+	icon: string,
+	item: string,
+	path: string
+}
+
+type sidebar_type = {
+	friends: Array<friendType>,
+	menu_items: Array<menuItemType>
+}
+
+const initial_state: sidebar_type = {
 	friends: [
 		{
 			id: 1,
@@ -58,7 +76,7 @@ const initial_state = {
 	]
 };
 
-const sidebar_reducer = (state = initial_state,action) => {
+const sidebar_reducer = (state = initial_state,action: any):sidebar_type => {
 	return state;
 }
 

@@ -1,52 +1,52 @@
+import { currentVisitedUserType } from './../actionCreators';
 import { actions } from '../actions';
 
-const initial_state = {
+type postType = {
+	id: number,
+	author_name: string,
+	author_id: number,
+	post_content: string,
+	likes_count: number
+}
+
+type profile_type = {
+	posts: Array<postType>,
+	current_visited_user: null|currentVisitedUserType,
+	status: string,
+	is_fetching: boolean
+}
+
+const initial_state:profile_type = {
 	posts: [
 		{
 			id: 1,
-			author: "Dem Pigeon",
+			author_name: "Dem Pigeon",
+			author_id: 14327,
 			post_content: "Hey, My name is Dem Pigeon",
 			likes_count: 13
 		},
 		{
 			id: 2,
-			author: "Dem Pigeon",
+			author_name: "Dem Pigeon",
+			author_id: 14327,
 			post_content: "This is my first post",
 			likes_count: 2
 		}
 	],
-	current_visited_user: '',
+	current_visited_user: null,
 	status: '',
-	isFetching: false,
-	// "aboutMe": "",
-	// "contacts": {
-	// 	"facebook": "",
-	// 	"website": "",
-	// 	"vk": "",
-	// 	"twitter": "",
-	// 	"instagram": "",
-	// 	"youtube": "",
-	// 	"github": "",
-	// 	"mainLink": ""
-	// },
-	// "lookingForAJob": false,
-	// "lookingForAJobDescription": "",
-	// "fullName": "",
-	// "userId": "",
-	// "photos": {
-	// 	"small": "",
-	// 	"large": ""
-	// }
+	is_fetching: false
 };
 
-const profile_reducer = (state = initial_state, action) => {
+const profile_reducer = (state = initial_state, action: any):profile_type => {
 	switch (action.type) {
 		case actions.ADD_POST:
 			return {
 				...state,
 				posts: [...state.posts, {
 					id: state.posts.length + 1,
-					author: "Dem Pigoen",
+					author_name: "Dem Pigoen",
+					author_id: 14327,
 					post_content: action.new_post,
 					likes_count: 0
 				}],
@@ -71,8 +71,8 @@ const profile_reducer = (state = initial_state, action) => {
 				...state,
 				is_fetching: action.is_fetching
 			}
-		case actions.SET_USER_INFO:
-			console.log("profile_reducer dispatch SET_USER_INFO call with action data: ",action.current_visited_user_changes);
+		// case actions.SET_USER_INFO:
+		// 	console.log("profile_reducer dispatch SET_USER_INFO call with action data: ",action.current_visited_user);
 		default:
 			return state
 	}

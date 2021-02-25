@@ -13,6 +13,6 @@
 	cursor: pointer;
 }
 
-.pagination .activePage {
+.pagination .active_page {
 	border-bottom: 4px solid rgb(0, 210, 238);
 }

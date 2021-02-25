@@ -19,7 +19,7 @@ const initial_state = {
 	]
 };
 
-const news_reducer = (state = initial_state,action) => {
+const news_reducer = (state = initial_state,action:any):typeof initial_state => {
 	return state;
 }
 

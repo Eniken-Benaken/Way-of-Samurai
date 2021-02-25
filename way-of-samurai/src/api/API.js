@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const a = axios.create({
 	baseURL: "https://social-network.samuraijs.com/api/1.0/",
 	withCredentials: true,
@@ -9,8 +8,8 @@ const a = axios.create({
 })
 
 export const usersAPI = {
-	getUsers(pageNumber = 1,pageSize = 50) {
-		return a.get(`users?page=${pageNumber}&count=${pageSize}`)
+	getUsers(pageNumber = 1,page_size = 50) {
+		return a.get(`users?page=${pageNumber}&count=${page_size}`)
 		.then(response => response.data)
 	},
 	followUser(userId) {

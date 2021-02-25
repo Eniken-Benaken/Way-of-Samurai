@@ -73,13 +73,6 @@
 	margin-bottom: 5px;
 }
 
-.description_block button {
-	display: block;
-	position: absolute;
-	right: 10px;
-	bottom: 10px;
-}
-
 .description_content {
 	margin-bottom: 5px;
 }
@@ -105,6 +98,13 @@
 
 .contact img {
 	width: 35px;
+}
+
+.change_info_button {
+	display: block;
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
 }
 
 .icons_author {

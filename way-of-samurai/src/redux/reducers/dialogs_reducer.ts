@@ -1,6 +1,26 @@
+import { sendMessageType } from '../actionCreators';
 import {actions} from '../actions';
 
-const initial_state =  {
+type dialogs_item_type = {
+	id: string,
+	dialog_name: string,
+	dialog_avatar: string
+}
+
+type messages_item_type = {
+	message_id: number,
+	message: string,
+	author_id: number | string,
+	author_name: string,
+}
+
+type dialogs_initial_state_type = {
+	dialogs: Array<dialogs_item_type>,
+	messages: Array<messages_item_type>,
+	newMessageState: string
+}
+
+const initial_state: dialogs_initial_state_type =  {
 	dialogs: [
 		{ id: "pavlo", dialog_name: "Pavlo", dialog_avatar: "https://static.wikia.nocookie.net/this-war-of-mine/images/7/7e/70px-Pavle.jpg" },
 		{ id: "meyrin", dialog_name: "Meyrin", dialog_avatar: "https://static.wikia.nocookie.net/this-war-of-mine/images/d/de/70px-Marin.jpg" },
@@ -17,9 +37,11 @@ const initial_state =  {
 		{ message_id: 5, message: "Smoke is soothing me.", author_id: 0, author_name: "Dem Pigeon" },
 		{ message_id: 6, message: "I hope we will be able to warm up this shelter", author_id: "pavlo", author_name: "Pavlo" }
 	],
+	newMessageState: ""
 };
 
-const dialogs_reducer = (state = initial_state,action) => {
+
+const dialogs_reducer = (state = initial_state,action: sendMessageType) => {
 	switch (action.type) {
 		case actions.SEND_MESSAGE:
 			return {
@@ -31,7 +53,7 @@ const dialogs_reducer = (state = initial_state,action) => {
 					message: action.new_message,
 				}],
 				newMessageState: ""
-			}
+			} as dialogs_initial_state_type
 		default:
 			return state;
 	}

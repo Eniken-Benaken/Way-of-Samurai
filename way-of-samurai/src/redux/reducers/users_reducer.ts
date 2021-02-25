@@ -1,31 +1,33 @@
 import { updateObjectInArray } from '../../components/common/object-helpers';
+import { userType } from '../actionCreators';
 import { actions } from '../actions';
 
-const initial_state = {
+type users_type = {
+	users: Array<userType>,
+	page_size: number|null,
+	total_users_count: number|null,
+	active_page: number|null,
+	is_fetching: boolean,
+	is_following: Array<number>,
+	portion_size: number
+}
+
+const initial_state: users_type = {
 	users: [],
-	pageSize: 10,
-	totalUsersCount: 501,
-	activePage: 1,
+	page_size: 10,
+	total_users_count: 501,
+	active_page: 1,
 	is_fetching: false,
 	is_following: [],
-	portionSize: 20
+	portion_size: 20
 };
 
-const users_reducer = (state = initial_state, action) => {
+const users_reducer = (state = initial_state, action:any):users_type => {
 	switch (action.type) {
 		case actions.FOLLOW_USER:
 			return {
 				...state,
 				users: updateObjectInArray(state.users, action.user_id, 'id', {followed: true})
-				// users: state.users.map(user => {
-				// 	if (user.id === action.user_id && !user.followed) {
-				// 		return {
-				// 			...user,
-				// 			followed: true
-				// 		}
-				// 	}
-				// 	else return user
-				// })
 			}
 		case actions.UNFOLLOW_USER:
 			return {
@@ -40,7 +42,7 @@ const users_reducer = (state = initial_state, action) => {
 		case actions.SET_CURRENT_USERS_PAGE:
 			return {
 				...state,
-				activePage: action.activePage
+				active_page: action.active_page
 			}
 		case actions.TOGGLE_IS_FETCHING:
 			return {

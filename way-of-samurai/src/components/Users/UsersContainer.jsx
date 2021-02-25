@@ -8,11 +8,11 @@ import { compose } from 'redux';
 
 class UsersContainer extends Component {
 	componentDidMount() {
-		this.props.getUsers(this.props.activePage,this.props.pageSize);
+		this.props.getUsers(this.props.active_page,this.props.page_size);
 	}
 
 	onPageChange = (pageNumber) => {
-		this.props.getUsers(pageNumber,this.props.pageSize);
+		this.props.getUsers(pageNumber,this.props.page_size);
 	}
 
 	render() {
@@ -30,7 +30,7 @@ class UsersContainer extends Component {
 		return (
 			<>
 				{this.props.is_fetching && <Preloader />}
-				<Users users={users} pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount} activePage={this.props.activePage} followUser={follow} unfollowUser={unfollow} setActivePage={this.onPageChange} portionSize={this.props.portionSize} is_following={this.props.is_following} />
+				<Users users={users} page_size={this.props.page_size} total_users_count={this.props.total_users_count} active_page={this.props.active_page} followUser={follow} unfollowUser={unfollow} setactive_page={this.onPageChange} portion_size={this.props.portion_size} is_following={this.props.is_following} />
 			</>
 		)
 	}
@@ -39,14 +39,15 @@ class UsersContainer extends Component {
 
 
 const mapStateToProps = (state) => {
+	const {users,page_size,total_users_count,active_page,is_fetching,is_following,portion_size} = state.users;
 	return ({
-		users: [...state.users.users],
-		pageSize: state.users.pageSize,
-		totalUsersCount: state.users.totalUsersCount,
-		activePage: state.users.activePage,
-		is_fetching: state.users.is_fetching,
-		is_following: state.users.is_following,
-		portionSize: state.users.portionSize
+		users: [...users],
+		page_size,
+		total_users_count,
+		active_page,
+		is_fetching,
+		is_following: [...is_following],
+		portion_size
 	});
 };
 

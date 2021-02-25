@@ -10,11 +10,11 @@ const followUnfollowFlow = async (dispatch, userId, AC, APImethod) => {
 	}
 }
 
-export const getUsers = (activePage, pageSize) => async (dispatch) => {
-	const data = await usersAPI.getUsers(activePage, pageSize)
+export const getUsers = (active_page, page_size) => async (dispatch) => {
+	const data = await usersAPI.getUsers(active_page, page_size)
 	if (!data.error) {
 		dispatch(setUsers(data.items));
-		dispatch(setCurrentUsersPage(activePage));
+		dispatch(setCurrentUsersPage(active_page));
 	}
 }
 export const followUser = (userId) => async (dispatch) => {

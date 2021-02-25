@@ -28,7 +28,7 @@ const ProfileInfo = ({ fullName, is_looking, avatar, ownProfile, onPhotoUpload, 
 				</div>
 				<h3 className={s.description_header}>Contacts:</h3>
 				{contacts}
-				{ownProfile && <button onClick={() => setEditMode(true)}>Change Your Info</button>}
+				{ownProfile && <button onClick={() => setEditMode(true)} className={s.change_info_button}>Change Your Info</button>}
 				
 				<div className={s.icons_author} onClick={(e) => {e.preventDefault()}}>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div className={s.icons_author} onClick={(e) => {e.preventDefault()}}>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div className={s.icons_author} onClick={(e) => {e.preventDefault()}}>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div className={s.icons_author} onClick={(e) => {e.preventDefault()}}>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div className={s.icons_author} onClick={(e) => {e.preventDefault()}}>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 			</div>

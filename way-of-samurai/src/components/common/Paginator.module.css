@@ -12,6 +12,6 @@
 	margin-right: 2px;
 }
 
-.pagination .activePage {
+.pagination .active_page {
 	border-bottom: 4px solid rgb(0, 210, 238);
 }
