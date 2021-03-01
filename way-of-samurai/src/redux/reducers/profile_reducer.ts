@@ -1,4 +1,4 @@
-import { currentVisitedUserType } from './../actionCreators';
+import { currentVisitedUserType, profileActionTypes } from './../actionCreators';
 import { actions } from '../actions';
 
 type postType = {
@@ -38,7 +38,7 @@ const initial_state:profile_type = {
 	is_fetching: false
 };
 
-const profile_reducer = (state = initial_state, action: any):profile_type => {
+const profile_reducer = (state = initial_state, action: profileActionTypes):profile_type => {
 	switch (action.type) {
 		case actions.ADD_POST:
 			return {
@@ -47,7 +47,7 @@ const profile_reducer = (state = initial_state, action: any):profile_type => {
 					id: state.posts.length + 1,
 					author_name: "Dem Pigoen",
 					author_id: 14327,
-					post_content: action.new_post,
+					post_content: action.new_post as profile,
 					likes_count: 0
 				}],
 			}
@@ -71,12 +71,8 @@ const profile_reducer = (state = initial_state, action: any):profile_type => {
 				...state,
 				is_fetching: action.is_fetching
 			}
-		// case actions.SET_USER_INFO:
-		// 	console.log("profile_reducer dispatch SET_USER_INFO call with action data: ",action.current_visited_user);
 		default:
 			return state
 	}
 }
 export default profile_reducer;
-
-// Если помог не забудь спасибо и лучший ответ)

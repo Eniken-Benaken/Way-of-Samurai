@@ -50,7 +50,6 @@ class UsersContainer extends Component<PropsType> {
 		return (
 			<>
 				{this.props.is_fetching && <Preloader />}
-				{this.props.haha}
 				<Users users={users} page_size={this.props.page_size} total_users_count={this.props.total_users_count} active_page={this.props.active_page} followUser={follow} unfollowUser={unfollow} set_active_page={this.onPageChange} portion_size={this.props.portion_size} is_following={this.props.is_following} />
 			</>
 		)
@@ -71,7 +70,7 @@ function mapStateToProps (state: AppStateType): MapStatePropsType {
 };
 
 export default compose (
-	connect<MapStatePropsType,MapDispatchPropsType,OwnPropsType>(mapStateToProps, { //JS looks for equal named imports(varibles)
+	connect<MapStatePropsType,MapDispatchPropsType,OwnPropsType,AppStateType>(mapStateToProps, { //JS looks for equal named imports(varibles)
 		followUser, //same as followUser: followUser
 		unfollowUser, //React-redux at the same time takes these ACs
 		getUsers,//and wraps it with dispatches inside CBs

@@ -1,22 +1,74 @@
 import { actions } from './actions';
 
 
-
-
-export type addPostType = {
+type addPostType = {
 	type: typeof actions.ADD_POST,
 	new_post: string
 };
 
-export type deletePostType = {
+type deletePostType = {
 	type: typeof actions.DELETE_POST,
 	postId: number
 };
+
+export type currentVisitedUserType = {
+	aboutMe: string|null,
+	contacts: {
+		facebook: string|null,
+		website: string|null,
+		vk: string|null,
+		twitter: string|null,
+		instagram: string|null,
+		youtube: string|null,
+		github: string|null,
+		mainLink: string|null
+	},
+	lookingForAJob: boolean,
+	lookingForAJobDescription: string|null,
+	fullName: string,
+	userId: number,
+	photos: {
+		small: string|null,
+		large: string|null
+	}
+}
+
+type setUserProfileType = {
+	type: typeof actions.SET_CURRENT_USERS_PAGE,
+	current_visited_user: currentVisitedUserType
+}
+
+type setStatusType = {
+	type: typeof actions.SET_STATUS,
+	status: string
+}
+
+type toggleIsFetchingType = {
+	type: typeof actions.TOGGLE_IS_FETCHING,
+	is_fetching: boolean
+}
+
+export type profileActionTypes = addPostType | deletePostType | setUserProfileType | setStatusType | toggleIsFetchingType;
+
+
 
 export const addPostAC = (new_post: string):addPostType => ({	type: actions.ADD_POST,new_post });
 export const deletePostAC = (postId: number):deletePostType => ({
 	type: actions.DELETE_POST, postId
 })
+export const setUserProfile = (current_visited_user: currentVisitedUserType):setUserProfileType => ({
+	type: actions.SET_USER_PROFILE, 
+	current_visited_user: current_visited_user
+})
+// export const setUserInfo = (current_visited_user:currentVisitedUserType):setUserProfileType => ({
+// 	type: actions.SET_USER_INFO, 
+// 	current_visited_user
+// })
+export const setStatus = (status:string):setStatusType => ({
+	type: actions.SET_STATUS, 
+	status
+})
+export const toggleIsFetching = (is_fetching:boolean):toggleIsFetchingType => ({ type: actions.TOGGLE_IS_FETCHING,is_fetching });
 
 
 
@@ -27,6 +79,7 @@ export type sendMessageType = {
 };
 
 export const sendMessageActionCreator = (new_message: string):sendMessageType => ({	type: actions.SEND_MESSAGE, new_message });
+
 
 
 
@@ -58,10 +111,7 @@ export type setCurrentUserPageType = {
 	type: typeof actions.SET_CURRENT_USERS_PAGE,
 	active_page: number
 }
-export type toggleIsFetchingType = {
-	type: typeof actions.TOGGLE_IS_FETCHING,
-	is_fetching: boolean
-}
+
 export type toggleFollowingType = {
 	type: typeof actions.TOGGLE_IS_FETCHING,
 	is_fetching: boolean,
@@ -73,55 +123,8 @@ export const followUserAC = (user_id: number):followUserType => ({	type: actions
 export const unfollowUserAC = (user_id:number):unfollowUserType => ({	type: actions.UNFOLLOW_USER,user_id: user_id});
 export const setUsers = (users: Array<userType>):setUsersType => ({	type: actions.SET_USERS,users: users});
 export const setCurrentUsersPage = (active_page = 1):setCurrentUserPageType => ({ type: actions.SET_CURRENT_USERS_PAGE,active_page: active_page });
-export const toggleIsFetching = (is_fetching:boolean):toggleIsFetchingType => ({ type: actions.TOGGLE_IS_FETCHING,is_fetching });
 export const toggleFollowing = (user_id: number,is_fetching: boolean):toggleFollowingType => ({ type: actions.TOGGLE_FOLLOWING, user_id, is_fetching});
 
-
-
-
-export type currentVisitedUserType = {
-  aboutMe: string|null,
-  contacts: {
-    facebook: string|null,
-    website: string|null,
-    vk: string|null,
-    twitter: string|null,
-    instagram: string|null,
-    youtube: string|null,
-    github: string|null,
-    mainLink: string|null
-  },
-  lookingForAJob: boolean,
-  lookingForAJobDescription: string|null,
-  fullName: string,
-  userId: number,
-  photos: {
-    small: string|null,
-    large: string|null
-  }
-}
-export type setUserProfileType = {
-	type: typeof actions.SET_CURRENT_USERS_PAGE,
-	current_visited_user: currentVisitedUserType
-}
-export type setStatusType = {
-	type: typeof actions.SET_STATUS,
-	status: string
-}
-
-
-export const setUserProfile = (current_visited_user: currentVisitedUserType):setUserProfileType => ({
-	type: actions.SET_USER_PROFILE, 
-	current_visited_user: current_visited_user
-})
-export const setUserInfo = (current_visited_user:currentVisitedUserType):setUserProfileType => ({
-	type: actions.SET_USER_INFO, 
-	current_visited_user
-})
-export const setStatus = (status:string):setStatusType => ({
-	type: actions.SET_STATUS, 
-	status
-})
 
 
 
@@ -179,11 +182,11 @@ export const getCaptchaUrlSuccess = (captcha_url:string):setCaptchaUrlType => ({
 
 
 
+
 export type initAppType = {
 	type: typeof actions.INIT_APP,
 	initialized: boolean
 }
-
 
 export const initApp = (initialized: boolean):initAppType => ({
 	type: actions.INIT_APP,
@@ -193,11 +196,11 @@ export const initApp = (initialized: boolean):initAppType => ({
 
 
 
+
 export type setCurrentRouteType = {
 	type: typeof actions.SET_CURRENT_ROUTE,
 	current_route: string
 }
-
 
 export const setCurrentRoute = (current_route: string):setCurrentRouteType => ({
 	type: actions.SET_CURRENT_ROUTE,
