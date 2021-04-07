@@ -49,7 +49,7 @@ const ProfileInfoContainer = ({ current_visited_user, isFetching, status, update
 		const response = await profileAPI.setProfileInfo(changed_info);
 		console.log(response);
 		if(response.data.resultCode === 0) {
-			dispatch(setUserInfo(changed_info))
+			// dispatch(setUserInfo(changed_info))
 			setEditMode(false);
 		}
 		else {

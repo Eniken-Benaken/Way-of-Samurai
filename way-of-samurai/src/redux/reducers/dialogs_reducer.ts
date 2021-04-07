@@ -1,5 +1,5 @@
-import { sendMessageType } from '../actionCreators';
-import {actions} from '../actions';
+import { dialogsActionTypes } from './../actionCreators';
+import * as actions from '../actions';
 
 type dialogs_item_type = {
 	id: string,
@@ -41,7 +41,7 @@ const initial_state: dialogs_type =  {
 };
 
 
-const dialogs_reducer = (state = initial_state,action: sendMessageType) => {
+const dialogs_reducer = (state = initial_state,action: dialogsActionTypes) => {
 	switch (action.type) {
 		case actions.SEND_MESSAGE:
 			return {

@@ -1,13 +1,12 @@
-import { actions } from './actions';
+import { Action } from 'redux';
+import * as actions from './actions';
 
 
-type addPostType = {
-	type: typeof actions.ADD_POST,
+interface IAddPost extends Action<typeof actions.ADD_POST> {
 	new_post: string
 };
 
-type deletePostType = {
-	type: typeof actions.DELETE_POST,
+interface IDeletePost extends Action<typeof actions.DELETE_POST> {
 	postId: number
 };
 
@@ -33,65 +32,63 @@ export type currentVisitedUserType = {
 	}
 }
 
-type setUserProfileType = {
-	type: typeof actions.SET_CURRENT_USERS_PAGE,
+interface ISetUserProfile extends Action<typeof actions.SET_USER_PROFILE> {
 	current_visited_user: currentVisitedUserType
 }
 
-type setStatusType = {
-	type: typeof actions.SET_STATUS,
+interface ISetStatus extends Action<typeof actions.SET_STATUS> {
 	status: string
 }
 
-type toggleIsFetchingType = {
-	type: typeof actions.TOGGLE_IS_FETCHING,
+interface IToggleIsFetching extends Action<typeof actions.TOGGLE_IS_FETCHING> {
 	is_fetching: boolean
 }
 
-export type profileActionTypes = addPostType | deletePostType | setUserProfileType | setStatusType | toggleIsFetchingType;
+export type profileActionTypes = IAddPost | IDeletePost | ISetUserProfile | ISetStatus | IToggleIsFetching;
 
 
 
-export const addPostAC = (new_post: string):addPostType => ({	type: actions.ADD_POST,new_post });
-export const deletePostAC = (postId: number):deletePostType => ({
+export const addPostAC = (new_post: string):IAddPost => ({	type: actions.ADD_POST,new_post });
+export const deletePostAC = (postId: number):IDeletePost => ({
 	type: actions.DELETE_POST, postId
 })
-export const setUserProfile = (current_visited_user: currentVisitedUserType):setUserProfileType => ({
+export const setUserProfile = (current_visited_user: currentVisitedUserType):ISetUserProfile => ({
 	type: actions.SET_USER_PROFILE, 
 	current_visited_user: current_visited_user
 })
-// export const setUserInfo = (current_visited_user:currentVisitedUserType):setUserProfileType => ({
-// 	type: actions.SET_USER_INFO, 
+// export const setUserInfo = (current_visited_user:currentVisitedUserType):ISetUserProfile => ({
+// 	type: actions.SET_USER_PROFILE, 
 // 	current_visited_user
 // })
-export const setStatus = (status:string):setStatusType => ({
+export const setStatus = (status:string):ISetStatus => ({
 	type: actions.SET_STATUS, 
 	status
 })
-export const toggleIsFetching = (is_fetching:boolean):toggleIsFetchingType => ({ type: actions.TOGGLE_IS_FETCHING,is_fetching });
+export const toggleIsFetching = (is_fetching:boolean):IToggleIsFetching => ({ type: actions.TOGGLE_IS_FETCHING,is_fetching });
 
 
 
 
-export type sendMessageType = {
-	type: typeof actions.SEND_MESSAGE,
+interface ISendMessage extends Action<typeof actions.SEND_MESSAGE> {
 	new_message: string
 };
 
-export const sendMessageActionCreator = (new_message: string):sendMessageType => ({	type: actions.SEND_MESSAGE, new_message });
+export type dialogsActionTypes = ISendMessage;
+
+export const sendMessageActionCreator = (new_message: string):ISendMessage => ({	type: actions.SEND_MESSAGE, new_message });
 
 
 
 
 
-export type followUserType = {
-	type: typeof actions.FOLLOW_USER,
+interface IFollowUser extends Action<typeof actions.FOLLOW_USER> {
 	user_id: number
 }
-export type unfollowUserType = {
-	type: typeof actions.UNFOLLOW_USER,
+
+interface IUnfollowUser extends Action<typeof actions.UNFOLLOW_USER> {
 	user_id: number
 }
+
 export type userType = {
 	name: string,
 	id: number,
@@ -103,57 +100,52 @@ export type userType = {
 	status: null|string,
 	followed: false
 }
-export type setUsersType = {
-	type: typeof actions.SET_USERS,
+
+interface ISetUsers extends Action<typeof actions.SET_USERS> {
 	users: Array<userType>,
 }
-export type setCurrentUserPageType = {
-	type: typeof actions.SET_CURRENT_USERS_PAGE,
+
+interface ISetCurrentUserPage extends Action<typeof actions.SET_CURRENT_USERS_PAGE> {
 	active_page: number
 }
 
-export type toggleFollowingType = {
-	type: typeof actions.TOGGLE_IS_FETCHING,
+interface IToggleFollowing extends Action<typeof actions.TOGGLE_FOLLOWING> {
 	is_fetching: boolean,
 	user_id: number
 }
 
 
-export const followUserAC = (user_id: number):followUserType => ({	type: actions.FOLLOW_USER,user_id: user_id});
-export const unfollowUserAC = (user_id:number):unfollowUserType => ({	type: actions.UNFOLLOW_USER,user_id: user_id});
-export const setUsers = (users: Array<userType>):setUsersType => ({	type: actions.SET_USERS,users: users});
-export const setCurrentUsersPage = (active_page = 1):setCurrentUserPageType => ({ type: actions.SET_CURRENT_USERS_PAGE,active_page: active_page });
-export const toggleFollowing = (user_id: number,is_fetching: boolean):toggleFollowingType => ({ type: actions.TOGGLE_FOLLOWING, user_id, is_fetching});
+export const followUserAC = (user_id: number):IFollowUser => ({	type: actions.FOLLOW_USER,user_id: user_id});
+export const unfollowUserAC = (user_id:number):IUnfollowUser => ({	type: actions.UNFOLLOW_USER,user_id: user_id});
+export const setUsers = (users: Array<userType>):ISetUsers => ({	type: actions.SET_USERS,users: users});
+export const setCurrentUsersPage = (active_page = 1):ISetCurrentUserPage => ({ type: actions.SET_CURRENT_USERS_PAGE,active_page: active_page });
+export const toggleFollowing = (user_id: number,is_fetching: boolean):IToggleFollowing => ({ type: actions.TOGGLE_FOLLOWING, user_id, is_fetching});
 
 
 
 
 
-export type setAuthDataType = {
-	type: typeof actions.SET_AUTH_DATA,
+interface ISetAuthData extends Action<typeof actions.SET_AUTH_DATA> {
 	data: {
-		id: number,
+		id: number|null,
 		email: string,
 		login: string
 	}
 }
-export type setIsAuthType = {
-	type: typeof actions.SET_IS_AUTH,
+interface ISetIsAuth extends Action<typeof actions.SET_IS_AUTH> {
 	is_auth: boolean
 }
-export type stopSumbitType = {
-	type: typeof actions.STOP_SUBMIT,
+interface IStopSumbit extends Action<typeof actions.STOP_SUBMIT> {
 	submit_error: string,
 	submit_error_code: number
 }
-export type setCaptchaUrlType = {
-	type: typeof actions.SET_CAPTCHA_URL,
+interface ISetCaptchaUrl extends Action<typeof actions.SET_CAPTCHA_URL> {
 	captcha_url: string
 }
 
 
 
-export const setAuthData = (id:number,email:string,login:string):setAuthDataType => ({
+export const setAuthData = (id:number|null,email:string,login:string):ISetAuthData => ({
 	type: actions.SET_AUTH_DATA, 
 	data: {
 		id,
@@ -161,7 +153,7 @@ export const setAuthData = (id:number,email:string,login:string):setAuthDataType
 		login
 	}
 })
-export const setIsAuth = (is_auth: boolean):setIsAuthType => ({
+export const setIsAuth = (is_auth: boolean):ISetIsAuth => ({
 	type: actions.SET_IS_AUTH,
 	is_auth
 })
@@ -169,12 +161,12 @@ export const toggleCkeckingAuth = (checking_auth:boolean) => ({
 	type: actions.SET_IS_AUTH,
 	checking_auth
 })
-export const stopSubmit = (error:string,error_code:number):stopSumbitType => ({
+export const stopSubmit = (error:string,error_code:number):IStopSumbit => ({
 	type: actions.STOP_SUBMIT,
 	submit_error: error,
 	submit_error_code: error_code
 })
-export const getCaptchaUrlSuccess = (captcha_url:string):setCaptchaUrlType => ({
+export const getCaptchaUrlSuccess = (captcha_url:string):ISetCaptchaUrl => ({
 	type: actions.SET_CAPTCHA_URL,
 	captcha_url: captcha_url
 })

@@ -1,4 +1,4 @@
-import { actions } from '../actions';
+import * as actions from '../actions';
 
 const initial_state = {
 	id: null as null | number,

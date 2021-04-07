@@ -1,6 +1,6 @@
 import { updateObjectInArray } from '../../components/common/object-helpers';
 import { userType } from '../actionCreators';
-import { actions } from '../actions';
+import * as actions from '../actions';
 
 type users_type = {
 	users: Array<userType>,

@@ -1,5 +1,3 @@
-import {actions} from '../actions';
-
 const initial_state = {
 	news_posts: [
 		{

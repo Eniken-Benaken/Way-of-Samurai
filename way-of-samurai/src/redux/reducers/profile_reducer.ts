@@ -1,5 +1,5 @@
 import { currentVisitedUserType, profileActionTypes } from './../actionCreators';
-import { actions } from '../actions';
+import * as actions from '../actions';
 
 type postType = {
 	id: number,
@@ -47,7 +47,7 @@ const profile_reducer = (state = initial_state, action: profileActionTypes):prof
 					id: state.posts.length + 1,
 					author_name: "Dem Pigoen",
 					author_id: 14327,
-					post_content: action.new_post as profile,
+					post_content: action.new_post,
 					likes_count: 0
 				}],
 			}

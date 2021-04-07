@@ -1,5 +1,3 @@
-import {actions} from '../actions';
-
 type friendType = {
 	id: number,
 	friend_avatar: string,

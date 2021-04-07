@@ -1,5 +1,5 @@
 import { deletePostAC } from '../actionCreators';
-import { actions } from '../actions';
+import * as actions from '../actions';
 import profile_reducer from './profile_reducer';
 
 const state = {
