@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUsers, followUser, unfollowUser } from '../../redux/thunkCreators'; 
+import { getUsers, followUser, unfollowUser } from '../../redux/reducers/users_reducer'; 
 import Users from './Users';
 import Preloader from '../common/Preloader';
 import { compose } from 'redux';
-import { userType } from '../../redux/actionCreators';
+import { userType } from '../../redux/reducers/users_reducer';
 import { AppStateType } from '../../redux/redux_store';
 
 type MapStatePropsType = {

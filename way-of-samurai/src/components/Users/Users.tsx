@@ -2,7 +2,7 @@ import s from './Users.module.css';
 import User from './User/User';
 import React from 'react';
 import Paginator from '../common/Paginator';
-import { userType } from '../../redux/actionCreators';
+import { userType } from '../../redux/reducers/users_reducer';
 
 type PropsType = {
 	users: Array<userType>,

@@ -11,7 +11,7 @@ import LoginPage from './components/Login/LoginPage';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader';
-import { init_app } from './redux/thunkCreators';
+import { init_app } from './redux/reducers/app_reducer';
 import withSuspense from './components/common/withSuspense';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));

@@ -16,5 +16,4 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
-let stor = store;
-window.store = stor;
+window.store = store;

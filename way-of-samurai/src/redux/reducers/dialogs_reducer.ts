@@ -1,5 +1,20 @@
-import { dialogsActionTypes } from './../actionCreators';
-import * as actions from '../actions';
+import { Action } from 'redux';
+export const SEND_MESSAGE = 'wos/dialogs/SEND_MESSAGE'
+
+
+interface ISendMessage extends Action<typeof SEND_MESSAGE> {
+	new_message: string
+};
+
+export type dialogsActionTypes = ISendMessage;
+
+export const sendMessageActionCreator = (new_message: string):ISendMessage => ({	type: SEND_MESSAGE, new_message });
+
+
+
+
+
+
 
 type dialogs_item_type = {
 	id: string,
@@ -43,7 +58,7 @@ const initial_state: dialogs_type =  {
 
 const dialogs_reducer = (state = initial_state,action: dialogsActionTypes) => {
 	switch (action.type) {
-		case actions.SEND_MESSAGE:
+		case SEND_MESSAGE:
 			return {
 				...state,
 				messages: [...state.messages,{

@@ -1,4 +1,5 @@
-import { sendMessageActionCreator, setCurrentRoute } from '../../redux/actionCreators';
+import { sendMessageActionCreator } from '../../redux/reducers/dialogs_reducer';
+import { setCurrentRoute } from '../../redux/reducers/app_reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';

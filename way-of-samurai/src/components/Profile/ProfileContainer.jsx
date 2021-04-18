@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
-import { getUserData, updateStatus, savePhoto, getAuthData } from '../../redux/thunkCreators';
-import { setCurrentRoute } from '../../redux/actionCreators';
+import { getUserData, updateStatus, savePhoto } from '../../redux/reducers/profile_reducer'
+import { getAuthData } from '../../redux/reducers/auth_reducer';
+import { setCurrentRoute } from '../../redux/reducers/app_reducer';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
@@ -79,5 +80,6 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
+	withAuthRedirect,
 	connect(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, getCurrentRoute, savePhoto, getAuthData }),
 )(ProfileContainer);

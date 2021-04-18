@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import LoginForm from '../Forms/LoginForm';
-import { submitLogin,getCaptcha } from '../../redux/thunkCreators';
+import { submitLogin,getCaptcha } from '../../redux/reducers/auth_reducer';
 import s from './LoginPage.module.css';
 import { getIsAuth,getSubmitError,getSubmitErrorCode,getCurrentRoute,getCaptchaUrl } from '../../redux/selectors';
 

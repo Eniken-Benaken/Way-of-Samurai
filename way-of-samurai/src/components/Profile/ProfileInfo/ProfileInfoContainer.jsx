@@ -4,16 +4,15 @@ import s from './ProfileInfo.module.css';
 import avatarPlaceholder from '../../../assets/images/avatar.png';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfileInfo from './ProfileInfo';
-import {setUserInfo} from './../../../redux/actionCreators';
 import { profileAPI } from '../../../api/API';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 
 const ProfileInfoContainer = ({ current_visited_user, isFetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
 	
 	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState(null);
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	if (isFetching) return <Preloader />
 	if (!current_visited_user) return <Preloader />
