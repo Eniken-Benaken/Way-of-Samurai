@@ -74,7 +74,7 @@ const initial_state: sidebar_type = {
 	]
 };
 
-const sidebar_reducer = (state = initial_state,action: any):sidebar_type => {
+const sidebar_reducer = (state = initial_state,action: unknown):sidebar_type => {
 	return state;
 }
 

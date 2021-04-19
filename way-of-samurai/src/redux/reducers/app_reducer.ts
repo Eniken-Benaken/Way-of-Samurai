@@ -1,30 +1,31 @@
+import { Action } from "redux"
 import { getAuthData } from "./auth_reducer"
 import { getUserData } from "./profile_reducer"
 
-export const INIT_APP = 'wos/app/INIT_APP'
-export const SET_CURRENT_ROUTE = 'wos/app/SET_CURRENT_ROUTE'
+const INIT_APP = 'wos/app/INIT_APP'
+const SET_CURRENT_ROUTE = 'wos/app/SET_CURRENT_ROUTE'
 
 
 
 //ACs Types
-export type initAppType = {
-	type: typeof INIT_APP,
+interface IInitAppAC extends Action<typeof INIT_APP> {
 	initialized: boolean
 }
 
-export type setCurrentRouteType = {
-	type: typeof SET_CURRENT_ROUTE,
+interface ISetCurrentRouteAC extends Action<typeof SET_CURRENT_ROUTE> {
 	current_route: string
 }
 
+type AppAC_Types = IInitAppAC | ISetCurrentRouteAC;
+
 
 //ACs
-export const initApp = (initialized: boolean):initAppType => ({
+const initApp = (initialized: boolean):IInitAppAC => ({
 	type: INIT_APP,
 	initialized
 })
 
-export const setCurrentRoute = (current_route: string):setCurrentRouteType => ({
+export const setCurrentRoute = (current_route: string):ISetCurrentRouteAC => ({
 	type: SET_CURRENT_ROUTE,
 	current_route
 })
@@ -51,7 +52,7 @@ const initial_state = {
 
 type appType = typeof initial_state
 
-const app_reducer = (state = initial_state, action: any): appType => {
+const app_reducer = (state = initial_state, action: AppAC_Types): appType => {
 	switch (action.type) {
 		case INIT_APP:
 			console.log('app_reducer.INIT_APP - prev.state+action.initialized',state,action.initialized);

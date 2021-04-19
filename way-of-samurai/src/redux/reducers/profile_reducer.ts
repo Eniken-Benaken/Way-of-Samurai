@@ -2,54 +2,60 @@ import { Action, Dispatch } from 'redux';
 import { profileAPI } from '../../api/API';
 
 
-export const ADD_POST = 'wos/profile/ADD_POST'
-export const DELETE_POST = 'wos/profile/DELETE_POST'
-export const SET_USER_INFO = 'wos/profile/SET_USER_INFO'
-export const SET_STATUS = 'wos/profile/SET_STATUS'
-export const TOGGLE_IS_FETCHING = 'wos/profile/TOGGLE_IS_FETCHING'
-export const SET_USER_PROFILE = 'wos/profile/SET_USER_PROFILE'
+const ADD_POST = 'wos/profile/ADD_POST'
+const DELETE_POST = 'wos/profile/DELETE_POST'
+// const SET_USER_INFO = 'wos/profile/SET_USER_INFO'
+const SET_STATUS = 'wos/profile/SET_STATUS'
+const TOGGLE_IS_FETCHING = 'wos/profile/TOGGLE_IS_FETCHING'
+const SET_USER_PROFILE = 'wos/profile/SET_USER_PROFILE'
 
 
 
 
 //ACs Types
-interface IAddPost extends Action<typeof ADD_POST> {
+interface IAddPostAC extends Action<typeof ADD_POST> {
 	new_post: string
 };
 
-interface IDeletePost extends Action<typeof DELETE_POST> {
+interface IDeletePostAC extends Action<typeof DELETE_POST> {
 	postId: number
 };
 
-interface ISetUserProfile extends Action<typeof SET_USER_PROFILE> {
+interface ISetUserProfileAC extends Action<typeof SET_USER_PROFILE> {
 	current_visited_user: currentVisitedUserType
 }
 
-interface IToggleIsFetching extends Action<typeof TOGGLE_IS_FETCHING> {
+interface IToggleIsFetchingAC extends Action<typeof TOGGLE_IS_FETCHING> {
 	is_fetching: boolean
 }
 
-interface ISetStatus extends Action<typeof SET_STATUS> {
+interface ISetStatusAC extends Action<typeof SET_STATUS> {
 	status: string
 }
 
-export type profileActionTypes = IAddPost | IDeletePost | ISetUserProfile | ISetStatus | IToggleIsFetching;
+export type profileActionTypes = IAddPostAC | IDeletePostAC | ISetUserProfileAC | ISetStatusAC | IToggleIsFetchingAC;
 
 
 //ACs
-export const addPostAC = (new_post: string):IAddPost => ({	type: ADD_POST,new_post });
-export const deletePostAC = (postId: number):IDeletePost => ({
-	type: DELETE_POST, postId
+export const addPostAC = (new_post: string): IAddPostAC => ({ 
+	type: ADD_POST, 
+	new_post 
+});
+export const deletePostAC = (postId: number): IDeletePostAC => ({
+	type: DELETE_POST,
+	postId
 })
-export const setUserProfile = (current_visited_user: currentVisitedUserType):ISetUserProfile => ({
-	type: SET_USER_PROFILE, 
+const setUserProfile = (current_visited_user: currentVisitedUserType): ISetUserProfileAC => ({
+	type: SET_USER_PROFILE,
 	current_visited_user: current_visited_user
 })
-export const setStatus = (status:string):ISetStatus => ({
-	type: SET_STATUS, 
+const setStatus = (status: string): ISetStatusAC => ({
+	type: SET_STATUS,
 	status
 })
-export const toggleIsFetching = (is_fetching:boolean):IToggleIsFetching => ({ type: TOGGLE_IS_FETCHING,is_fetching });
+const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => ({ 		type: TOGGLE_IS_FETCHING, 
+	is_fetching 
+});
 
 
 
@@ -84,24 +90,24 @@ export const savePhoto = (photo: any, userId: number) => async (dispatch: any) =
 
 
 export type currentVisitedUserType = {
-	aboutMe: string|null,
+	aboutMe: string | null,
 	contacts: {
-		facebook: string|null,
-		website: string|null,
-		vk: string|null,
-		twitter: string|null,
-		instagram: string|null,
-		youtube: string|null,
-		github: string|null,
-		mainLink: string|null
+		facebook: string | null,
+		website: string | null,
+		vk: string | null,
+		twitter: string | null,
+		instagram: string | null,
+		youtube: string | null,
+		github: string | null,
+		mainLink: string | null
 	},
 	lookingForAJob: boolean,
-	lookingForAJobDescription: string|null,
+	lookingForAJobDescription: string | null,
 	fullName: string,
 	userId: number,
 	photos: {
-		small: string|null,
-		large: string|null
+		small: string | null,
+		large: string | null
 	}
 }
 
@@ -115,12 +121,12 @@ type postType = {
 
 type profile_type = {
 	posts: Array<postType>,
-	current_visited_user: null|currentVisitedUserType,
+	current_visited_user: null | currentVisitedUserType,
 	status: string,
 	is_fetching: boolean
 }
 
-const initial_state:profile_type = {
+const initial_state: profile_type = {
 	posts: [
 		{
 			id: 1,
@@ -142,7 +148,7 @@ const initial_state:profile_type = {
 	is_fetching: false
 };
 
-const profile_reducer = (state = initial_state, action: profileActionTypes):profile_type => {
+const profile_reducer = (state = initial_state, action: profileActionTypes): profile_type => {
 	switch (action.type) {
 		case ADD_POST:
 			return {

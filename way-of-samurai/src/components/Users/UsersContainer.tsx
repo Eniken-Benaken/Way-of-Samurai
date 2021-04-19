@@ -23,11 +23,11 @@ type MapDispatchPropsType = {
 	unfollowUser: (userId: number) => void,
 }
 
-type OwnPropsType = {
-	haha: string
-}
+// type OwnPropsType = { //THat is needed for connet typization
+// 	haha: string
+// }
 
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
+type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 class UsersContainer extends Component<PropsType> {
 	componentDidMount() {
@@ -70,7 +70,7 @@ function mapStateToProps (state: AppStateType): MapStatePropsType {
 };
 
 export default compose (
-	connect<MapStatePropsType,MapDispatchPropsType,OwnPropsType,AppStateType>(mapStateToProps, { //JS looks for equal named imports(varibles)
+	connect<MapStatePropsType,MapDispatchPropsType,{},AppStateType>(mapStateToProps, { //JS looks for equal named imports(varibles)
 		followUser, //same as followUser: followUser
 		unfollowUser, //React-redux at the same time takes these ACs
 		getUsers,//and wraps it with dispatches inside CBs

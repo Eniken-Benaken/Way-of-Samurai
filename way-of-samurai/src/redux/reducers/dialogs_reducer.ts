@@ -1,13 +1,18 @@
 import { Action } from 'redux';
-export const SEND_MESSAGE = 'wos/dialogs/SEND_MESSAGE'
+const SEND_MESSAGE = 'wos/dialogs/SEND_MESSAGE'
 
 
+
+//AC Types
 interface ISendMessage extends Action<typeof SEND_MESSAGE> {
 	new_message: string
 };
 
-export type dialogsActionTypes = ISendMessage;
+type dialogsActionTypes = ISendMessage;
 
+
+
+//AС
 export const sendMessageActionCreator = (new_message: string):ISendMessage => ({	type: SEND_MESSAGE, new_message });
 
 

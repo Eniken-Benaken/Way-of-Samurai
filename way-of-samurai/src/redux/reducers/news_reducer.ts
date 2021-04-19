@@ -19,7 +19,7 @@ const initial_state = {
 
 type newsType = typeof initial_state;
 
-const news_reducer = (state = initial_state,action:any): newsType => {
+const news_reducer = (state = initial_state, action: unknown): newsType => {
 	return state;
 }
 

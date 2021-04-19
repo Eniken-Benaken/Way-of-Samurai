@@ -16,7 +16,17 @@ type PropsType = {
 	is_following: Array<number>
 }
 
-const Users: React.FC<PropsType> = ({users, page_size, total_users_count, active_page, set_active_page, followUser, unfollowUser, is_following, portion_size}) => {
+const Users: React.FC<PropsType> = ({
+	users, 
+	total_users_count, 
+	page_size, 
+	active_page, 
+	set_active_page, 
+	followUser, 
+	unfollowUser, 
+	is_following, 
+	portion_size
+}) => {
 	return (
 		<div className={s.users}>
 			<Paginator page_size={page_size} active_page={active_page} set_active_page={set_active_page} total_items_count={total_users_count} portion_size={portion_size} />
@@ -34,8 +44,6 @@ const Users: React.FC<PropsType> = ({users, page_size, total_users_count, active
 					user_name={u.name}
 					user_avatar={u.photos.small}
 					user_status_message={u.status}
-					user_city={"u.city"}
-					user_country={"u.country"}
 					is_followed={u.followed}
 					is_following={is_follow}
 					followUser={followUser}
@@ -43,6 +51,7 @@ const Users: React.FC<PropsType> = ({users, page_size, total_users_count, active
 				/>
 			}
 			)}
+			<Paginator page_size={page_size} active_page={active_page} set_active_page={set_active_page} total_items_count={total_users_count} portion_size={portion_size} />
 		</div>
 	);
 }
