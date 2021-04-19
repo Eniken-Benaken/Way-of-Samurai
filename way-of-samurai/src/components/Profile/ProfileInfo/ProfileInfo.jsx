@@ -3,8 +3,7 @@ import s from './ProfileInfo.module.css';
 import Status from './Status';
 
 
-const ProfileInfo = ({ fullName, is_looking, avatar, ownProfile, onPhotoUpload, status, updateStatus, contacts, setEditMode, lookingForAJobDescription, aboutMe, serverErrorMessage }) => {
-	console.log(contacts);
+const ProfileInfo = ({ fullName, is_looking, avatar, ownProfile, onPhotoUpload, status, updateStatus, contacts, setEditMode, lookingForAJobDescription, aboutMe, statusUpdateError }) => {
 	return <div className={s.profileInfo_wrapper}>
 		<div className={s.banner}>
 			<img src="https://source.unsplash.com/1000x200/?city" alt="newyear" />
@@ -17,7 +16,7 @@ const ProfileInfo = ({ fullName, is_looking, avatar, ownProfile, onPhotoUpload, 
 			</div>
 			<div className={s.description_block}>
 				<h3 className={s.description_header}>Status: </h3>
-				<Status statusText={status} ownProfile={ownProfile} updateStatus={updateStatus} serverErrorMessage={serverErrorMessage}/>
+				<Status statusText={status} ownProfile={ownProfile} updateStatus={updateStatus} statusUpdateError={statusUpdateError}/>
 				<h3 className={s.description_header}>About me: </h3>
 				<div className={s.description_content}>
 					{aboutMe}

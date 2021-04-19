@@ -55,13 +55,13 @@ type appType = typeof initial_state
 const app_reducer = (state = initial_state, action: AppAC_Types): appType => {
 	switch (action.type) {
 		case INIT_APP:
-			console.log('app_reducer.INIT_APP - prev.state+action.initialized',state,action.initialized);
+			// console.log('app_reducer.INIT_APP - prev.state+action.initialized',state,action.initialized);
 			return {
 				...state,
 				initialized: action.initialized
 			}
 		case SET_CURRENT_ROUTE:
-			console.log('app_reducer.SET_CURRENT_ROUTE - prev.state+action.current_route',state,action.current_route);
+			// console.log('app_reducer.SET_CURRENT_ROUTE - prev.state+action.current_route',state,action.current_route);
 			return {
 				...state,
 				current_route: action.current_route

@@ -4,7 +4,17 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import s from '../Login/LoginPage.module.css';
 
-const LoginForm = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
+
+type PropsTypes = {
+	error: string,
+	error_code: number | null,
+	is_auth: boolean,
+	current_route: string,
+	captchaUrl: string | null,
+	submitLogin: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void,
+}
+
+const LoginForm: React.FC<PropsTypes> = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
 	if(is_auth) return <Redirect to={current_route} />
 
 	const initialValues = {
@@ -14,9 +24,8 @@ const LoginForm = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
 		captcha: null
 	}
 
-	const onSubmit = values => {
+	const onSubmit = (values: typeof initialValues) => {
 		let {email,password,rememberMe,captcha} = values;
-		console.log(email,password,rememberMe,captcha);
 		submitLogin(email,password,rememberMe,captcha)
 		// .then(response => console.log(response));
 	}
@@ -31,7 +40,7 @@ const LoginForm = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
 		email: Yup.string().email('Invalid email format').min(10, "Must be longer than 10 characters")
     .max(40, "Nice try, nobody has a email that long").required('Required'),
 		password: Yup.string().min(8, "Must be longer than 8 characters").required('Required'),
-		captcha: Yup.string().min(5, "Captcha must be longer than 5 characters").required('Required')
+		captcha: Yup.string().min(4, "Captcha must be longer than 3 characters").required('Required')
 	})
 
 	let serverErrorMessage = error && <div className={s.submit_error}>{error}</div>

@@ -3,14 +3,20 @@ import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import MessageForm from '../Forms/MessageForm';
+import { dialogs_type } from '../../redux/reducers/dialogs_reducer';
 
 
+type PropsType = {
+	dialogs: dialogs_type,
+	sendMessage: (new_message: string) => void,
+	setCurrentRoute: (current_route: string) => void
+}
 
-const Dialogs = ({dialogs:{dialogs,messages},sendMessage,setCurrentRoute}) => {
+const Dialogs: React.FC<PropsType> = ({dialogs:{dialogs,messages},sendMessage,setCurrentRoute}) => {
 	setCurrentRoute("/dialogs");
 	let dialogsArray = [...dialogs];
 	let messagesArray = [...messages];
-	const sendNewMessage = (new_message) => {
+	const sendNewMessage = (new_message: string) => {
 			sendMessage(new_message);
 	};
 
@@ -22,7 +28,7 @@ const Dialogs = ({dialogs:{dialogs,messages},sendMessage,setCurrentRoute}) => {
 				</div>
 			</div>
 			<div className={s.messages}>
-				{messagesArray.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_name={m.author_name} author_id={m.author_id} />)}
+				{messagesArray.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_id={m.author_id} />)}
 				<MessageForm sendMessage={sendNewMessage} />
 			</div>
 		</div>

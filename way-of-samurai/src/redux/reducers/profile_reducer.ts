@@ -61,7 +61,7 @@ const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => ({ 		typ
 
 
 //THUNK CREATORS
-export const getUserData = (userId: number) => async (dispatch: Dispatch<profileActionTypes>) => {
+export const getUserData = (userId: number | null) => async (dispatch: Dispatch<profileActionTypes>) => {
 	dispatch(toggleIsFetching(true));
 	const data = await profileAPI.getUserData(userId)
 	dispatch(setUserProfile(data));
@@ -81,26 +81,26 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
 	}
 }
 
-export const savePhoto = (photo: any, userId: number) => async (dispatch: any) => {
+export const savePhoto = (photo: any, userId: number | null) => async (dispatch: any) => {
 	const response = await profileAPI.setProfilePhoto(photo)
 	if (response.data.resultCode === 0) dispatch(getUserData(userId));
 }
 
 
-
+export type  userContactsType = {
+	facebook: string | null,
+	website: string | null,
+	vk: string | null,
+	twitter: string | null,
+	instagram: string | null,
+	youtube: string | null,
+	github: string | null,
+	mainLink: string | null
+}
 
 export type currentVisitedUserType = {
 	aboutMe: string | null,
-	contacts: {
-		facebook: string | null,
-		website: string | null,
-		vk: string | null,
-		twitter: string | null,
-		instagram: string | null,
-		youtube: string | null,
-		github: string | null,
-		mainLink: string | null
-	},
+	contacts: userContactsType,
 	lookingForAJob: boolean,
 	lookingForAJobDescription: string | null,
 	fullName: string,

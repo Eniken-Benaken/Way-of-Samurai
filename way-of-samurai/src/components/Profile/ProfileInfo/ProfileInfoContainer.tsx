@@ -5,16 +5,34 @@ import avatarPlaceholder from '../../../assets/images/avatar.png';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfileInfo from './ProfileInfo';
 import { profileAPI } from '../../../api/API';
+import { currentVisitedUserType, userContactsType } from '../../../redux/reducers/profile_reducer';
 // import { useDispatch } from 'react-redux';
 
 
-const ProfileInfoContainer = ({ current_visited_user, isFetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
-	
+type PropsTypes = {
+	current_visited_user: currentVisitedUserType | null,
+	is_fetching: boolean,
+	status: null | string,
+	user_id: number | null,
+	current_route: string,
+	is_auth: boolean
+	getUserData: (userId: number | null) => void,
+	updateStatus: (status: string) => void,
+	savePhoto: (photo: any, userId: number | null) => void,
+	getAuthData: () => void,
+	setCurrentRoute: (route: string) => void
+	ownProfile: boolean
+	icons: any
+}
+
+
+const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_fetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
+	let [statusUpdateError,setStatusUpdateError] = useState(null)
 	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState(null);
 	// const dispatch = useDispatch();
 
-	if (isFetching) return <Preloader />
+	if (is_fetching) return <Preloader />
 	if (!current_visited_user) return <Preloader />
 
 	let is_looking = current_visited_user.lookingForAJob
@@ -22,10 +40,15 @@ const ProfileInfoContainer = ({ current_visited_user, isFetching, status, update
 		: <span className={s.looking_for_job}>🤠</span>;
 
 	let contacts = [];
-	for (let contact in current_visited_user.contacts) {
-		if (current_visited_user.contacts[contact]) {
+	for (let contact in current_visited_user.contacts as userContactsType) {
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment 
+		// @ts-ignore
+		if (current_visited_user.contacts[contact] as any) {
+			
 			contacts.push(
-				<a key={contact} className={s.contact} href={current_visited_user.contacts[contact]}><img className={s.contact_icon} src={icons[`${contact}Icon`]} alt={contact} title={contact} /></a>
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment 
+		// @ts-ignore
+				<a key={contact} className={s.contact} href={current_visited_user.contacts[contact] as any}><img className={s.contact_icon} src={icons[`${contact}Icon`]} alt={contact} title={contact} /></a>
 			)
 		}
 	}
@@ -35,16 +58,17 @@ const ProfileInfoContainer = ({ current_visited_user, isFetching, status, update
 		: <img src={avatarPlaceholder} alt="avatar" />
 
 	
-	const onPhotoUpload = (e) => {
+	const onPhotoUpload = async (e: any) => {
 		if (e.target.files.length) {
-			savePhoto(e.target.files[0],user_id);
+			let response = await savePhoto(e.target.files[0],user_id);
+			console.log(response);			
 		}
 		else {
 			console.log('No file loaded');
 		}
 	}
 
-	const submitProfileInfoChange = async (changed_info) => {
+	const submitProfileInfoChange = async (changed_info: any) => {
 		const response = await profileAPI.setProfileInfo(changed_info);
 		console.log(response);
 		if(response.data.resultCode === 0) {
@@ -60,7 +84,9 @@ const ProfileInfoContainer = ({ current_visited_user, isFetching, status, update
 	return (
 		editMode 
 		? <ProfileInfoForm userId={current_visited_user.userId} fullName={current_visited_user.fullName} contacts={current_visited_user.contacts} lookingForAJob={current_visited_user.lookingForAJob} lookingForAJobDescription={current_visited_user.lookingForAJobDescription} submitProfileInfoChange={submitProfileInfoChange} error={error} aboutMe={current_visited_user.aboutMe}/>
-		: <ProfileInfo fullName={current_visited_user.fullName} is_looking={is_looking} avatar={avatar} ownProfile={ownProfile} onPhotoUpload={onPhotoUpload} status={status} updateStatus={updateStatus} contacts={contacts} setEditMode={setEditMode} lookingForAJobDescription={current_visited_user.lookingForAJobDescription} aboutMe={current_visited_user.aboutMe} />
+		: <ProfileInfo fullName={current_visited_user.fullName} is_looking={is_looking} avatar={avatar} ownProfile={ownProfile} onPhotoUpload={onPhotoUpload} status={status} updateStatus={updateStatus} contacts={contacts} setEditMode={setEditMode} lookingForAJobDescription={current_visited_user.lookingForAJobDescription} aboutMe=
+		{current_visited_user.aboutMe} 
+		statusUpdateError={statusUpdateError} />
 	);
 
 }

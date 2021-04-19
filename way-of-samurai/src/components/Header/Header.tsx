@@ -2,7 +2,15 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Header.module.css';
 
-const Header = ({is_auth,login,signOut}) => {
+
+type PropsType = {
+	is_auth: boolean,
+	login: string | null,
+	signOut: () => void
+}
+
+
+const Header: React.FC<PropsType> = ({is_auth,login,signOut}) => {
 	let signed = is_auth ? [<span key="span">Welcome, {login}</span>,<button key='signOut' onClick={signOut}>Sign Out</button>] : <NavLink key="signin" to='/login'>Sign in</NavLink>
 	return(
 		<header className={s.header}>

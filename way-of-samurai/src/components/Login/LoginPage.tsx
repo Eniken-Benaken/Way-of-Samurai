@@ -4,8 +4,26 @@ import LoginForm from '../Forms/LoginForm';
 import { submitLogin,getCaptcha } from '../../redux/reducers/auth_reducer';
 import s from './LoginPage.module.css';
 import { getIsAuth,getSubmitError,getSubmitErrorCode,getCurrentRoute,getCaptchaUrl } from '../../redux/selectors';
+import { AppStateType } from '../../redux/redux_store';
 
-const LoginPage = ({submitLogin,error,error_code,is_auth,current_route,captcha_url,getCaptcha}) => {
+
+type mapStateToPropsType = {
+	error: string,
+	error_code: number | null,
+	is_auth: boolean,
+	current_route: string,
+	captcha_url: string | null,
+}
+
+type mapDispatchToPropsType = {
+	submitLogin: (email: string, password: string, rememberMe: boolean, captcha: any) => void,
+	getCaptcha: () => void
+}
+
+type PropsTypes = mapStateToPropsType & mapDispatchToPropsType
+
+
+const LoginPage: React.FC<PropsTypes> = ({submitLogin,error,error_code,is_auth,current_route,captcha_url,getCaptcha}) => {
 	if(error_code === 10) getCaptcha();
 	const [captcha,setCaptcha] = useState(captcha_url);
 
@@ -20,7 +38,9 @@ const LoginPage = ({submitLogin,error,error_code,is_auth,current_route,captcha_u
 	);
 }
 
-const mapStateToProps = (state) => ({
+
+
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 	is_auth: getIsAuth(state),
 	error: getSubmitError(state),
 	error_code: getSubmitErrorCode(state),
@@ -28,5 +48,4 @@ const mapStateToProps = (state) => ({
 	captcha_url: getCaptchaUrl(state)
 })
 
-export default connect(mapStateToProps,{submitLogin,getCaptcha})(LoginPage);
-
+export default connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps,{submitLogin,getCaptcha})(LoginPage);

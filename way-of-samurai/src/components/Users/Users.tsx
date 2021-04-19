@@ -51,7 +51,6 @@ const Users: React.FC<PropsType> = ({
 				/>
 			}
 			)}
-			<Paginator page_size={page_size} active_page={active_page} set_active_page={set_active_page} total_items_count={total_users_count} portion_size={portion_size} />
 		</div>
 	);
 }

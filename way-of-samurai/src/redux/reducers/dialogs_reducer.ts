@@ -13,7 +13,7 @@ type dialogsActionTypes = ISendMessage;
 
 
 //AС
-export const sendMessageActionCreator = (new_message: string):ISendMessage => ({	type: SEND_MESSAGE, new_message });
+export const sendMessage = (new_message: string):ISendMessage => ({	type: SEND_MESSAGE, new_message });
 
 
 
@@ -21,8 +21,8 @@ export const sendMessageActionCreator = (new_message: string):ISendMessage => ({
 
 
 
-type dialogs_item_type = {
-	id: string,
+export type dialogs_item_type = {
+	id: string | number,
 	dialog_name: string,
 	dialog_avatar: string
 }
@@ -34,7 +34,7 @@ type messages_item_type = {
 	author_name: string,
 }
 
-type dialogs_type = {
+export type dialogs_type = {
 	dialogs: Array<dialogs_item_type>,
 	messages: Array<messages_item_type>,
 	newMessageState: string

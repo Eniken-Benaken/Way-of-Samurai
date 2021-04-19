@@ -12,25 +12,27 @@ export const usersAPI = {
 		return a.get(`users?page=${pageNumber}&count=${page_size}`)
 		.then(response => response.data)
 	},
-	followUser(userId) {
+	followUser(userId: number) {
 		return a.post(`follow/${userId}`)
 	},
-	unfollowUser(userId) {
+	unfollowUser(userId: number) {
 		return a.delete(`follow/${userId}`)
 	}
 } 
 
 export const profileAPI = {
-	getUserData(userId) {
+	getUserData(userId: number | null) {
 		return a.get(`profile/${userId}`).then(response => response.data).catch(e => {console.error(e)})
 	},
-	getStatus(userId=14327) {
-		return a.get(`profile/status/${userId}`)
+	getStatus(userId: number | null) {
+		let uid = userId;
+		if(!uid) uid = 14327
+		return a.get(`profile/status/${uid}`)
 	},
-	setStatus(status) {
+	setStatus(status: string) {
 		return a.put(`profile/status`, {status: status})
 	},
-	setProfilePhoto(photo) {
+	setProfilePhoto(photo: any) {
 		const formData = new FormData();
 		formData.append('image', photo);
 		return a.put(`profile/photo`, formData, {
@@ -39,7 +41,7 @@ export const profileAPI = {
 			}
 		})
 	},
-	setProfileInfo(changed_info) {
+	setProfileInfo(changed_info: unknown) {
 		return a.put(`profile`, changed_info);
 	},
 }
@@ -48,11 +50,11 @@ export const authAPI = {
 	getAuthData() {
 		return a.get(`auth/me`).then(
 			response => {
-				console.log('authAPI.getAuthData() - response.data',response.data);
+				// console.log('authAPI.getAuthData() - response.data',response.data);
 				return response.data
 			})
 	},
-	sendLoginData(email,password,rememberMe,captcha) {
+	sendLoginData(email: string,password: string,rememberMe: boolean,captcha: string | null) {
 		return a.post(`auth/login`, { email,password,rememberMe,captcha}).then(
 			response => {
 				console.log('authAPI.sendLoginData() - response',response);

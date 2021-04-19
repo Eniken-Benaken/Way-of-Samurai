@@ -1,8 +1,11 @@
 import React from 'react';
+import { newsType } from '../../redux/reducers/news_reducer';
 import s from './News.module.css';
 import NewsPost from './NewsPost/NewsPost';
 
-const News = (props) => {
+type PropsTypes = newsType;
+
+const News: React.FC<PropsTypes> = (props) => {
 	let news_posts = [...props.news_posts];
 
 	return(

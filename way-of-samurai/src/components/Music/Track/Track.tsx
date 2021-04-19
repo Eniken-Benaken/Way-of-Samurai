@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './Track.module.css';
 
-const Track = (props) => {
+type PropsTypes = {
+	track_name: string,
+	track_duration: string
+}
+
+const Track: React.FC<PropsTypes> = (props) => {
 	return(
 		<div className={s.track}>
 			<div className={s.cover}>

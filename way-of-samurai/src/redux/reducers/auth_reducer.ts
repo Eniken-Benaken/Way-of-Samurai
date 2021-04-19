@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import {authAPI, securityAPI} from "../../api/API";
+import { authAPI, securityAPI } from "../../api/API";
 
 
 const SET_AUTH_DATA = 'wos/auth/SET_AUTH_DATA'
@@ -12,7 +12,7 @@ const SET_CAPTCHA_URL = 'wos/auth/SET_CAPTCHA_URL'
 //ACs Types
 interface ISetAuthDataAC extends Action<typeof SET_AUTH_DATA> {
 	data: {
-		id: number|null,
+		id: number | null,
 		email: string,
 		login: string
 	}
@@ -32,24 +32,24 @@ type AuthAC_Types = ISetAuthDataAC | ISetIsAuthAC | IStopSumbitAC | ISetCaptchaU
 
 
 //ACs
-const setAuthData = (id:number|null,email:string,login:string):ISetAuthDataAC => ({
-	type: SET_AUTH_DATA, 
+const setAuthData = (id: number | null, email: string, login: string): ISetAuthDataAC => ({
+	type: SET_AUTH_DATA,
 	data: {
 		id,
 		email,
 		login
 	}
 })
-const setIsAuth = (is_auth: boolean):ISetIsAuthAC => ({
+const setIsAuth = (is_auth: boolean): ISetIsAuthAC => ({
 	type: SET_IS_AUTH,
 	is_auth
 })
-const stopSubmit = (error:string,error_code:number):IStopSumbitAC => ({
+const stopSubmit = (error: string, error_code: number): IStopSumbitAC => ({
 	type: STOP_SUBMIT,
 	submit_error: error,
 	submit_error_code: error_code
 })
-const getCaptchaUrlSuccess = (captcha_url:string):ISetCaptchaUrlAC => ({
+const getCaptchaUrlSuccess = (captcha_url: string): ISetCaptchaUrlAC => ({
 	type: SET_CAPTCHA_URL,
 	captcha_url: captcha_url
 })
@@ -67,7 +67,7 @@ export const getAuthData = () => async (dispatch: any) => {
 	return data;
 }
 
-export const submitLogin = (email: string, password: string, rememberMe: boolean, captcha: any) => {
+export const submitLogin = (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
 	return async (dispatch: any) => {
 		const response = await authAPI.sendLoginData(email, password, rememberMe, captcha)
 		if (response.data.resultCode === 0) {
@@ -123,7 +123,7 @@ const initial_state = {
 	is_auth: false,
 	checking_auth: false,
 	submit_error: '',
-	submit_error_code: '' as string | number,
+	submit_error_code: null as null | number,
 	captcha_url: null as null | string
 };
 
@@ -156,7 +156,7 @@ const auth_reducer = (state = initial_state, action: AuthAC_Types): authType => 
 			return {
 				...state,
 				captcha_url: action.captcha_url,
-				submit_error_code: ''
+				submit_error_code: null
 			}
 		default:
 			return state

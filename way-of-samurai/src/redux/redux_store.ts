@@ -17,7 +17,6 @@ let root_reducer = combineReducers({
 	auth: auth_reducer,
 	app: app_reducer
 })
-debugger;
 type RootReducerType = typeof root_reducer;
 export type AppStateType = ReturnType<RootReducerType>;
 

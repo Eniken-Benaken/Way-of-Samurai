@@ -2,7 +2,11 @@ import React from 'react';
 import Track from './Track/Track';
 import s from './Music.module.css';
 
-const Music = (props) => {
+type PropsTypes = {
+	
+}
+
+const Music: React.FC<PropsTypes> = (props: unknown) => {
 	return(
 		<div className={s.music_wrapper}>
 			<div className={s.music_header}>My music</div>

@@ -3,12 +3,16 @@ import React from 'react';
 import s from './MessageForm.module.css';
 import * as Yup from 'yup';
 
-const MessageForm = ({sendMessage}) => {
+type PropsType = {
+	sendMessage: (new_message: string) => void,
+}
+
+const MessageForm: React.FC<PropsType> = ({sendMessage}) => {
 	const initialValues = {
 		new_message: '',
 	}
 
-	const onSubmit = (values,{resetForm}) => {
+	const onSubmit = (values: typeof initialValues,{resetForm}:any) => {
 		try {
 			sendMessage(values.new_message);
 			resetForm({});
