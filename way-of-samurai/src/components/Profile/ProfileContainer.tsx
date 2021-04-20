@@ -33,7 +33,7 @@ type mapStateToPropsType = {
 
 type mapDispatchToPropsType = {
 	getUserData: (userId: number | null) => void,
-	updateStatus: (status: string) => void,
+	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
 	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void

@@ -17,7 +17,7 @@ type PropsTypes = {
 	current_route: string,
 	is_auth: boolean
 	getUserData: (userId: number | null) => void,
-	updateStatus: (status: string) => void,
+	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
 	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void
@@ -27,7 +27,7 @@ type PropsTypes = {
 
 
 const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_fetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
-	let [statusUpdateError,setStatusUpdateError] = useState(null)
+	let [statusUpdateError,setStatusUpdateError] = useState(null as null | string)
 	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState(null);
 	// const dispatch = useDispatch();

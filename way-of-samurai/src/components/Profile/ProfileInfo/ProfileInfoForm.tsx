@@ -2,8 +2,22 @@ import React from 'react';
 import s from './ProfileInfo.module.css';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { userContactsType } from '../../../redux/reducers/profile_reducer';
 
-const ProfileInfoForm = ({fullName,userId,contacts,lookingForAJob,lookingForAJobDescription,submitProfileInfoChange,error,aboutMe}) => {
+
+type PropsTypes = {
+	fullName: string,
+	userId: number,
+	contacts: userContactsType,
+	lookingForAJob: boolean,
+	lookingForAJobDescription: string | null,
+	submitProfileInfoChange: (changed_info: any) => void,
+	error: string | null,
+	aboutMe: string | null
+}
+
+
+const ProfileInfoForm: React.FC<PropsTypes> = ({fullName,userId,contacts,lookingForAJob,lookingForAJobDescription,submitProfileInfoChange,error,aboutMe}) => {
 	const initialValues = {
 		...contacts,
 		lookingForAJob,
@@ -12,7 +26,7 @@ const ProfileInfoForm = ({fullName,userId,contacts,lookingForAJob,lookingForAJob
 		aboutMe
 	}
 
-	const onSubmit = values => {
+	const onSubmit = (values: typeof initialValues) => {
 		let {lookingForAJob,lookingForAJobDescription,fullName,facebook,github,instagram,mainLink,twitter,vk,website,youtube,aboutMe} = values;
 		const formData = {userId,fullName,lookingForAJob,aboutMe, lookingForAJobDescription,contacts:{facebook,github,instagram,mainLink,twitter,vk,website,youtube}}
 		submitProfileInfoChange(formData)
