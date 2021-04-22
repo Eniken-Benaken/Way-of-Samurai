@@ -9,17 +9,16 @@ import SidebarContainer from './components/Sidebar/SidebarContainer';
 import NewsContainer from './components/News/NewsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import LoginPage from './components/Login/LoginPage';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloader from './components/common/Preloader';
 import { init_app } from './redux/reducers/app_reducer';
 import withSuspense from './components/common/withSuspense';
-import { lazily } from 'react-lazily';
 
-const DialogsContainer = lazily(() => import('./components/Dialogs/DialogsContainer'));
-const ProfileContainer = lazily(() => import('./components/Profile/ProfileContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
-class App extends Component<PropsTypes> {
+class App extends Component<PropsTypes>{
 	componentDidMount() {
 		this.props.init_app();
 	}
@@ -89,5 +88,5 @@ const mapStateToProps = (state: AppStateType) => ({
 
 export default compose(
 	withRouter,
-	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps, { init_app })
+	connect <mapStateToPropsType,mapDispatchToPropsType,{},AppStateType> (mapStateToProps, { init_app })
 )(App);

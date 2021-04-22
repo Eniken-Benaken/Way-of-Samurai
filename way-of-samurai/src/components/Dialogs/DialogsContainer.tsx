@@ -23,10 +23,12 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 };
 
 
+
+
 export default compose(
 	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps,{
 		sendMessage,
 		setCurrentRoute
 	}),
 	withAuthRedirect
-)(Dialogs);
+)(Dialogs) as React.FC;
