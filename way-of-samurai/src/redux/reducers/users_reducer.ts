@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action, Reducer } from 'redux';
 import { usersAPI } from '../../api/API';
 import { updateObjectInArray } from '../../components/common/object-helpers';
 const FOLLOW_USER = 'wos/users/FOLLOW_USER'
@@ -105,7 +105,7 @@ const initial_state: users_type = {
 	portion_size: 20
 };
 
-const users_reducer = (state = initial_state, action:UsersAC_Types):users_type => {
+const users_reducer: Reducer<users_type, UsersAC_Types> = (state = initial_state, action) => {
 	switch (action.type) {
 		case FOLLOW_USER:
 			return {

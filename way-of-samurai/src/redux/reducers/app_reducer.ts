@@ -1,4 +1,4 @@
-import { Action } from "redux"
+import { Action, Reducer } from "redux"
 import { getAuthData } from "./auth_reducer"
 import { getUserData } from "./profile_reducer"
 
@@ -52,7 +52,7 @@ const initial_state = {
 
 type appType = typeof initial_state
 
-const app_reducer = (state = initial_state, action: AppAC_Types): appType => {
+const app_reducer: Reducer<appType,AppAC_Types> = (state = initial_state, action) => {
 	switch (action.type) {
 		case INIT_APP:
 			// console.log('app_reducer.INIT_APP - prev.state+action.initialized',state,action.initialized);

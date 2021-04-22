@@ -1,13 +1,16 @@
 import React from 'react';
 import PostForm from '../../Forms/PostForm';
 import s from './MyPosts.module.css';
+import { MyPostsPropsType } from './MyPostsContainer';
 import Post from './Post/Post';
 
-const MyPosts = (props) => {
+
+
+const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 	const posts = props.posts;
 
-	const addPost = (new_post) => {
-			props.addPost(new_post);
+	const addPost = (new_post: string) => {
+			props.addPostAC(new_post);
 	};
 
 	return(
@@ -21,9 +24,9 @@ const MyPosts = (props) => {
 			{posts.map(p => <Post 
 				key={p.id}
 				id={p.id}
-				author={p.author}
+				author={p.author_name}
 				post_content={p.post_content}
-				likes_count={p.likes_count} 
+				likes_count={p.likes_count}
 			/>)}
 		</div>
 	);

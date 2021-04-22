@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action, Reducer } from 'redux';
 const SEND_MESSAGE = 'wos/dialogs/SEND_MESSAGE'
 
 
@@ -61,7 +61,7 @@ const initial_state: dialogs_type =  {
 };
 
 
-const dialogs_reducer = (state = initial_state,action: dialogsActionTypes) => {
+const dialogs_reducer: Reducer<dialogs_type, dialogsActionTypes> = (state = initial_state,action) => {
 	switch (action.type) {
 		case SEND_MESSAGE:
 			return {

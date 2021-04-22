@@ -1,3 +1,5 @@
+import { Reducer } from "redux";
+
 type friendType = {
 	id: number,
 	friend_avatar: string,
@@ -11,12 +13,12 @@ type menuItemType = {
 	path: string
 }
 
-type sidebar_type = {
+export type sidebarType = {
 	friends: Array<friendType>,
 	menu_items: Array<menuItemType>
 }
 
-const initial_state: sidebar_type = {
+const initial_state: sidebarType = {
 	friends: [
 		{
 			id: 1,
@@ -74,7 +76,7 @@ const initial_state: sidebar_type = {
 	]
 };
 
-const sidebar_reducer = (state = initial_state,action: unknown):sidebar_type => {
+const sidebar_reducer: Reducer<sidebarType> = (state = initial_state,action: unknown) => {
 	return state;
 }
 

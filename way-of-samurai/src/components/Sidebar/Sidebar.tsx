@@ -3,9 +3,11 @@ import { Route } from 'react-router-dom';
 import s from './Sidebar.module.css';
 import Friend from './Friend/Friend';
 import MenuItem from './Menu_items/MenuItem';
+import { sidebarType } from '../../redux/reducers/sidebar_reducer';
 
+type PropsTypes = sidebarType & {is_auth: boolean}
 
-const Sidebar = (props) => {
+const Sidebar: React.FC<PropsTypes> = (props) => {
 	let friends = [...props.friends];
 	let menu_items = [...props.menu_items];
 

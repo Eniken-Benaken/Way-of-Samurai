@@ -46,3 +46,15 @@ export const getIsFetchingProfileData = (state: AppStateType) => {
 export const getDialogs = (state: AppStateType) => {
 	return state.dialogs
 }
+
+export const getPosts = (state: AppStateType) => {
+	return state.profile.posts
+}
+
+export const getFriendsBarItems = (state: AppStateType) => {
+	return state.sidebar.friends
+}
+
+export const getSideMenuItems = (state: AppStateType) => {
+	return state.sidebar.menu_items
+}

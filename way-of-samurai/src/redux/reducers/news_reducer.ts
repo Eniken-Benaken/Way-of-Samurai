@@ -1,3 +1,5 @@
+import { Reducer } from "redux";
+
 const initial_state = {
 	news_posts: [
 		{
@@ -19,7 +21,7 @@ const initial_state = {
 
 export type newsType = typeof initial_state;
 
-const news_reducer = (state = initial_state, action: unknown): newsType => {
+const news_reducer: Reducer<newsType> = (state = initial_state, action: unknown): newsType => {
 	return state;
 }
 

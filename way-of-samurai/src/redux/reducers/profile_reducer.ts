@@ -1,10 +1,9 @@
-import { Action, Dispatch } from 'redux';
+import { Action, Dispatch, Reducer } from 'redux';
 import { profileAPI } from '../../api/API';
 
 
 const ADD_POST = 'wos/profile/ADD_POST'
 const DELETE_POST = 'wos/profile/DELETE_POST'
-// const SET_USER_INFO = 'wos/profile/SET_USER_INFO'
 const SET_STATUS = 'wos/profile/SET_STATUS'
 const TOGGLE_IS_FETCHING = 'wos/profile/TOGGLE_IS_FETCHING'
 const SET_USER_PROFILE = 'wos/profile/SET_USER_PROFILE'
@@ -112,7 +111,7 @@ export type currentVisitedUserType = {
 	}
 }
 
-type postType = {
+export type postType = {
 	id: number,
 	author_name: string,
 	author_id: number,
@@ -149,7 +148,7 @@ const initial_state: profile_type = {
 	is_fetching: false
 };
 
-const profile_reducer = (state = initial_state, action: profileActionTypes): profile_type => {
+const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initial_state, action) => {
 	switch (action.type) {
 		case ADD_POST:
 			return {

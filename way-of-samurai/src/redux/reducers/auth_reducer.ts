@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action, Reducer } from "redux";
 import { authAPI, securityAPI } from "../../api/API";
 
 
@@ -129,7 +129,7 @@ const initial_state = {
 
 type authType = typeof initial_state;
 
-const auth_reducer = (state = initial_state, action: AuthAC_Types): authType => {
+const auth_reducer: Reducer<authType,AuthAC_Types> = (state = initial_state, action) => {
 	switch (action.type) {
 		case SET_AUTH_DATA:
 			return {
