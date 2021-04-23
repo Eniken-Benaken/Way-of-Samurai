@@ -23,10 +23,11 @@ type PropsTypes = {
 	setCurrentRoute: (route: string) => void
 	ownProfile: boolean
 	icons: any
+	photoUploaded: () => void
 }
 
 
-const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_fetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
+const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_fetching, status, updateStatus, user_id, savePhoto, ownProfile, icons, photoUploaded }) => {
 	let [statusUpdateError,setStatusUpdateError] = useState(null as null | string)
 	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState(null);
@@ -61,7 +62,7 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 	const onPhotoUpload = async (e: any) => {
 		if (e.target.files.length) {
 			let response = await savePhoto(e.target.files[0],user_id);
-			console.log(response);			
+			photoUploaded()			
 		}
 		else {
 			console.log('No file loaded');

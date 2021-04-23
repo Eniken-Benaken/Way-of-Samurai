@@ -19,6 +19,7 @@ type PropsTypes = {
 	setCurrentRoute: (route: string) => void
 	ownProfile: boolean
 	icons: any
+	photoUploaded: () => void
 }
 
 

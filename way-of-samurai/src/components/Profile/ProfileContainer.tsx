@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
-import { getUserData, updateStatus, savePhoto, currentVisitedUserType } from '../../redux/reducers/profile_reducer'
+import { getUserData, updateStatus, savePhoto, currentVisitedUserType, toggleIsPhotoUploaded } from '../../redux/reducers/profile_reducer'
 import { getAuthData } from '../../redux/reducers/auth_reducer';
 import { setCurrentRoute } from '../../redux/reducers/app_reducer';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
-import { getCurrentVisitedUserId, getIsFetchingProfileData, getCurrentVisitedUserstatus, getCurrentUserId, getCurrentRoute, getIsAuth } from '../../redux/selectors';
+import { getCurrentVisitedUserId, getIsFetchingProfileData, getCurrentVisitedUserstatus, getCurrentUserId, getCurrentRoute, getIsAuth, getIsPhotoUploaded } from '../../redux/selectors';
 import * as _ from 'lodash'
 
 import facebookIcon from '../../assets/images/008-facebook.svg';
@@ -28,7 +28,8 @@ type mapStateToPropsType = {
 	status: null | string,
 	user_id: number | null,
 	current_route: string,
-	is_auth: boolean
+	is_auth: boolean,
+	photoUploaded: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -37,6 +38,7 @@ type mapDispatchToPropsType = {
 	savePhoto: (photo: any, userId: number | null) => void,
 	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void
+	toggleIsPhotoUploaded: (photoUploaded: boolean) => void
 }
 
 type PropsTypes = mapStateToPropsType & mapDispatchToPropsType & {match: any};
@@ -61,15 +63,26 @@ class ProfileContainer extends Component<PropsTypes> {
 
 	shouldComponentUpdate(nextProps: PropsTypes) {
 		let urlChanged = nextProps.match.params.userId !== this.props.match.params.userId
+		if(urlChanged) console.log('url changed', new Date().getSeconds());
+		let photoChanged = nextProps.photoUploaded !== this.props.photoUploaded
 		let statusChanged = nextProps.status !== this.props.status;
+		if(statusChanged) console.log('status changed', new Date().getSeconds());
 		let userIdChanged = nextProps.user_id !== this.props.user_id;
+		if(userIdChanged) console.log('userId changed', new Date().getSeconds());
 		let userInfoChanged = !(_.isEqual(nextProps.current_visited_user,this.props.current_visited_user));
+		if(userInfoChanged) console.log('userInfo changed', new Date().getSeconds());
 		let authStateChanged = nextProps.is_auth !== this.props.is_auth;
-		let somethingChanged = urlChanged || statusChanged || userIdChanged || userInfoChanged || authStateChanged;
+		if(authStateChanged) console.log('authState changed', new Date().getSeconds());
+		let somethingChanged = urlChanged || statusChanged || userIdChanged || userInfoChanged || authStateChanged || photoChanged;
+		if(somethingChanged) console.log("something changed - rerender", new Date().getSeconds());
+		debugger
 		return  somethingChanged
 	}
 
 	componentDidUpdate(prevProps: PropsTypes) {
+		console.log("compDIdUpd", new Date().getSeconds());
+		let photoChanged = prevProps.photoUploaded !== this.props.photoUploaded;
+		if(photoChanged) this.photoUploaded();
 		this.initProfile()
 	}
 
@@ -77,7 +90,8 @@ class ProfileContainer extends Component<PropsTypes> {
 		let { userId } = this.props.match.params;
 		if (!userId) {
 			if (this.props.current_route !== `/profile`) this.props.setCurrentRoute(`/profile`)
-			if(!this.ownProfile)this.props.getUserData(this.props.user_id);
+			console.log("ProfileContainer calls - getUserData", new Date().getSeconds());
+			this.props.getUserData(this.props.user_id);
 			this.ownProfile = true;
 		}
 		else {
@@ -88,11 +102,14 @@ class ProfileContainer extends Component<PropsTypes> {
 		}
 	}
 
+	photoUploaded() {
+		return
+	}
+
 	
 	render() {
-		debugger
 		if(this.ownProfile && !this.props.is_auth) return <Redirect to="/login" />
-		return <Profile {...this.props} ownProfile={this.ownProfile} icons={this.icons} />
+		return <Profile {...this.props} photoUploaded={this.photoUploaded.bind(this)} ownProfile={this.ownProfile} icons={this.icons} />
 	}
 }
 
@@ -106,12 +123,13 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 			status: getCurrentVisitedUserstatus(state),
 			user_id: getCurrentUserId(state),
 			current_route: getCurrentRoute(state),
-			is_auth: getIsAuth(state)
+			is_auth: getIsAuth(state),
+			photoUploaded: getIsPhotoUploaded(state)
 		}
 	)
 }
 
 export default compose(
 	withAuthRedirect,
-	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, savePhoto, getAuthData }),
+	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, savePhoto, getAuthData, toggleIsPhotoUploaded }),
 )(ProfileContainer);

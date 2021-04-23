@@ -43,6 +43,10 @@ export const getIsFetchingProfileData = (state: AppStateType) => {
 	return state.profile.is_fetching
 }
 
+export const getIsPhotoUploaded = (state: AppStateType) => {
+	return state.profile.photoUploaded
+}
+
 export const getDialogs = (state: AppStateType) => {
 	return state.dialogs
 }

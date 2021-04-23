@@ -1,4 +1,6 @@
-import { Action, Dispatch, Reducer } from 'redux';
+import { AxiosResponse } from 'axios';
+import { Action, AnyAction, Dispatch, Reducer } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { profileAPI } from '../../api/API';
 
 
@@ -6,6 +8,7 @@ const ADD_POST = 'wos/profile/ADD_POST'
 const DELETE_POST = 'wos/profile/DELETE_POST'
 const SET_STATUS = 'wos/profile/SET_STATUS'
 const TOGGLE_IS_FETCHING = 'wos/profile/TOGGLE_IS_FETCHING'
+const TOGGLE_IS_PHOTO_UPLOADED = 'wos/profile/TOGGLE_IS_PHOTO_UPLOADED'
 const SET_USER_PROFILE = 'wos/profile/SET_USER_PROFILE'
 
 
@@ -28,11 +31,15 @@ interface IToggleIsFetchingAC extends Action<typeof TOGGLE_IS_FETCHING> {
 	is_fetching: boolean
 }
 
+interface IToggleIsPhotoUploadedAC extends Action<typeof TOGGLE_IS_PHOTO_UPLOADED> {
+	photoUploaded: boolean
+}
+
 interface ISetStatusAC extends Action<typeof SET_STATUS> {
 	status: string
 }
 
-export type profileActionTypes = IAddPostAC | IDeletePostAC | ISetUserProfileAC | ISetStatusAC | IToggleIsFetchingAC;
+export type profileActionTypes = IAddPostAC | IDeletePostAC | ISetUserProfileAC | ISetStatusAC | IToggleIsFetchingAC | IToggleIsPhotoUploadedAC;
 
 
 //ACs
@@ -55,22 +62,33 @@ const setStatus = (status: string): ISetStatusAC => ({
 const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => ({ 		type: TOGGLE_IS_FETCHING, 
 	is_fetching 
 });
+export const toggleIsPhotoUploaded = (photoUploaded: boolean): IToggleIsPhotoUploadedAC => ({ 		type: TOGGLE_IS_PHOTO_UPLOADED, 
+	photoUploaded
+});
 
+
+
+type dispatch = Dispatch<profileActionTypes> & {}
+type dispatch_thunk = ThunkDispatch<profile_type,undefined,AnyAction>;
 
 
 
 //THUNK CREATORS
-export const getUserData = (userId: number | null) => async (dispatch: Dispatch<profileActionTypes>) => {
+export const getUserData = (userId: number | null) => async (dispatch: dispatch) => {
+	console.log("getUserData - Dispatched", new Date().getSeconds());
+	
 	dispatch(toggleIsFetching(true));
 	const data = await profileAPI.getUserData(userId)
 	dispatch(setUserProfile(data));
+	console.log(`photoUploaded changed to false`);
+	dispatch(toggleIsPhotoUploaded(false));
 	dispatch(toggleIsFetching(false));
 	const response = await profileAPI.getStatus(userId)
 	if (response.data)
 		dispatch(setStatus(response.data))
 	else dispatch(setStatus(response.statusText))
 }
-export const updateStatus = (status: string | null) => async (dispatch: any) => {
+export const updateStatus = (status: string | null) => async (dispatch: dispatch) => {
 	try {
 		if(status === null) return;
 		const response = await profileAPI.setStatus(status)
@@ -81,9 +99,15 @@ export const updateStatus = (status: string | null) => async (dispatch: any) => 
 	}
 }
 
-export const savePhoto = (photo: any, userId: number | null) => async (dispatch: any) => {
+export const savePhoto = (photo: any, userId: number | null) => async (dispatch: dispatch & dispatch_thunk) => {
+	console.log("savePhoto - Dispatched", new Date().getSeconds());
+	
 	const response = await profileAPI.setProfilePhoto(photo)
-	if (response.data.resultCode === 0) dispatch(getUserData(userId));
+	if (response.data.resultCode === 0) {
+		dispatch(getUserData(userId));
+		console.log(`photoUploaded changed to true`);
+		dispatch(toggleIsPhotoUploaded(true))
+	}
 }
 
 
@@ -123,7 +147,8 @@ type profile_type = {
 	posts: Array<postType>,
 	current_visited_user: null | currentVisitedUserType,
 	status: string,
-	is_fetching: boolean
+	is_fetching: boolean,
+	photoUploaded: boolean
 }
 
 const initial_state: profile_type = {
@@ -145,7 +170,8 @@ const initial_state: profile_type = {
 	],
 	current_visited_user: null,
 	status: '',
-	is_fetching: false
+	is_fetching: false,
+	photoUploaded: false
 };
 
 const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initial_state, action) => {
@@ -181,6 +207,11 @@ const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initi
 				...state,
 				is_fetching: action.is_fetching
 			}
+		// case TOGGLE_IS_PHOTO_UPLOADED:
+		// 	return {
+		// 		...state,
+		// 		photoUploaded: action.photoUploaded
+		// 	}
 		default:
 			return state
 	}
