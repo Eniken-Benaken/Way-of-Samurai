@@ -1,6 +1,7 @@
 import { Action, Reducer } from "redux"
+import { ThunkAction } from "redux-thunk"
+import { AppStateType } from "../redux_store"
 import { getAuthData } from "./auth_reducer"
-import { getUserData } from "./profile_reducer"
 
 const INIT_APP = 'wos/app/INIT_APP'
 const SET_CURRENT_ROUTE = 'wos/app/SET_CURRENT_ROUTE'
@@ -31,13 +32,13 @@ export const setCurrentRoute = (current_route: string):ISetCurrentRouteAC => ({
 })
 
 
+type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,AppAC_Types>
+
+
 
 // THUNK CREATORS
-export const init_app = () => async (dispatch: any) => {
-	const response = await dispatch(getAuthData());
-	if (response.resultCode === 0) {
-		await dispatch(getUserData(response.data.id));
-	}
+export const init_app = (): ThunkType => async (dispatch) => {
+	await dispatch(getAuthData());
 	dispatch(initApp(true));
 }
 

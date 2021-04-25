@@ -1,6 +1,8 @@
 import { Action, Dispatch, Reducer } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { usersAPI } from '../../api/API';
 import { updateObjectInArray } from '../../components/common/object-helpers';
+import { AppStateType } from '../redux_store';
 const FOLLOW_USER = 'wos/users/FOLLOW_USER'
 const UNFOLLOW_USER = 'wos/users/UNFOLLOW_USER'
 const SET_USERS = 'wos/users/SET_USERS'
@@ -43,12 +45,12 @@ const toggleFollowing = (user_id: number,is_fetching: boolean):IToggleFollowingA
 
 
 
-type dispatch = Dispatch<UsersAC_Types> & {};
-
+type dispatch = Dispatch<UsersAC_Types>;
+type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,UsersAC_Types>
 
 
 //THUNK CREATORS
-const followUnfollowFlow = async (dispatch: dispatch, userId: number, AC: (userId: number) => UsersAC_Types, APImethod: (userId: number) => any) => {//API method should be properly typed
+const _followUnfollowFlow = async (dispatch: dispatch, userId: number, AC: (userId: number) => UsersAC_Types, APImethod: (userId: number) => any) => {//API method should be properly typed
 	dispatch(toggleFollowing(userId, true));
 	const response = await APImethod(userId)
 	if (response.data.resultCode === 0) {
@@ -57,18 +59,18 @@ const followUnfollowFlow = async (dispatch: dispatch, userId: number, AC: (userI
 	}
 }
 
-export const getUsers = (active_page: number, page_size: number) => async (dispatch: dispatch) => {
+export const getUsers = (active_page: number, page_size: number): ThunkType => async (dispatch) => {
 	const data = await usersAPI.getUsers(active_page, page_size)
 	if (!data.error) {
 		dispatch(setUsers(data.items));
 		dispatch(setCurrentUsersPage(active_page));
 	}
 }
-export const followUser = (userId: number) => async (dispatch: dispatch) => {
-	followUnfollowFlow(dispatch, userId, followUserAC, usersAPI.followUser)
+export const followUser = (userId: number): ThunkType => async (dispatch) => {
+	_followUnfollowFlow(dispatch, userId, followUserAC, usersAPI.followUser)
 }
-export const unfollowUser = (userId: number) => async (dispatch: dispatch) => {
-	followUnfollowFlow(dispatch, userId, unfollowUserAC, usersAPI.unfollowUser)
+export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
+	_followUnfollowFlow(dispatch, userId, unfollowUserAC, usersAPI.unfollowUser)
 }
 
 

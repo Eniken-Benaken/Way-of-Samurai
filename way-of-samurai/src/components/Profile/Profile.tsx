@@ -12,14 +12,12 @@ type PropsTypes = {
 	user_id: number | null,
 	current_route: string,
 	is_auth: boolean
-	getUserData: (userId: number | null) => void,
 	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
 	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void
 	ownProfile: boolean
 	icons: any
-	photoUploaded: () => void
 }
 
 

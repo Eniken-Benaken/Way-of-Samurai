@@ -1,5 +1,7 @@
 import { Action, Reducer } from "redux";
+import { ThunkAction } from "redux-thunk";
 import { authAPI, securityAPI } from "../../api/API";
+import { AppStateType } from "../redux_store";
 
 
 const SET_AUTH_DATA = 'wos/auth/SET_AUTH_DATA'
@@ -55,9 +57,11 @@ const getCaptchaUrlSuccess = (captcha_url: string): ISetCaptchaUrlAC => ({
 })
 
 
+type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,AuthAC_Types>
+
 
 // THUNK CREATORS
-export const getAuthData = () => async (dispatch: any) => {
+export const getAuthData = (): ThunkType => async (dispatch) => {
 	const data = await authAPI.getAuthData()
 	let { id, email, login } = data.data;
 	dispatch(setAuthData(id, email, login));
@@ -67,8 +71,8 @@ export const getAuthData = () => async (dispatch: any) => {
 	return data;
 }
 
-export const submitLogin = (email: string, password: string, rememberMe: boolean, captcha: string | null) => {
-	return async (dispatch: any) => {
+export const submitLogin = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => {
+	return async (dispatch) => {
 		const response = await authAPI.sendLoginData(email, password, rememberMe, captcha)
 		if (response.data.resultCode === 0) {
 			const data = await authAPI.getAuthData();
@@ -88,8 +92,8 @@ export const submitLogin = (email: string, password: string, rememberMe: boolean
 	}
 }
 
-export const signOut = () => {
-	return async (dispatch: any) => {
+export const signOut = (): ThunkType => {
+	return async (dispatch) => {
 		const response = await authAPI.signOut()
 		if (response.data.resultCode === 0) {
 			const data = await authAPI.getAuthData()
@@ -107,7 +111,7 @@ export const signOut = () => {
 	}
 }
 
-export const getCaptcha = () => async (dispatch: any) => {
+export const getCaptcha = (): ThunkType => async (dispatch) => {
 	const captcha_url = await securityAPI.getCaptchaUrl()
 	if (captcha_url) dispatch(getCaptchaUrlSuccess(captcha_url));
 	else console.log("AIN'T GET ANY CAPTCHA");

@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
-import { Action, AnyAction, Dispatch, Reducer } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import { Action, Reducer } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { profileAPI } from '../../api/API';
+import { AppStateType } from '../redux_store';
 
 
 const ADD_POST = 'wos/profile/ADD_POST'
@@ -59,36 +59,35 @@ const setStatus = (status: string): ISetStatusAC => ({
 	type: SET_STATUS,
 	status
 })
-const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => ({ 		type: TOGGLE_IS_FETCHING, 
+const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => {
+	console.log("toggleIsFetching - Dispatched", new Date().getSeconds());
+	return ({ 		type: TOGGLE_IS_FETCHING, 
 	is_fetching 
-});
-export const toggleIsPhotoUploaded = (photoUploaded: boolean): IToggleIsPhotoUploadedAC => ({ 		type: TOGGLE_IS_PHOTO_UPLOADED, 
+})};
+export const toggleIsPhotoUploaded = (photoUploaded: boolean): IToggleIsPhotoUploadedAC => {
+	console.log("toggleIsPhotoUploaded - Dispatched", new Date().getSeconds());
+	return({ 		type: TOGGLE_IS_PHOTO_UPLOADED, 
 	photoUploaded
-});
+})};
 
 
-
-type dispatch = Dispatch<profileActionTypes> & {}
-type dispatch_thunk = ThunkDispatch<profile_type,undefined,AnyAction>;
-
+type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,profileActionTypes>;
 
 
 //THUNK CREATORS
-export const getUserData = (userId: number | null) => async (dispatch: dispatch) => {
+export const getUserData = (userId: number | null): ThunkType => async (dispatch) => {
 	console.log("getUserData - Dispatched", new Date().getSeconds());
 	
 	dispatch(toggleIsFetching(true));
 	const data = await profileAPI.getUserData(userId)
 	dispatch(setUserProfile(data));
-	console.log(`photoUploaded changed to false`);
-	dispatch(toggleIsPhotoUploaded(false));
 	dispatch(toggleIsFetching(false));
 	const response = await profileAPI.getStatus(userId)
 	if (response.data)
 		dispatch(setStatus(response.data))
 	else dispatch(setStatus(response.statusText))
 }
-export const updateStatus = (status: string | null) => async (dispatch: dispatch) => {
+export const updateStatus = (status: string | null): ThunkType => async (dispatch) => {
 	try {
 		if(status === null) return;
 		const response = await profileAPI.setStatus(status)
@@ -99,12 +98,11 @@ export const updateStatus = (status: string | null) => async (dispatch: dispatch
 	}
 }
 
-export const savePhoto = (photo: any, userId: number | null) => async (dispatch: dispatch & dispatch_thunk) => {
+export const savePhoto = (photo: any, userId: number | null): ThunkType => async (dispatch) => {
 	console.log("savePhoto - Dispatched", new Date().getSeconds());
 	
 	const response = await profileAPI.setProfilePhoto(photo)
 	if (response.data.resultCode === 0) {
-		dispatch(getUserData(userId));
 		console.log(`photoUploaded changed to true`);
 		dispatch(toggleIsPhotoUploaded(true))
 	}
@@ -207,11 +205,11 @@ const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initi
 				...state,
 				is_fetching: action.is_fetching
 			}
-		// case TOGGLE_IS_PHOTO_UPLOADED:
-		// 	return {
-		// 		...state,
-		// 		photoUploaded: action.photoUploaded
-		// 	}
+		case TOGGLE_IS_PHOTO_UPLOADED:
+			return {
+				...state,
+				photoUploaded: action.photoUploaded
+			}
 		default:
 			return state
 	}

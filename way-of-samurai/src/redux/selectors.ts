@@ -31,7 +31,7 @@ export const getCaptchaUrl = (state: AppStateType) => {
 	return state.auth.captcha_url
 }
 
-export const getCurrentVisitedUserId = (state: AppStateType) => {
+export const getCurrentVisitedUserData = (state: AppStateType) => {
 	return state.profile.current_visited_user
 }
 
