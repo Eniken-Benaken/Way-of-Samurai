@@ -33,7 +33,7 @@ type mapStateToPropsType = {
 }
 
 type mapDispatchToPropsType = {
-	getUserData: (userId: number | null) => void,
+	getUserData: (userId: number | null, isFetching: boolean) => void,
 	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
 	getAuthData: () => void,
@@ -47,6 +47,12 @@ type PropsTypes = mapStateToPropsType & mapDispatchToPropsType & { match: any };
 
 class ProfileContainer extends Component<PropsTypes> {
 	ownProfile: boolean = true; //JUST FOR IT WOULD WORK
+	urlChanged: boolean = false;
+	photoChanged: boolean = false;
+	statusChanged: boolean = false;
+	userInfoChanged: boolean = false;
+	authChanged: boolean = false;
+
 	icons = {
 		facebookIcon,
 		websiteIcon,
@@ -62,25 +68,31 @@ class ProfileContainer extends Component<PropsTypes> {
 	}
 
 	shouldComponentUpdate(nextProps: PropsTypes) {
-		let urlChanged = nextProps.match.params.userId !== this.props.match.params.userId
-		if (urlChanged) console.log('url changed', new Date().getSeconds());
-		let photoChanged = nextProps.photoUploaded !== this.props.photoUploaded;
-		if (photoChanged) console.log(`photo changed from ${this.props.current_visited_user?.photos.small?.slice(-3)} to ${nextProps.current_visited_user?.photos.small?.slice(-3)}`, new Date().getSeconds());
-		let statusChanged = nextProps.status !== this.props.status;
-		if (statusChanged) console.log('status changed', new Date().getSeconds());
-		let userIdChanged = nextProps.user_id !== this.props.user_id;
-		if (userIdChanged) console.log('userId changed', new Date().getSeconds());
-		let userInfoChanged = !(_.isEqual(nextProps.current_visited_user, this.props.current_visited_user));
-		// if(userInfoChanged) console.log('userInfo changed', new Date().getSeconds());
-		let authStateChanged = nextProps.is_auth !== this.props.is_auth;
-		if (authStateChanged) console.log('authState changed', new Date().getSeconds());
-		let somethingChanged = urlChanged || statusChanged || userIdChanged || userInfoChanged || authStateChanged || photoChanged;
-		if (somethingChanged) console.log("something changed - rerender", new Date().getSeconds());
+		this.urlChanged = nextProps.match.params.userId !== this.props.match.params.userId
+		if (this.urlChanged) console.log('url changed- rerender', new Date().getSeconds());
+		this.photoChanged = nextProps.photoUploaded !== this.props.photoUploaded;
+		if (this.photoChanged) console.log(`photo changed - rerender`, new Date().getSeconds());
+		this.statusChanged = nextProps.status !== this.props.status;
+		if (this.statusChanged) console.log('status changed- rerender', new Date().getSeconds());
+		this.userInfoChanged = !(_.isEqual(nextProps.current_visited_user, this.props.current_visited_user));
+		if(this.userInfoChanged) console.log('userInfo changed', new Date().getSeconds());
+		this.authChanged = nextProps.is_auth !== this.props.is_auth;
+		if (this.authChanged) console.log('auth changed- rerender', new Date().getSeconds());
+		let somethingChanged = this.urlChanged || this.statusChanged || this.userInfoChanged || this.authChanged || this.photoChanged || this.props.is_fetching !== nextProps.is_fetching;
 		return somethingChanged
 	}
 
 	componentDidUpdate() {
-		this.initProfile()
+		if(this.urlChanged || this.authChanged || this.userInfoChanged || this.photoChanged)	{
+			this.initProfile()
+			if(this.urlChanged) this.urlChanged = !this.urlChanged;
+			if(this.authChanged) this.authChanged = !this.authChanged;
+			if(this.userInfoChanged) this.userInfoChanged = !this.userInfoChanged;
+			if(this.photoChanged) {
+				this.photoChanged = !this.photoChanged
+				this.props.toggleIsPhotoUploaded(false);
+			};
+		}
 	}
 
 	initProfile() {
@@ -88,14 +100,14 @@ class ProfileContainer extends Component<PropsTypes> {
 		if (!userId) {
 			if (this.props.current_route !== `/profile`) this.props.setCurrentRoute(`/profile`)
 			console.log("ProfileContainer calls - getUserData", new Date().getSeconds());
-			this.props.getUserData(this.props.user_id);
+			this.props.getUserData(this.props.user_id,this.props.is_fetching);
 			this.ownProfile = true;
 		}
 		else {
 			this.ownProfile = false;
 			if (this.props.current_route !== `/profile/${userId}`) this.props.setCurrentRoute(`/profile/${userId}`)
 			else return
-			this.props.getUserData(userId);
+			this.props.getUserData(userId,this.props.is_fetching);
 		}
 	}
 

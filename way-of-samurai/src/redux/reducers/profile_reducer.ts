@@ -75,17 +75,17 @@ type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,profileActionTyp
 
 
 //THUNK CREATORS
-export const getUserData = (userId: number | null): ThunkType => async (dispatch) => {
+export const getUserData = (userId: number | null, isFetching: boolean): ThunkType => async (dispatch) => {
 	console.log("getUserData - Dispatched", new Date().getSeconds());
-	
+	if(isFetching) return
 	dispatch(toggleIsFetching(true));
 	const data = await profileAPI.getUserData(userId)
 	dispatch(setUserProfile(data));
-	dispatch(toggleIsFetching(false));
 	const response = await profileAPI.getStatus(userId)
 	if (response.data)
-		dispatch(setStatus(response.data))
+	dispatch(setStatus(response.data))
 	else dispatch(setStatus(response.statusText))
+	dispatch(toggleIsFetching(false));
 }
 export const updateStatus = (status: string | null): ThunkType => async (dispatch) => {
 	try {
