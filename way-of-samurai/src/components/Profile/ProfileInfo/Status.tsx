@@ -13,7 +13,7 @@ const Status: FC<PropsType> = ({ statusText, ownProfile, updateStatus, statusUpd
 	const [editMode, setEditMode] = useState(false)
 	const [error,setError] = useState(statusUpdateError)
 
-	if (status === '' || status === null && ownProfile) {
+	if ((status === '' || status === null) && ownProfile) {
 		setStatus('Double-click here to add status');
 	}
 

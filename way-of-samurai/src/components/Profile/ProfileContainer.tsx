@@ -46,7 +46,7 @@ type PropsTypes = mapStateToPropsType & mapDispatchToPropsType & { match: any };
 
 
 class ProfileContainer extends Component<PropsTypes> {
-	ownProfile: boolean = true; //JUST FOR IT WOULD WORK
+	ownProfile: boolean = false; //JUST FOR IT WOULD WORK
 	urlChanged: boolean = false;
 	photoChanged: boolean = false;
 	statusChanged: boolean = false;
