@@ -84,7 +84,6 @@ export const getUserData = (userId: number | null, isFetching: boolean): ThunkTy
 	const response = await profileAPI.getStatus(userId)
 	if (response.data)
 	dispatch(setStatus(response.data))
-	else dispatch(setStatus(response.statusText))
 	dispatch(toggleIsFetching(false));
 }
 export const updateStatus = (status: string | null): ThunkType => async (dispatch) => {

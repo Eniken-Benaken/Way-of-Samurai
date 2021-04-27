@@ -35,7 +35,7 @@ const ProfileInfoForm: React.FC<PropsTypes> = ({fullName,userId,contacts,looking
 	const validationSchema = Yup.object({
 	})
 
-	let serverErrorMessage = error && <div className={s.submit_error}>{error}</div>
+	let serverErrorMessage = error ? <div className={s.submit_error}>{error}</div> : null
 
 	return(
 		<Formik

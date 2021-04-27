@@ -36,7 +36,6 @@ type mapDispatchToPropsType = {
 	getUserData: (userId: number | null, isFetching: boolean) => void,
 	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
-	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void
 	toggleIsPhotoUploaded: (photoUploaded: boolean) => void
 }
@@ -135,5 +134,5 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 
 export default compose(
 	withAuthRedirect,
-	connect<mapStateToPropsType, mapDispatchToPropsType, {}, AppStateType>(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, savePhoto, getAuthData, toggleIsPhotoUploaded }),
+	connect<mapStateToPropsType, mapDispatchToPropsType, {}, AppStateType>(mapStateToProps, { getUserData, updateStatus, setCurrentRoute, savePhoto, toggleIsPhotoUploaded }),
 )(ProfileContainer);

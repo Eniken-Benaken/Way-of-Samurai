@@ -1,8 +1,8 @@
-import { getAuthDataRT } from './../../api/API';
 import { Action, Reducer } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { authAPI, securityAPI } from "../../api/API";
 import { AppStateType } from "../redux_store";
+import { getAuthDataRT } from './../../api/API';
 
 
 const SET_AUTH_DATA = 'wos/auth/SET_AUTH_DATA'
@@ -58,21 +58,20 @@ const getCaptchaUrlSuccess = (captcha_url: string): ISetCaptchaUrlAC => ({
 })
 
 
-type ThunkType = ThunkAction<Promise<getAuthDataRT|undefined>, AppStateType, unknown, AuthAC_Types>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthAC_Types>
 
 
 // THUNK CREATORS
 export const getAuthData = (): ThunkType => async (dispatch) => {
 	try {
-		const data = await authAPI.getAuthData()
-		if (data) {
-			let { id, email, login } = data.data;
+		const response = await authAPI.getAuthData()
+		if (response?.data) {
+			let { id, email, login } = response.data.data;
 			dispatch(setAuthData(id, email, login));
 			if (login) {
 				dispatch(setIsAuth(true));
 			} else dispatch(setIsAuth(false));
-			return data;
-		}
+		}//removed return statement cause nobody needed it and because it requires special typing
 	}
 	catch(e) {
 		console.error(e);
@@ -84,19 +83,19 @@ export const submitLogin = (email: string, password: string, rememberMe: boolean
 	return async (dispatch) => {
 		const response = await authAPI.sendLoginData(email, password, rememberMe, captcha)
 		if (response?.data.resultCode === 0) {
-			const data = await authAPI.getAuthData();
-			if (data.resultCode === 1) {
+			const response = await authAPI.getAuthData();
+			if (response?.data.resultCode === 1) {
 				dispatch(setAuthData(null, '', ''));
 				dispatch(setIsAuth(false));
 			}
-			else if (data.resultCode === 0) {
-				let { id, email, login } = data.data;
+			else if (response?.data.resultCode === 0) {
+				let { id, email, login } = response?.data.data;
 				dispatch(setAuthData(id, email, login));
 				dispatch(setIsAuth(true));
 			}
 		}
-		else {
-			dispatch(stopSubmit(response?.data.messages.toString(), response?.data.resultCode))
+		else if(response?.data.messages){
+			dispatch(stopSubmit(response.data.messages[0], response.data.resultCode))
 		}
 	}
 }
@@ -105,18 +104,18 @@ export const signOut = (): ThunkType => {
 	return async (dispatch) => {
 		const response = await authAPI.signOut()
 		if (response?.data.resultCode === 0) {
-			const data = await authAPI.getAuthData()
-			if (data.resultCode === 1) {
+			const response = await authAPI.getAuthData()
+			if (response?.data.resultCode === 1) {
 				dispatch(setAuthData(null, '', ''));
 				dispatch(setIsAuth(false));
 			}
-			else if (data.resultCode === 0) {
-				let { id, email, login } = data.data;
+			else if (response?.data.resultCode === 0) {
+				let { id, email, login } = response?.data.data;
 				dispatch(setAuthData(id, email, login));
 				dispatch(setIsAuth(true));
 			}
 		}
-		else console.log(response?.data.data.messages.toString());
+		else console.log(response?.data.messages[0]);
 	}
 }
 

@@ -14,7 +14,6 @@ type PropsTypes = {
 	is_auth: boolean
 	updateStatus: (status: string | null) => void,
 	savePhoto: (photo: any, userId: number | null) => void,
-	getAuthData: () => void,
 	setCurrentRoute: (route: string) => void
 	ownProfile: boolean
 	icons: any

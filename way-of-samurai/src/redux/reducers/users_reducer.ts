@@ -1,6 +1,6 @@
 import { Action, Dispatch, Reducer } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { usersAPI } from '../../api/API';
+import { followRT, usersAPI } from '../../api/API';
 import { updateObjectInArray } from '../../components/common/object-helpers';
 import { AppStateType } from '../redux_store';
 const FOLLOW_USER = 'wos/users/FOLLOW_USER'
@@ -52,18 +52,23 @@ type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,UsersAC_Types>
 //THUNK CREATORS
 const _followUnfollowFlow = async (dispatch: dispatch, userId: number, AC: (userId: number) => UsersAC_Types, APImethod: (userId: number) => any) => {//API method should be properly typed
 	dispatch(toggleFollowing(userId, true));
-	const response = await APImethod(userId)
+	const response: followRT = await APImethod(userId)
 	if (response.data.resultCode === 0) {
 		dispatch(toggleFollowing(userId, false));
 		dispatch(AC(userId));
+	}
+	else {
+		console.error('Error has occured when tried to follow/unfollow')
 	}
 }
 
 export const getUsers = (active_page: number, page_size: number): ThunkType => async (dispatch) => {
 	const data = await usersAPI.getUsers(active_page, page_size)
-	if (!data.error) {
-		dispatch(setUsers(data.items));
-		dispatch(setCurrentUsersPage(active_page));
+	if (data) {
+		if(!data.error) {
+			dispatch(setUsers(data.items));
+			dispatch(setCurrentUsersPage(active_page));
+		}
 	}
 }
 export const followUser = (userId: number): ThunkType => async (dispatch) => {
@@ -81,7 +86,6 @@ export const unfollowUser = (userId: number): ThunkType => async (dispatch) => {
 export type userType = {
 	name: string,
 	id: number,
-	uniqueUrlName: null|string,
 	photos: {
 		small: null|string,
 		large: null|string
