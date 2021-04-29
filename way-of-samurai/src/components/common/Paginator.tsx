@@ -25,7 +25,7 @@ const Paginator : React.FC<PropsType> = ({ total_items_count,page_size, active_p
 	useEffect(() => {
 		let portionNumberToDisplay = Math.ceil(active_page/portion_size);
 		setPortionNumber(portionNumberToDisplay);
-	},[active_page])
+	},[active_page,portion_size])
 
 	const pagesItems = pages.filter(p => p >= leftPortionNumber && p <= rightPortionNumber).map(pageNumber => {
 		if (pageNumber === active_page) {

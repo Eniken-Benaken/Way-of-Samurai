@@ -2,9 +2,10 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import s from './MessageForm.module.css';
 import * as Yup from 'yup';
+import { dialogsActionTypes } from '../../redux/reducers/dialogs_reducer';
 
 type PropsType = {
-	sendMessage: (new_message: string) => void,
+	sendMessage: (new_message: string) => dialogsActionTypes,
 }
 
 const MessageForm: React.FC<PropsType> = ({sendMessage}) => {

@@ -3,13 +3,13 @@ import s from './Dialogs.module.css';
 import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import MessageForm from '../Forms/MessageForm';
-import { dialogs_type } from '../../redux/reducers/dialogs_reducer';
+import { dialogs_type,dialogsActionTypes } from '../../redux/reducers/dialogs_reducer';
 import { AppActionTypes } from '../../redux/reducers/app_reducer';
 
 
 type PropsType = {
 	dialogs: dialogs_type,
-	sendMessage: (new_message: string) => void,
+	sendMessage: (new_message: string) => dialogsActionTypes,
 	setCurrentRoute: (currentRoute: string) => AppActionTypes
 }
 
@@ -17,9 +17,7 @@ const Dialogs: React.FC<PropsType> = ({dialogs:{dialogs,messages},sendMessage,se
 	setCurrentRoute("/dialogs");
 	let dialogsArray = [...dialogs];
 	let messagesArray = [...messages];
-	const sendNewMessage = (new_message: string) => {
-			sendMessage(new_message);
-	};
+	
 
 	return (
 		<div className={s.dialogs_wrapper}>
@@ -30,7 +28,7 @@ const Dialogs: React.FC<PropsType> = ({dialogs:{dialogs,messages},sendMessage,se
 			</div>
 			<div className={s.messages}>
 				{messagesArray.map(m => <Message key={m.message_id} message_id={m.message_id} message={m.message} author_id={m.author_id} />)}
-				<MessageForm sendMessage={sendNewMessage} />
+				<MessageForm sendMessage={sendMessage} />
 			</div>
 		</div>
 	);

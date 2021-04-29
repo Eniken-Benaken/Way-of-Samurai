@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 import { AppStateType } from '../../redux/redux_store';
 import { sidebarType } from '../../redux/reducers/sidebar_reducer';

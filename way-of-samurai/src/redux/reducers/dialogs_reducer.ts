@@ -4,7 +4,7 @@ import { InferActionTypes } from './common';
 
 
 //AC Types
-type dialogsActionTypes = InferActionTypes<typeof dialogs_actions>
+export type dialogsActionTypes = InferActionTypes<typeof dialogs_actions>
 
 //AС
 export const dialogs_actions = {

@@ -1,8 +1,6 @@
 import { resultCodes } from './../../api/API';
-import { Action, Reducer } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { Reducer } from 'redux';
 import { profileAPI } from "../../api/profile-api";
-import { AppStateType } from '../redux_store';
 import { BaseThunkType, InferActionTypes } from './common';
 
 
@@ -64,7 +62,7 @@ export const updateStatus = (status: string | null): ThunkType => async (dispatc
 	}
 }
 
-export const savePhoto = (photo: any, userId: number | null): ThunkType => async (dispatch) => {
+export const savePhoto = (photo: File, userId: number | null): ThunkType => async (dispatch) => {
 	console.log("savePhoto - Dispatched", new Date().getSeconds());
 
 	const data = await profileAPI.setProfilePhoto(photo)

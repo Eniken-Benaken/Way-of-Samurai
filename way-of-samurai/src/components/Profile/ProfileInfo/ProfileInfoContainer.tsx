@@ -7,7 +7,6 @@ import ProfileInfo from './ProfileInfo';
 import { resultCodes } from '../../../api/API';
 import { profileAPI } from "../../../api/profile-api";
 import { currentVisitedUserType, userContactsType } from '../../../redux/reducers/profile_reducer';
-// import { useDispatch } from 'react-redux';
 
 
 type PropsTypes = {
@@ -18,7 +17,7 @@ type PropsTypes = {
 	current_route: string,
 	is_auth: boolean
 	updateStatus: (status: string | null) => void,
-	savePhoto: (photo: any, userId: number | null) => void,
+	savePhoto: (photo: File, userId: number | null) => void,
 	setCurrentRoute: (route: string) => void
 	ownProfile: boolean
 	icons: any
@@ -66,7 +65,7 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 		}
 	}
 
-	const submitProfileInfoChange = async (changed_info: any) => {
+	const submitProfileInfoChange = async (changed_info: currentVisitedUserType) => {
 		const response = await profileAPI.setProfileInfo(changed_info);
 		console.log(response);
 		if(response.data.resultCode === resultCodes.Success) {

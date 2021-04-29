@@ -6,6 +6,7 @@ import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
 import { getDialogs } from '../../redux/selectors';
 import { AppStateType } from '../../redux/redux_store';
+import React from 'react';
 
 type mapStateToPropsType = {
 	dialogs: dialogs_type
@@ -22,14 +23,10 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 	});
 };
 
-const setCurrentRoute = app_actions.setCurrentRoute
-
-const sendMessage = dialogs_actions.sendMessage;
-
-export default compose(
+export default compose<React.FC>(
 	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps,{
-		sendMessage,
-		setCurrentRoute
+		sendMessage: dialogs_actions.sendMessage,
+		setCurrentRoute: app_actions.setCurrentRoute
 	}),
 	withAuthRedirect
-	)(Dialogs) as React.FC;
+	)(Dialogs);
