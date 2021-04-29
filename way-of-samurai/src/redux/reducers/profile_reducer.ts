@@ -74,14 +74,14 @@ export const savePhoto = (photo: File, userId: number | null): ThunkType => asyn
 
 
 export type userContactsType = {
-	facebook: string | null,
-	website: string | null,
-	vk: string | null,
-	twitter: string | null,
-	instagram: string | null,
-	youtube: string | null,
-	github: string | null,
-	mainLink: string | null
+	facebook: string | undefined,
+	website: string | undefined,
+	vk: string | undefined,
+	twitter: string | undefined,
+	instagram: string | undefined,
+	youtube: string | undefined,
+	github: string | undefined,
+	mainLink: string | undefined
 }
 
 export type currentVisitedUserType = {

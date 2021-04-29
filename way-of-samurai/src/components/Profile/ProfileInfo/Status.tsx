@@ -5,13 +5,11 @@ type PropsType = {
 	statusText: string | null,
 	ownProfile: boolean,
 	updateStatus: (status: string | null) => void
-	statusUpdateError: string
 }
 
-const Status: FC<PropsType> = ({ statusText, ownProfile, updateStatus, statusUpdateError }) => {
+const Status: FC<PropsType> = ({ statusText, ownProfile, updateStatus,  }) => {
 	let [status, setStatus] = useState(statusText)
 	const [editMode, setEditMode] = useState(false)
-	const [error,setError] = useState(statusUpdateError)
 
 	if ((status === '' || status === null) && ownProfile) {
 		setStatus('Double-click here to add status');
@@ -31,7 +29,13 @@ const Status: FC<PropsType> = ({ statusText, ownProfile, updateStatus, statusUpd
 
 	const updateUserStatus = () => {
 		toggleEditMode()
-		updateStatus(status);
+		try {
+			updateStatus(status);
+		}
+		catch(e) {
+			console.error(e);
+			
+		}
 	}
 
 	let userStatus;

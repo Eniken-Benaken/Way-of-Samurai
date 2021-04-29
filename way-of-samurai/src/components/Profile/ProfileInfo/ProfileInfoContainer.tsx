@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
 import Preloader from '../../common/Preloader';
 import s from './ProfileInfo.module.css';
 import avatarPlaceholder from '../../../assets/images/avatar.png';
@@ -25,7 +25,6 @@ type PropsTypes = {
 
 
 const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_fetching, status, updateStatus, user_id, savePhoto, ownProfile, icons }) => {
-	let [statusUpdateError,setStatusUpdateError] = useState(null as null | string)
 	let [editMode,setEditMode] = useState(false);
 	let [error,setError] = useState("");
 	// const dispatch = useDispatch();
@@ -37,16 +36,12 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 		? <span className={s.looking_for_job}>🤑</span>
 		: <span className={s.looking_for_job}>🤠</span>;
 
-	let contacts = [];
-	for (let contact in current_visited_user.contacts as userContactsType) {
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment 
-		// @ts-ignore
-		if (current_visited_user.contacts[contact] as any) {
+	let contacts: ReactElement[] = [];
+	for (let contact in current_visited_user.contacts) {
+		if (current_visited_user.contacts[contact as keyof userContactsType]) {
 			
 			contacts.push(
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment 
-		// @ts-ignore
-				<a key={contact} className={s.contact} href={current_visited_user.contacts[contact] as any}><img className={s.contact_icon} src={icons[`${contact}Icon`]} alt={contact} title={contact} /></a>
+				<a key={contact} className={s.contact} href={current_visited_user.contacts[contact as keyof userContactsType]}><img className={s.contact_icon} src={icons[`${contact}Icon`]} alt={contact} title={contact} /></a>
 			)
 		}
 	}
@@ -56,8 +51,8 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 		: <img src={avatarPlaceholder} alt="avatar" />
 
 	
-	const onPhotoUpload = async (e: any) => {
-		if (e.target.files.length) {
+	const onPhotoUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files?.length) {
 			savePhoto(e.target.files[0],user_id);
 		}
 		else {
@@ -82,8 +77,7 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 		editMode 
 		? <ProfileInfoForm userId={current_visited_user.userId} fullName={current_visited_user.fullName} contacts={current_visited_user.contacts} lookingForAJob={current_visited_user.lookingForAJob} lookingForAJobDescription={current_visited_user.lookingForAJobDescription} submitProfileInfoChange={submitProfileInfoChange} error={error} aboutMe={current_visited_user.aboutMe}/>
 		: <ProfileInfo fullName={current_visited_user.fullName} is_looking={is_looking} avatar={avatar} ownProfile={ownProfile} onPhotoUpload={onPhotoUpload} status={status} updateStatus={updateStatus} contacts={contacts} setEditMode={setEditMode} lookingForAJobDescription={current_visited_user.lookingForAJobDescription} aboutMe=
-		{current_visited_user.aboutMe} 
-		statusUpdateError={statusUpdateError} />
+		{current_visited_user.aboutMe}/>
 	);
 
 }
