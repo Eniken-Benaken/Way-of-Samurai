@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import s from '../Login/LoginPage.module.css';
 
 
-type PropsTypes = {
+interface IProps {
 	error: string,
 	error_code: number | null,
 	is_auth: boolean,
@@ -14,7 +14,7 @@ type PropsTypes = {
 	submitLogin: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void,
 }
 
-const LoginForm: React.FC<PropsTypes> = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
+const LoginForm: React.FC<IProps> = ({submitLogin,error,is_auth,current_route,captchaUrl}) => {
 	if(is_auth) return <Redirect to={current_route} />
 
 	const initialValues = {

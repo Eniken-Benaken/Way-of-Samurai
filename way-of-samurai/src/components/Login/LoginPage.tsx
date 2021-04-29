@@ -5,6 +5,7 @@ import { submitLogin,getCaptcha } from '../../redux/reducers/auth_reducer';
 import s from './LoginPage.module.css';
 import { getIsAuth,getSubmitError,getSubmitErrorCode,getCurrentRoute,getCaptchaUrl } from '../../redux/selectors';
 import { AppStateType } from '../../redux/redux_store';
+import { captchaRC } from '../../api/API';
 
 
 type mapStateToPropsType = {
@@ -24,7 +25,7 @@ type PropsTypes = mapStateToPropsType & mapDispatchToPropsType
 
 
 const LoginPage: React.FC<PropsTypes> = ({submitLogin,error,error_code,is_auth,current_route,captcha_url,getCaptcha}) => {
-	if(error_code === 10) getCaptcha();
+	if(error_code === captchaRC.CaptchaRequired) getCaptcha();
 	const [captcha,setCaptcha] = useState(captcha_url);
 
 	useEffect(() => {

@@ -4,7 +4,8 @@ import s from './ProfileInfo.module.css';
 import avatarPlaceholder from '../../../assets/images/avatar.png';
 import ProfileInfoForm from './ProfileInfoForm';
 import ProfileInfo from './ProfileInfo';
-import { profileAPI } from '../../../api/API';
+import { resultCodes } from '../../../api/API';
+import { profileAPI } from "../../../api/profile-api";
 import { currentVisitedUserType, userContactsType } from '../../../redux/reducers/profile_reducer';
 // import { useDispatch } from 'react-redux';
 
@@ -68,7 +69,7 @@ const ProfileInfoContainer: React.FC<PropsTypes> = ({ current_visited_user, is_f
 	const submitProfileInfoChange = async (changed_info: any) => {
 		const response = await profileAPI.setProfileInfo(changed_info);
 		console.log(response);
-		if(response.data.resultCode === 0) {
+		if(response.data.resultCode === resultCodes.Success) {
 			// dispatch(setUserInfo(changed_info))
 			setEditMode(false);
 		}

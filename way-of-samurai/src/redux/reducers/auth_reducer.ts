@@ -1,76 +1,58 @@
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { authAPI, securityAPI } from "../../api/API";
+import { resultCodes } from "../../api/API";
+import { securityAPI } from "../../api/security-api";
+import { authAPI } from "../../api/auth-api";
 import { AppStateType } from "../redux_store";
-import { getAuthDataRT } from './../../api/API';
-
-
-const SET_AUTH_DATA = 'wos/auth/SET_AUTH_DATA'
-const SET_IS_AUTH = 'wos/auth/SET_IS_AUTH'
-// const TOGGLE_CHECKING_AUTH = 'wos/auth/TOGGLE_CHECKING_AUTH'
-const STOP_SUBMIT = 'wos/auth/STOP_SUBMIT'
-const SET_CAPTCHA_URL = 'wos/auth/SET_CAPTCHA_URL'
+import { BaseThunkType, InferActionTypes, PropertyTypes } from "./common";
 
 
 //ACs Types
-interface ISetAuthDataAC extends Action<typeof SET_AUTH_DATA> {
-	data: {
-		id: number | null,
-		email: string | null,
-		login: string | null
-	}
-}
-interface ISetIsAuthAC extends Action<typeof SET_IS_AUTH> {
-	is_auth: boolean
-}
-interface IStopSumbitAC extends Action<typeof STOP_SUBMIT> {
-	submit_error: string,
-	submit_error_code: number
-}
-interface ISetCaptchaUrlAC extends Action<typeof SET_CAPTCHA_URL> {
-	captcha_url: string
-}
-
-type AuthAC_Types = ISetAuthDataAC | ISetIsAuthAC | IStopSumbitAC | ISetCaptchaUrlAC;
+export type AuthAC_Types = PropertyTypes<typeof auth_actions>
+export type AuthActionTypes = InferActionTypes<typeof auth_actions>
 
 
 //ACs
-const setAuthData = (id: number | null, email: string | null, login: string | null): ISetAuthDataAC => ({
-	type: SET_AUTH_DATA,
-	data: {
-		id,
-		email,
-		login
-	}
-})
-const setIsAuth = (is_auth: boolean): ISetIsAuthAC => ({
-	type: SET_IS_AUTH,
-	is_auth
-})
-const stopSubmit = (error: string, error_code: number): IStopSumbitAC => ({
-	type: STOP_SUBMIT,
-	submit_error: error,
-	submit_error_code: error_code
-})
-const getCaptchaUrlSuccess = (captcha_url: string): ISetCaptchaUrlAC => ({
-	type: SET_CAPTCHA_URL,
-	captcha_url: captcha_url
-})
+const auth_actions = {
+	setAuthData: (id: number | null, email: string | null, login: string | null) => ({
+		type: 'wos/auth/SET_AUTH_DATA',
+		data: {
+			id,
+			email,
+			login
+		}
+	}) as const,
+	setIsAuth: (is_auth: boolean) => ({
+		type: 'wos/auth/SET_IS_AUTH',
+		is_auth
+	}) as const,
+	stopSubmit: (error: string, error_code: number) => ({
+		type: 'wos/auth/STOP_SUBMIT',
+		submit_error: error,
+		submit_error_code: error_code
+	}) as const,
+	getCaptchaUrlSuccess: (captcha_url: string) => ({
+		type: 'wos/auth/SET_CAPTCHA_URL',
+		captcha_url: captcha_url
+	}) as const
+}
 
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthAC_Types>
+type ThunkType = BaseThunkType<AuthActionTypes>
 
 
 // THUNK CREATORS
 export const getAuthData = (): ThunkType => async (dispatch) => {
 	try {
-		const response = await authAPI.getAuthData()
-		if (response?.data) {
-			let { id, email, login } = response.data.data;
-			dispatch(setAuthData(id, email, login));
-			if (login) {
-				dispatch(setIsAuth(true));
-			} else dispatch(setIsAuth(false));
+		const data = await authAPI.getAuthData()
+		if (data) {
+			if(data.resultCode === resultCodes.Success) {
+				let { id, email, login } = data.data;
+				dispatch(auth_actions.setAuthData(id, email, login));
+				
+				if (login) {
+					dispatch(auth_actions.setIsAuth(true));
+				} else dispatch(auth_actions.setIsAuth(false));
+			}
 		}//removed return statement cause nobody needed it and because it requires special typing
 	}
 	catch(e) {
@@ -82,20 +64,20 @@ export const getAuthData = (): ThunkType => async (dispatch) => {
 export const submitLogin = (email: string, password: string, rememberMe: boolean, captcha: string | null): ThunkType => {
 	return async (dispatch) => {
 		const response = await authAPI.sendLoginData(email, password, rememberMe, captcha)
-		if (response?.data.resultCode === 0) {
-			const response = await authAPI.getAuthData();
-			if (response?.data.resultCode === 1) {
-				dispatch(setAuthData(null, '', ''));
-				dispatch(setIsAuth(false));
+		if (response?.data.resultCode === resultCodes.Success) {
+			const data = await authAPI.getAuthData();
+			if (data?.resultCode === resultCodes.Error) {
+				dispatch(auth_actions.setAuthData(null, '', ''));
+				dispatch(auth_actions.setIsAuth(false));
 			}
-			else if (response?.data.resultCode === 0) {
-				let { id, email, login } = response?.data.data;
-				dispatch(setAuthData(id, email, login));
-				dispatch(setIsAuth(true));
+			else if (data?.resultCode === resultCodes.Success) {
+				let { id, email, login } = data.data;
+				dispatch(auth_actions.setAuthData(id, email, login));
+				dispatch(auth_actions.setIsAuth(true));
 			}
 		}
 		else if(response?.data.messages){
-			dispatch(stopSubmit(response.data.messages[0], response.data.resultCode))
+			dispatch(auth_actions.stopSubmit(response.data.messages[0], response.data.resultCode))
 		}
 	}
 }
@@ -103,16 +85,16 @@ export const submitLogin = (email: string, password: string, rememberMe: boolean
 export const signOut = (): ThunkType => {
 	return async (dispatch) => {
 		const response = await authAPI.signOut()
-		if (response?.data.resultCode === 0) {
-			const response = await authAPI.getAuthData()
-			if (response?.data.resultCode === 1) {
-				dispatch(setAuthData(null, '', ''));
-				dispatch(setIsAuth(false));
+		if (response?.data.resultCode === resultCodes.Success) {
+			const data = await authAPI.getAuthData()
+			if (data?.resultCode === resultCodes.Error) {
+				dispatch(auth_actions.setAuthData(null, '', ''));
+				dispatch(auth_actions.setIsAuth(false));
 			}
-			else if (response?.data.resultCode === 0) {
-				let { id, email, login } = response?.data.data;
-				dispatch(setAuthData(id, email, login));
-				dispatch(setIsAuth(true));
+			else if (data?.resultCode === resultCodes.Success) {
+				let { id, email, login } = data.data;
+				dispatch(auth_actions.setAuthData(id, email, login));
+				dispatch(auth_actions.setIsAuth(true));
 			}
 		}
 		else console.log(response?.data.messages[0]);
@@ -121,7 +103,7 @@ export const signOut = (): ThunkType => {
 
 export const getCaptcha = (): ThunkType => async (dispatch) => {
 	const captcha_url = await securityAPI.getCaptchaUrl()
-	if (captcha_url) dispatch(getCaptchaUrlSuccess(captcha_url));
+	if (captcha_url) dispatch(auth_actions.getCaptchaUrlSuccess(captcha_url));
 	else console.log("AIN'T GET ANY CAPTCHA");
 }
 
@@ -141,14 +123,14 @@ const initial_state = {
 
 type authType = typeof initial_state;
 
-const auth_reducer: Reducer<authType, AuthAC_Types> = (state = initial_state, action) => {
+const auth_reducer: Reducer<authType, AuthActionTypes> = (state = initial_state, action) => {
 	switch (action.type) {
-		case SET_AUTH_DATA:
+		case 'wos/auth/SET_AUTH_DATA':
 			return {
 				...state,
 				...action.data
 			}
-		case SET_IS_AUTH:
+		case 'wos/auth/SET_IS_AUTH':
 			return {
 				...state,
 				is_auth: action.is_auth
@@ -158,13 +140,13 @@ const auth_reducer: Reducer<authType, AuthAC_Types> = (state = initial_state, ac
 		// 		...state,
 		// 		checking_auth: action.checking_auth
 		// 	}
-		case STOP_SUBMIT:
+		case 'wos/auth/STOP_SUBMIT':
 			return {
 				...state,
 				submit_error: action.submit_error,
 				submit_error_code: action.submit_error_code
 			}
-		case SET_CAPTCHA_URL:
+		case 'wos/auth/SET_CAPTCHA_URL':
 			return {
 				...state,
 				captcha_url: action.captcha_url,

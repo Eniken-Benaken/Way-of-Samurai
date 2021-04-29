@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Profile from './Profile';
-import { getUserData, updateStatus, savePhoto, currentVisitedUserType, toggleIsPhotoUploaded } from '../../redux/reducers/profile_reducer'
-import { getAuthData } from '../../redux/reducers/auth_reducer';
-import { setCurrentRoute } from '../../redux/reducers/app_reducer';
+import { getUserData, updateStatus, savePhoto, currentVisitedUserType, profile_actions } from '../../redux/reducers/profile_reducer'
+import { app_actions } from '../../redux/reducers/app_reducer';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
 import { compose } from 'redux';
@@ -131,6 +130,9 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 		}
 	)
 }
+
+const setCurrentRoute = app_actions.setCurrentRoute;
+const toggleIsPhotoUploaded = profile_actions.toggleIsPhotoUploaded;
 
 export default compose(
 	withAuthRedirect,

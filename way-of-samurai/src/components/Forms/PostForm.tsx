@@ -3,12 +3,16 @@ import React from 'react';
 import * as Yup from 'yup';
 import s from './PostForm.module.css';
 
-const PostForm = ({addPost}) => {
+type PropsType = {
+	addPost: (newPostValue: string) => void
+}
+
+const PostForm: React.FC<PropsType> = ({addPost}) => {
 	const initialValues = {
 		new_post: '',
 	}
 
-	const onSubmit = (values,{resetForm}) => {
+	const onSubmit = (values: typeof initialValues,{resetForm}:  {resetForm: (formResetObj: object) => void}) => {
 		try {
 			addPost(values.new_post);
 			resetForm({});

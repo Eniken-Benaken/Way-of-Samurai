@@ -1,96 +1,63 @@
+import { resultCodes } from './../../api/API';
 import { Action, Reducer } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { profileAPI } from '../../api/API';
+import { profileAPI } from "../../api/profile-api";
 import { AppStateType } from '../redux_store';
-
-
-const ADD_POST = 'wos/profile/ADD_POST'
-const DELETE_POST = 'wos/profile/DELETE_POST'
-const SET_STATUS = 'wos/profile/SET_STATUS'
-const TOGGLE_IS_FETCHING = 'wos/profile/TOGGLE_IS_FETCHING'
-const TOGGLE_IS_PHOTO_UPLOADED = 'wos/profile/TOGGLE_IS_PHOTO_UPLOADED'
-const SET_USER_PROFILE = 'wos/profile/SET_USER_PROFILE'
-
+import { BaseThunkType, InferActionTypes } from './common';
 
 
 
 //ACs Types
-interface IAddPostAC extends Action<typeof ADD_POST> {
-	new_post: string
-};
-
-interface IDeletePostAC extends Action<typeof DELETE_POST> {
-	postId: number
-};
-
-interface ISetUserProfileAC extends Action<typeof SET_USER_PROFILE> {
-	current_visited_user: currentVisitedUserType
-}
-
-interface IToggleIsFetchingAC extends Action<typeof TOGGLE_IS_FETCHING> {
-	is_fetching: boolean
-}
-
-interface IToggleIsPhotoUploadedAC extends Action<typeof TOGGLE_IS_PHOTO_UPLOADED> {
-	photoUploaded: boolean
-}
-
-interface ISetStatusAC extends Action<typeof SET_STATUS> {
-	status: string
-}
-
-export type profileActionTypes = IAddPostAC | IDeletePostAC | ISetUserProfileAC | ISetStatusAC | IToggleIsFetchingAC | IToggleIsPhotoUploadedAC;
-
+export type profileActionTypes = InferActionTypes<typeof profile_actions>
 
 //ACs
-export const addPostAC = (new_post: string): IAddPostAC => ({ 
-	type: ADD_POST, 
-	new_post 
-});
-export const deletePostAC = (postId: number): IDeletePostAC => ({
-	type: DELETE_POST,
-	postId
-})
-const setUserProfile = (current_visited_user: currentVisitedUserType): ISetUserProfileAC => ({
-	type: SET_USER_PROFILE,
-	current_visited_user: current_visited_user
-})
-const setStatus = (status: string): ISetStatusAC => ({
-	type: SET_STATUS,
-	status
-})
-const toggleIsFetching = (is_fetching: boolean): IToggleIsFetchingAC => {
-	console.log("toggleIsFetching - Dispatched", new Date().getSeconds());
-	return ({ 		type: TOGGLE_IS_FETCHING, 
-	is_fetching 
-})};
-export const toggleIsPhotoUploaded = (photoUploaded: boolean): IToggleIsPhotoUploadedAC => {
-	console.log("toggleIsPhotoUploaded - Dispatched", new Date().getSeconds());
-	return({ 		type: TOGGLE_IS_PHOTO_UPLOADED, 
-	photoUploaded
-})};
+export const profile_actions = {
+	addPostAC: (new_post: string) => ({
+		type: 'wos/profile/ADD_POST',
+		new_post
+	}) as const,
+	deletePostAC: (postId: number) => ({
+		type: 'wos/profile/DELETE_POST',
+		postId
+	}) as const,
+	setUserProfile: (current_visited_user: currentVisitedUserType) => ({
+		type: 'wos/profile/SET_USER_PROFILE',
+		current_visited_user: current_visited_user
+	}) as const,
+	setStatus: (status: string) => ({
+		type: 'wos/profile/SET_STATUS',
+		status
+	}) as const,
+	toggleIsFetching: (is_fetching: boolean) => ({
+		type: 'wos/profile/TOGGLE_IS_FETCHING',
+		is_fetching
+	}) as const,
+	toggleIsPhotoUploaded: (photoUploaded: boolean) => ({
+		type: 'wos/profile/TOGGLE_IS_PHOTO_UPLOADED',
+		photoUploaded
+	}) as const
+}
 
-
-type ThunkType = ThunkAction<Promise<void>,AppStateType,unknown,profileActionTypes>;
+type ThunkType = BaseThunkType<profileActionTypes>;
 
 
 //THUNK CREATORS
 export const getUserData = (userId: number | null, isFetching: boolean): ThunkType => async (dispatch) => {
 	console.log("getUserData - Dispatched", new Date().getSeconds());
-	if(isFetching) return
-	dispatch(toggleIsFetching(true));
+	if (isFetching) return
+	dispatch(profile_actions.toggleIsFetching(true));
 	const data = await profileAPI.getUserData(userId)
-	dispatch(setUserProfile(data));
+	dispatch(profile_actions.setUserProfile(data));
 	const response = await profileAPI.getStatus(userId)
 	if (response.data)
-	dispatch(setStatus(response.data))
-	dispatch(toggleIsFetching(false));
+		dispatch(profile_actions.setStatus(response.data))
+	dispatch(profile_actions.toggleIsFetching(false));
 }
 export const updateStatus = (status: string | null): ThunkType => async (dispatch) => {
 	try {
-		if(status === null) return;
-		const response = await profileAPI.setStatus(status)
-		if (response.data.resultCode === 0) dispatch(setStatus(status));
+		if (status === null) return;
+		const data = await profileAPI.setStatus(status)
+		if (data.resultCode === resultCodes.Success) dispatch(profile_actions.setStatus(status));
 	}
 	catch (error) {
 		console.log(error);
@@ -99,16 +66,16 @@ export const updateStatus = (status: string | null): ThunkType => async (dispatc
 
 export const savePhoto = (photo: any, userId: number | null): ThunkType => async (dispatch) => {
 	console.log("savePhoto - Dispatched", new Date().getSeconds());
-	
-	const response = await profileAPI.setProfilePhoto(photo)
-	if (response.data.resultCode === 0) {
+
+	const data = await profileAPI.setProfilePhoto(photo)
+	if (data.resultCode === resultCodes.Success) {
 		console.log(`photoUploaded changed to true`);
-		dispatch(toggleIsPhotoUploaded(true))
+		dispatch(profile_actions.toggleIsPhotoUploaded(true))
 	}
 }
 
 
-export type  userContactsType = {
+export type userContactsType = {
 	facebook: string | null,
 	website: string | null,
 	vk: string | null,
@@ -171,9 +138,9 @@ const initial_state: profile_type = {
 	photoUploaded: false
 };
 
-const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initial_state, action) => {
+const profile_reducer: Reducer<profile_type, profileActionTypes> = (state = initial_state, action) => {
 	switch (action.type) {
-		case ADD_POST:
+		case 'wos/profile/ADD_POST':
 			return {
 				...state,
 				posts: [...state.posts, {
@@ -184,27 +151,27 @@ const profile_reducer: Reducer<profile_type,profileActionTypes> = (state = initi
 					likes_count: 0
 				}],
 			}
-		case DELETE_POST:
+		case 'wos/profile/DELETE_POST':
 			return {
 				...state,
 				posts: state.posts.filter(post => post.id !== action.postId),
 			}
-		case SET_USER_PROFILE:
+		case 'wos/profile/SET_USER_PROFILE':
 			return {
 				...state,
 				current_visited_user: action.current_visited_user
 			}
-		case SET_STATUS:
+		case 'wos/profile/SET_STATUS':
 			return {
 				...state,
 				status: action.status
 			}
-		case TOGGLE_IS_FETCHING:
+		case 'wos/profile/TOGGLE_IS_FETCHING':
 			return {
 				...state,
 				is_fetching: action.is_fetching
 			}
-		case TOGGLE_IS_PHOTO_UPLOADED:
+		case 'wos/profile/TOGGLE_IS_PHOTO_UPLOADED':
 			return {
 				...state,
 				photoUploaded: action.photoUploaded

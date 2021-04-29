@@ -4,12 +4,13 @@ import Dialog from './Dialog/Dialog';
 import Message from './Message/Message';
 import MessageForm from '../Forms/MessageForm';
 import { dialogs_type } from '../../redux/reducers/dialogs_reducer';
+import { AppActionTypes } from '../../redux/reducers/app_reducer';
 
 
 type PropsType = {
 	dialogs: dialogs_type,
 	sendMessage: (new_message: string) => void,
-	setCurrentRoute: (current_route: string) => void
+	setCurrentRoute: (currentRoute: string) => AppActionTypes
 }
 
 const Dialogs: React.FC<PropsType> = ({dialogs:{dialogs,messages},sendMessage,setCurrentRoute}) => {

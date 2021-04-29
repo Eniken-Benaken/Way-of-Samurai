@@ -1,23 +1,15 @@
-import { Action, Reducer } from 'redux';
-const SEND_MESSAGE = 'wos/dialogs/SEND_MESSAGE'
+import { Reducer } from 'redux';
+import { InferActionTypes } from './common';
 
 
 
 //AC Types
-interface ISendMessage extends Action<typeof SEND_MESSAGE> {
-	new_message: string
-};
-
-type dialogsActionTypes = ISendMessage;
-
-
+type dialogsActionTypes = InferActionTypes<typeof dialogs_actions>
 
 //AС
-export const sendMessage = (new_message: string):ISendMessage => ({	type: SEND_MESSAGE, new_message });
-
-
-
-
+export const dialogs_actions = {
+	sendMessage: (new_message: string) => ({	type: 'wos/users/TOGGLE_FOLLOWING', new_message } as const) 
+};
 
 
 
@@ -63,7 +55,7 @@ const initial_state: dialogs_type =  {
 
 const dialogs_reducer: Reducer<dialogs_type, dialogsActionTypes> = (state = initial_state,action) => {
 	switch (action.type) {
-		case SEND_MESSAGE:
+		case 'wos/users/TOGGLE_FOLLOWING':
 			return {
 				...state,
 				messages: [...state.messages,{

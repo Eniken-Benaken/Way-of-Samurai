@@ -1,5 +1,5 @@
-import { dialogs_type, sendMessage } from '../../redux/reducers/dialogs_reducer';
-import { setCurrentRoute } from '../../redux/reducers/app_reducer';
+import { dialogs_type, dialogs_actions } from '../../redux/reducers/dialogs_reducer';
+import { app_actions,AppAC_Types } from '../../redux/reducers/app_reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
 import withAuthRedirect from '../common/withAuthRedirect';
@@ -13,7 +13,7 @@ type mapStateToPropsType = {
 
 type mapDispatchToPropsType = {
 	sendMessage: (new_message: string) => void,
-	setCurrentRoute: (current_route: string) => void
+	setCurrentRoute: AppAC_Types
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
@@ -22,8 +22,9 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
 	});
 };
 
+const setCurrentRoute = app_actions.setCurrentRoute
 
-
+const sendMessage = dialogs_actions.sendMessage;
 
 export default compose(
 	connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps,{
@@ -31,4 +32,4 @@ export default compose(
 		setCurrentRoute
 	}),
 	withAuthRedirect
-)(Dialogs) as React.FC;
+	)(Dialogs) as React.FC;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addPostAC, postType } from '../../../redux/reducers/profile_reducer';
+import { profile_actions, postType } from '../../../redux/reducers/profile_reducer';
 import { AppStateType } from '../../../redux/redux_store';
 import { getPosts } from '../../../redux/selectors';
 import MyPosts from './MyPosts';
@@ -19,6 +19,6 @@ const mapStateToProps = (state: AppStateType) => ({
 });
 
 
-
+const addPostAC = profile_actions.addPostAC
 
 export default connect<mapStateToPropsType,mapDispatchToPropsType,{},AppStateType>(mapStateToProps,{addPostAC})(MyPosts);
